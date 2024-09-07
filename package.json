@@ -1,0 +1,95 @@
+{
+	"name": "[*]",
+	"version": "0.0.0",
+	"type": "module",
+	"description": "[*]",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/[*].git"
+	},
+	"main": "./dist/esm-min/index.js",
+	"module": "./dist/esm-min/index.js",
+	"types": "./dist/esm-min/index.d.ts",
+	"homepage": "https://github.com/[*]#readme",
+	"bugs": {
+		"url": "https://github.com/[*]/issues"
+	},
+	"license": "MIT",
+	"author": "[*]",
+	"scripts": {
+		"build:dev": "cross-env NODE_ENV=development tsup",
+		"build:test": "concurrently --prefix-colors \"yellow.bold,#7da4f8.bold,magenta\" --names PUBLINT,TSUP,ATTW 'pnpm:lint:publint' 'pnpm:build:dev' 'pnpm:lint:attw'",
+		"build": "tsup",
+		"inspect:eslint-config": "pnpx @eslint/config-inspector@latest",
+		"lint:attw": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+		"lint:check-types": "tsc --pretty --incremental -p tsconfig.json",
+		"lint:commitlint": "pnpm commitlint --edit",
+		"lint:eslint": "eslint src/**/*.ts --cache --max-warnings 0 --report-unused-disable-directives",
+		"lint:format": "prettier --cache --write .",
+		"lint:packages": "pnpm dedupe --check",
+		"lint:publint": "publint --strict .",
+		"lint:size": "size-limit",
+		"prepare": "husky",
+		"release": "changeset publish",
+		"test:release": "pkg-pr-new publish",
+		"version-package": "changeset version"
+	},
+	"devDependencies": {
+		"@arethetypeswrong/cli": "^0.16.0",
+		"@changesets/cli": "^2.27.8",
+		"@commitlint/cli": "^19.4.1",
+		"@commitlint/config-conventional": "^19.4.1",
+		"@eslint/js": "^9.10.0",
+		"@size-limit/esbuild-why": "^11.1.4",
+		"@size-limit/preset-small-lib": "^11.1.4",
+		"@stylistic/eslint-plugin": "^2.7.2",
+		"@total-typescript/ts-reset": "^0.6.1",
+		"@types/eslint": "^9.6.1",
+		"@types/node": "^22.5.4",
+		"@zayne-labs/tsconfig": "^0.1.1",
+		"concurrently": "^8.2.2",
+		"cross-env": "^7.0.3",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^9.10.0",
+		"eslint-import-resolver-typescript": "^3.6.3",
+		"eslint-plugin-import-x": "^4.2.1",
+		"eslint-plugin-jsdoc": "^50.2.2",
+		"eslint-plugin-perfectionist": "^3.4.0",
+		"eslint-plugin-unicorn": "^55.0.0",
+		"eslint-typegen": "^0.3.1",
+		"globals": "^15.9.0",
+		"husky": "^9.1.5",
+		"lint-staged": "^15.2.10",
+		"pkg-pr-new": "^0.0.24",
+		"prettier": "^3.3.3",
+		"publint": "^0.2.10",
+		"size-limit": "^11.1.4",
+		"terser": "^5.31.6",
+		"tsup": "^8.2.4",
+		"typescript": "5.5.4",
+		"typescript-eslint": "^8.4.0"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/",
+		"provenance": true
+	},
+	"exports": {
+		".": "./dist/esm-min/index.js",
+		"./[*]": "./dist/esm-min/[*]/index.js"
+	},
+	"files": [
+		"dist"
+	],
+	"size-limit": [
+		{
+			"path": "./src/[*]",
+			"limit": "[*] kb"
+		}
+	],
+	"sideEffects": false,
+	"keywords": [],
+	"engines": {
+		"node": ">=[*].x"
+	}
+}
