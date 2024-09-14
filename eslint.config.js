@@ -1,33 +1,23 @@
-/// <reference path="./eslint-typegen.d.ts" />
-
 import eslintJs from "@eslint/js";
 import eslintStylistic from "@stylistic/eslint-plugin";
 import eslintImportX from "eslint-plugin-import-x";
 import eslintJsdoc from "eslint-plugin-jsdoc";
 import eslintPerfectionist from "eslint-plugin-perfectionist";
 import eslintUnicorn from "eslint-plugin-unicorn";
-import typegen from "eslint-typegen";
 import globals from "globals";
 import tsEslint from "typescript-eslint";
 
-/**
- * @import { FlatESLintConfig } from "./config/eslint-config-types";
- * @import { TypeGenOptions } from "eslint-typegen"
- * @import { Linter } from "eslint"
- * @typedef {Array<Linter.Config & FlatESLintConfig>} ConfigArray
- */
-
-/**
- *
- * @param {[configs:Promise<ConfigArray> | ConfigArray, options?: TypeGenOptions]} args
- */
-
-const augumentedTypegen = (...args) => typegen(...args);
-
-const eslintConfigArray = augumentedTypegen([
+const eslintConfigArray = [
 	// == Global Options
 	{
-		ignores: ["dist/**", "build/**", "eslint-typegen.d.ts", "config/**", "eslint.config.js"],
+		ignores: [
+			"dist/**",
+			"build/**",
+			"src/typegen.d.ts",
+			"config/**",
+			"eslint.config.js",
+			"src/types/**",
+		],
 		name: "zayne/defaults/ignores",
 	},
 
@@ -42,7 +32,7 @@ const eslintConfigArray = augumentedTypegen([
 
 			parser: tsEslint.parser,
 			parserOptions: {
-				project: "config/tsconfig.eslint.json",
+				project: "tsconfig.eslint.json",
 				tsconfigRootDir: import.meta.dirname,
 			},
 
@@ -457,6 +447,6 @@ const eslintConfigArray = augumentedTypegen([
 			"unicorn/prevent-abbreviations": "off",
 		},
 	},
-]);
+];
 
 export default eslintConfigArray;

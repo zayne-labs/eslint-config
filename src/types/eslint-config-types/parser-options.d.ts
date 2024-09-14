@@ -1,3 +1,4 @@
+import type { Linter } from "eslint";
 import type { LiteralUnion } from "./utility-types";
 
 // Some types copied from `@types/eslint` `Linter.ParserOptions`
@@ -11,33 +12,12 @@ import type { LiteralUnion } from "./utility-types";
  *
  * @see https://typescript-eslint.io/architecture/parser/#ecmaversion
  */
-export type EcmaVersion =
-	| 3
-	| 5
-	| 6
-	| 7
-	| 8
-	| 9
-	| 10
-	| 11
-	| 12
-	| 13
-	| 14
-	| 2015
-	| 2016
-	| 2017
-	| 2018
-	| 2019
-	| 2020
-	| 2021
-	| 2022
-	| 2023
-	| "latest";
+export type EcmaVersion = Linter.EcmaVersion;
 
 /**
  * Set to "script" (default) or "module" if your code is in ECMAScript modules.
  */
-export type SourceType = "script" | "module";
+export type SourceType = Linter.SourceType;
 
 /**
  * An object indicating which additional language features you'd like to use.
@@ -45,7 +25,7 @@ export type SourceType = "script" | "module";
  * @see https://eslint.org/docs/latest/user-guide/configuring/language-options#specifying-parser-options
  * @see https://typescript-eslint.io/architecture/parser#ecmafeatures
  */
-export interface EcmaFeatures extends Partial<Record<string, boolean>> {
+export type EcmaFeatures = Linter.ParserOptions["ecmaFeatures"] & {
 	/**
 	 * Allow `return` statements in the global scope.
 	 */
@@ -60,7 +40,7 @@ export interface EcmaFeatures extends Partial<Record<string, boolean>> {
 	 * Enable [JSX](https://facebook.github.io/jsx).
 	 */
 	jsx?: boolean;
-}
+};
 
 /** Lib. */
 export type Lib = LiteralUnion<
@@ -191,7 +171,7 @@ export interface CustomParserOptions {}
  *
  * @see [Specifying Parser Options](https://eslint.org/docs/user-guide/configuring/language-options#specifying-parser-options)
  */
-export interface ParserOptions extends Partial<CustomParserOptions>, Partial<Record<string, unknown>> {
+export interface ParserOptions extends Partial<Linter.ParserOptions> {
 	/**
 	 * Accepts any valid ECMAScript version number or `'latest'`:
 	 *
@@ -224,7 +204,7 @@ export interface ParserOptions extends Partial<CustomParserOptions>, Partial<Rec
 	 * @see https://eslint.org/docs/latest/user-guide/configuring/language-options#specifying-parser-options
 	 * @see https://typescript-eslint.io/architecture/parser#ecmafeatures
 	 */
-	ecmaFeatures?: EcmaFeatures;
+	ecmaFeatures?: Linter.ParserOptions["ecmaFeatures"] & EcmaFeatures;
 
 	/**
 	 * Parser.
@@ -232,5 +212,5 @@ export interface ParserOptions extends Partial<CustomParserOptions>, Partial<Rec
 	 * @see [Working with Custom Parsers](https://eslint.org/docs/developer-guide/working-with-custom-parsers)
 	 * @see [Specifying Parser](https://eslint.org/docs/user-guide/configuring/plugins#specifying-parser)
 	 */
-	parser?: Parser;
+	parser?: Linter.Parser;
 }
