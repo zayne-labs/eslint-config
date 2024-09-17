@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import { flatConfigsToRulesDTS } from "eslint-typegen/core";
 import { builtinRules } from "eslint/use-at-your-own-risk";
-import { combine, javascript, typescript } from "../src";
+import { combine, javascript, tailwindcss, typescript, unicorn} from "../src";
 
 const coreRules = () => ({
 	plugins: {
@@ -9,11 +9,11 @@ const coreRules = () => ({
 	},
 });
 
-const configs = await combine(coreRules(), javascript(), typescript());
+const configs = await combine(coreRules(), javascript(), unicorn(), typescript(), tailwindcss());
 
 const dts = await flatConfigsToRulesDTS(configs, {
-	includeAugmentation: false,
 	exportTypeName: "Rules",
+	includeAugmentation: false,
 });
 
 const configNames = configs.map((config) => config.name).filter(Boolean);

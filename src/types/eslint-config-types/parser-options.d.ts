@@ -42,6 +42,13 @@ export type EcmaFeatures = Linter.ParserOptions["ecmaFeatures"] & {
 	jsx?: boolean;
 };
 
+export type Parser =
+	| Linter.Parser
+	| {
+			meta?: Linter.Parser["meta"];
+			parseForESLint(text: string, options?: any): ESLintParseResult;
+	  };
+
 /** Lib. */
 export type Lib = LiteralUnion<
 	| "es5"
@@ -204,7 +211,7 @@ export interface ParserOptions extends Partial<Linter.ParserOptions> {
 	 * @see https://eslint.org/docs/latest/user-guide/configuring/language-options#specifying-parser-options
 	 * @see https://typescript-eslint.io/architecture/parser#ecmafeatures
 	 */
-	ecmaFeatures?: Linter.ParserOptions["ecmaFeatures"] & EcmaFeatures;
+	ecmaFeatures?: EcmaFeatures;
 
 	/**
 	 * Parser.
@@ -212,5 +219,5 @@ export interface ParserOptions extends Partial<Linter.ParserOptions> {
 	 * @see [Working with Custom Parsers](https://eslint.org/docs/developer-guide/working-with-custom-parsers)
 	 * @see [Specifying Parser](https://eslint.org/docs/user-guide/configuring/plugins#specifying-parser)
 	 */
-	parser?: Linter.Parser;
+	parser?: Parser;
 }

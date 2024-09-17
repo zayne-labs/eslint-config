@@ -1,14 +1,6 @@
+import type { Linter } from "eslint";
 import type { EcmaVersion, Parser, ParserOptions, SourceType } from "./parser-options";
-
-export type ParserModule =
-	| {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			parse(text: string, options?: any): any;
-	  }
-	| {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			parseForESLint(text: string, options?: any): any;
-	  };
+import type { meta } from "eslint-plugin-unicorn";
 
 /**
  * An object containing settings related to how JavaScript is configured for linting
@@ -36,7 +28,7 @@ export interface LanguageOptions {
 	 *
 	 * @see [Configuring global variables](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#configuring-global-variables)
 	 */
-	globals?: Record<string, "readonly" | "writable" | false | "readable" | true | "writeable" | "off">;
+	globals?: Linter.LanguageOptions["globals"];
 
 	/**
 	 * Either an object containing a `parse()` method or a string indicating the name of a parser inside of a plugin (i.e., `"pluginName/parserName"`).
@@ -45,7 +37,7 @@ export interface LanguageOptions {
 	 *
 	 * @see [Configuring a custom parser and its options](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#configuring-a-custom-parser-and-its-options)
 	 */
-	parser?: Parser | ParserModule;
+	parser?: Parser;
 
 	/**
 	 * An object specifying additional options that are passed directly to the `parser()` method on the parser. The available options are parser-dependent.

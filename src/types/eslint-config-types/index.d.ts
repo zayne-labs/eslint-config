@@ -13,14 +13,14 @@ export interface FlatESLintConfigItem {
 	 *
 	 * @see [Ignore Patterns](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#excluding-files-with-ignores)
 	 */
-	files?: string[];
+	files?: Linter.Config["files"];
 
 	/**
 	 * An array of glob patterns indicating the files that the configuration object should not apply to. If not specified, the configuration object applies to all files matched by files.
 	 *
 	 * @see [Ignore Patterns](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#excluding-files-with-ignores)
 	 */
-	ignores?: string[];
+	ignores?: Linter.Config["ignores"];
 
 	/**
 	 * An object containing settings related to how JavaScript is configured for linting.
@@ -39,21 +39,21 @@ export interface FlatESLintConfigItem {
 	 *
 	 * @see [Using processors](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-processors)
 	 */
-	processor?: string | Linter.Processor;
+	processor?: Linter.Config["processor"];
 
 	/**
 	 * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
 	 *
 	 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
 	 */
-	plugins?: Record<string, ESLint.Plugin>;
+	plugins?: Linter.Config["plugins"];
 
 	/**
 	 * An object containing the configured rules. When `files` or `ignores` are specified, these rule configurations are only available to the matching files.
 	 *
 	 * @see [Configuring rules](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#configuring-rules)
 	 */
-	rules?: Linter.RulesRecord;
+	rules?: Linter.Config["rules"];
 
 	/**
 	 * An object containing name-value pairs of information that should be available to all rules.

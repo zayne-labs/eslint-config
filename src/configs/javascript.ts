@@ -1,8 +1,8 @@
 import { eslintJs } from "@/plugins";
-import type { OptionsIsInEditor, OptionsOverrides, TypedFlatConfigItem } from "@/types";
+import type { OptionsOverrides, TypedFlatConfigItem } from "@/types";
 import globals from "globals";
 
-const javascript = (options: OptionsIsInEditor & OptionsOverrides = {}): TypedFlatConfigItem[] => {
+const javascript = (options: OptionsOverrides = {}): TypedFlatConfigItem[] => {
 	const { overrides } = options;
 
 	return [
@@ -22,7 +22,7 @@ const javascript = (options: OptionsIsInEditor & OptionsOverrides = {}): TypedFl
 					ecmaFeatures: {
 						jsx: true,
 					},
-					ecmaVersion: 2022,
+					ecmaVersion: "latest",
 					sourceType: "module",
 				},
 
@@ -40,7 +40,7 @@ const javascript = (options: OptionsIsInEditor & OptionsOverrides = {}): TypedFl
 			...eslintJs.configs.recommended,
 		},
 		{
-			name: "zayne/eslint",
+			name: "zayne/js-eslint/rules",
 
 			rules: {
 				"accessor-pairs": ["error", { enforceForClassMembers: true, setWithoutGet: true }],

@@ -10,17 +10,18 @@ export type Awaitable<T> = T | Promise<T>;
 export type { ConfigNames, Rules };
 
 export type TypedFlatConfigItem = Omit<
-	Linter.Config<Linter.RulesRecord & Rules> & FlatESLintConfigItem,
-	"plugins"
-> & {
-	// Relax plugins type limitation, as most of the plugins did not have correct type info yet.
-	/**
-	 * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
-	 *
-	 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
-	 */
-	plugins?: Record<string, any>;
-};
+	Linter.Config<Linter.RulesRecord & Rules>,
+	"plugins" | "languageOptions"
+> &
+	Omit<FlatESLintConfigItem, "plugins"> & {
+		// Relax plugins type limitation, as most of the plugins did not have correct type info yet.
+		/**
+		 * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
+		 *
+		 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
+		 */
+		plugins?: Record<string, any>;
+	};
 
 export interface OptionsFiles {
 	/**
@@ -60,15 +61,6 @@ export interface OptionsComponentExts {
 	componentExts?: string[];
 }
 
-export interface OptionsUnicorn {
-	/**
-	 * Include all rules recommended by `eslint-plugin-unicorn`, instead of only ones picked by Anthony.
-	 *
-	 * @default false
-	 */
-	allRecommended?: boolean;
-}
-
 export interface OptionsTypeScriptParserOptions {
 	/**
 	 * Additional parser options for TypeScript.
@@ -86,6 +78,12 @@ export interface OptionsTypeScriptParserOptions {
 	 * @default ['**\/*.md\/**', '**\/*.astro/*.ts']
 	 */
 	ignoresTypeAware?: string[];
+
+	/**
+	 *	Default projects to allow in the parser project service.
+	 * @default ['./*.js']
+	 **/
+	allowedDefaultProjects?: string[];
 }
 
 export interface OptionsTypeScriptWithTypes {
@@ -111,15 +109,15 @@ export interface OptionsOverrides {
 	overrides?: TypedFlatConfigItem["rules"];
 }
 
-export interface OptionsRegExp {
-	/**
-	 * Override rulelevels
-	 */
-	level?: "error" | "warn";
+export interface OptionsTailwindCss {
+	settings?: TypedFlatConfigItem["settings"];
 }
 
-export interface OptionsIsInEditor {
-	isInEditor?: boolean;
+export interface OptionsRegExp {
+	/**
+	 * Override rule levels
+	 */
+	level?: "error" | "warn";
 }
 
 export interface OptionsConfig extends OptionsComponentExts {
@@ -132,17 +130,6 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @default true
 	 */
 	gitignore?: boolean | FlatGitignoreOptions;
-
-	/**
-	 * Disable some opinionated rules to Anthony's preference.
-	 *
-	 * Including:
-	 * - `antfu/top-level-function`
-	 * - `antfu/if-newline`
-	 *
-	 * @default false
-	 */
-	lessOpinionated?: boolean;
 
 	/**
 	 * Core rules. Can't be disabled.
@@ -172,14 +159,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 *
 	 * @default true
 	 */
-	unicorn?: boolean | OptionsUnicorn;
-
-	/**
-	 * Enable test support.
-	 *
-	 * @default true
-	 */
-	test?: boolean | OptionsOverrides;
+	unicorn?: boolean | OptionsOverrides;
 
 	/**
 	 * Enable Vue support.
@@ -277,29 +257,4 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @default false
 	 */
 	svelte?: boolean;
-
-	/**
-	 * Control to disable some rules in editors.
-	 * @default auto-detect based on the process.env
-	 */
-	isInEditor?: boolean;
-
-	/**
-	 * Provide overrides for rules for each integration.
-	 *
-	 * @deprecated use `overrides` option in each integration key instead
-	 */
-	overrides?: {
-		stylistic?: TypedFlatConfigItem["rules"];
-		javascript?: TypedFlatConfigItem["rules"];
-		typescript?: TypedFlatConfigItem["rules"];
-		test?: TypedFlatConfigItem["rules"];
-		vue?: TypedFlatConfigItem["rules"];
-		jsonc?: TypedFlatConfigItem["rules"];
-		markdown?: TypedFlatConfigItem["rules"];
-		yaml?: TypedFlatConfigItem["rules"];
-		toml?: TypedFlatConfigItem["rules"];
-		react?: TypedFlatConfigItem["rules"];
-		svelte?: TypedFlatConfigItem["rules"];
-	};
 }

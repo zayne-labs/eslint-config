@@ -1,10 +1,10 @@
 import { interopDefault } from "@/utils";
-import type { Linter } from "eslint";
 import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from "../globs";
 import type {
 	OptionsComponentExts,
 	OptionsFiles,
 	OptionsOverrides,
+	OptionsStylistic,
 	OptionsTypeScriptParserOptions,
 	OptionsTypeScriptWithTypes,
 	TypedFlatConfigItem,
@@ -14,18 +14,23 @@ export const typescript = async (
 	options: OptionsFiles &
 		OptionsComponentExts &
 		OptionsOverrides &
+		OptionsStylistic &
 		OptionsTypeScriptWithTypes &
 		OptionsTypeScriptParserOptions = {}
 ): Promise<TypedFlatConfigItem[]> => {
 	const {
+		allowedDefaultProjects = ["./*.js"],
 		componentExts = [],
 		files = [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)],
 		filesTypeAware = [GLOB_TS, GLOB_TSX],
 		ignoresTypeAware = [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS],
 		overrides,
 		parserOptions,
+		stylistic = true,
 		tsconfigPath,
 	} = options;
+
+	const isTypeAware = Boolean(tsconfigPath);
 
 	const tsEslint = await interopDefault(import("typescript-eslint"));
 
@@ -35,35 +40,56 @@ export const typescript = async (
 		...(ignores && { ignores }),
 
 		languageOptions: {
-			parser: tsEslint.parser as Linter.Parser,
+			parser: tsEslint.parser,
 
 			parserOptions: {
 				ecmaFeatures: { globalReturn: true },
 
 				extraFileExtensions: componentExts.map((ext) => `.${ext}`),
 
-				projectService: {
-					allowDefaultProject: ["./*.js"],
-					defaultProject: tsconfigPath,
-				},
+				...(isTypeAware && {
+					projectService: {
+						allowDefaultProject: allowedDefaultProjects,
+						defaultProject: tsconfigPath,
+					},
+					tsconfigRootDir: import.meta.dirname,
+				}),
 
 				sourceType: "module",
-
-				tsconfigRootDir: import.meta.dirname,
 
 				...parserOptions,
 			},
 		},
 	});
 
+	const typeAwareRules: TypedFlatConfigItem["rules"] = {
+		"ts-eslint/no-unnecessary-type-parameters": "off",
+		// "ts-eslint/non-nullable-type-assertion-style": "off",
+		"ts-eslint/prefer-nullish-coalescing": ["error", { ignoreConditionalTests: true }],
+		"ts-eslint/restrict-template-expressions": [
+			"error",
+			{ allowBoolean: true, allowNullish: true, allowNumber: true },
+		],
+		"ts-eslint/return-await": ["error", "in-try-catch"],
+	};
+
 	return [
-		...tsEslint.configs.strictTypeChecked.map((config) => ({ ...config, files }) as TypedFlatConfigItem),
-		...tsEslint.configs.stylisticTypeChecked.map(
-			(config) => ({ ...config, files }) as TypedFlatConfigItem
-		),
+		...tsEslint.configs[isTypeAware ? "strictTypeChecked" : "strict"].map((config) => ({
+			...config,
+			files,
+			name: `zayne/ts-eslint/${isTypeAware ? "strictTypeChecked" : "strict"}`,
+		})),
+
+		...(stylistic
+			? tsEslint.configs[isTypeAware ? "stylisticTypeChecked" : "stylistic"].map((config) => ({
+					...config,
+					files,
+					name: `zayne/ts-eslint/${isTypeAware ? "stylisticTypeChecked" : "stylistic"}`,
+				}))
+			: []),
 
 		{
-			name: "zayne/@typescript-eslint/setup",
+			name: `zayne/ts-eslint/${isTypeAware ? "type-aware-setup" : "setup"}`,
 
 			...makeParser(files),
 			...makeParser(filesTypeAware, ignoresTypeAware),
@@ -72,45 +98,37 @@ export const typescript = async (
 		{
 			files,
 
-			name: "zayne/@typescript-eslint",
+			name: "zayne/ts-eslint/rules",
 
 			plugins: {
-				"@typescript-eslint": tsEslint.plugin,
+				"ts-eslint": tsEslint.plugin,
 			},
 
 			rules: {
-				"@typescript-eslint/array-type": ["error", { default: "array-simple" }],
-				"@typescript-eslint/consistent-type-definitions": ["error", "type"],
-				"@typescript-eslint/default-param-last": "error",
-				"@typescript-eslint/dot-notation": "error",
-				"@typescript-eslint/member-ordering": "error",
-				"@typescript-eslint/method-signature-style": ["error", "property"],
-				"@typescript-eslint/no-confusing-void-expression": "off",
-				"@typescript-eslint/no-empty-function": [
+				"ts-eslint/array-type": ["error", { default: "array-simple" }],
+				"ts-eslint/consistent-type-definitions": ["error", "type"],
+				"ts-eslint/default-param-last": "error",
+				"ts-eslint/member-ordering": "error",
+				"ts-eslint/method-signature-style": ["error", "property"],
+				"ts-eslint/no-confusing-void-expression": "off",
+				"ts-eslint/no-empty-function": [
 					"error",
 					{ allow: ["arrowFunctions", "functions", "methods"] },
 				],
-				"@typescript-eslint/no-import-type-side-effects": "error",
-				"@typescript-eslint/no-shadow": "error",
-				"@typescript-eslint/no-unnecessary-type-parameters": "off",
-				"@typescript-eslint/no-unused-expressions": [
+				"ts-eslint/no-import-type-side-effects": "error",
+				"ts-eslint/no-shadow": "error",
+				"ts-eslint/no-unused-expressions": [
 					"error",
 					{
 						allowShortCircuit: true,
 						allowTernary: true,
 					},
 				],
-				"@typescript-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
-				"@typescript-eslint/no-use-before-define": "off",
-				"@typescript-eslint/no-useless-constructor": "error",
-				"@typescript-eslint/non-nullable-type-assertion-style": "off",
-				"@typescript-eslint/prefer-nullish-coalescing": ["error", { ignoreConditionalTests: true }],
-				"@typescript-eslint/require-await": "error",
-				"@typescript-eslint/restrict-template-expressions": [
-					"error",
-					{ allowBoolean: true, allowNullish: true, allowNumber: true },
-				],
-				"@typescript-eslint/return-await": ["error", "in-try-catch"],
+				"ts-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
+				"ts-eslint/no-use-before-define": "off",
+				"ts-eslint/no-useless-constructor": "error",
+
+				...(isTypeAware && typeAwareRules),
 
 				...overrides,
 			},

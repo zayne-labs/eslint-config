@@ -7,7 +7,7 @@ const sharedOptions = {
 	dts: true, // generate d.ts
 	entry: ["src/index.ts"],
 	format: ["esm"],
-	platform: "browser",
+	platform: "node",
 	sourcemap: !isDevMode,
 	splitting: true,
 	target: "esnext",
