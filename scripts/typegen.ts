@@ -1,12 +1,10 @@
 import fs from "node:fs/promises";
 import { flatConfigsToRulesDTS } from "eslint-typegen/core";
 import { builtinRules } from "eslint/use-at-your-own-risk";
-import { combine, javascript, tailwindcss, typescript, unicorn} from "../src";
+import { combine, javascript, tailwindcss, typescript, unicorn } from "../src";
 
 const coreRules = () => ({
-	plugins: {
-		"": { rules: Object.fromEntries(builtinRules) },
-	},
+	plugins: { "": { rules: Object.fromEntries(builtinRules) } },
 });
 
 const configs = await combine(coreRules(), javascript(), unicorn(), typescript(), tailwindcss());

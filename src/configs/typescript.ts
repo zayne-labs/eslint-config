@@ -1,4 +1,4 @@
-import { interopDefault } from "@/utils";
+import { interopDefault, renamePluginInConfigs } from "@/utils";
 import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from "../globs";
 import type {
 	OptionsComponentExts,
@@ -11,12 +11,12 @@ import type {
 } from "../types";
 
 export const typescript = async (
-	options: OptionsFiles &
-		OptionsComponentExts &
+	options: OptionsComponentExts &
+		OptionsFiles &
 		OptionsOverrides &
 		OptionsStylistic &
-		OptionsTypeScriptWithTypes &
-		OptionsTypeScriptParserOptions = {}
+		OptionsTypeScriptParserOptions &
+		OptionsTypeScriptWithTypes = {}
 ): Promise<TypedFlatConfigItem[]> => {
 	const {
 		allowedDefaultProjects = ["./*.js"],
@@ -74,20 +74,6 @@ export const typescript = async (
 	};
 
 	return [
-		...tsEslint.configs[isTypeAware ? "strictTypeChecked" : "strict"].map((config) => ({
-			...config,
-			files,
-			name: `zayne/ts-eslint/${isTypeAware ? "strictTypeChecked" : "strict"}`,
-		})),
-
-		...(stylistic
-			? tsEslint.configs[isTypeAware ? "stylisticTypeChecked" : "stylistic"].map((config) => ({
-					...config,
-					files,
-					name: `zayne/ts-eslint/${isTypeAware ? "stylisticTypeChecked" : "stylistic"}`,
-				}))
-			: []),
-
 		{
 			name: `zayne/ts-eslint/${isTypeAware ? "type-aware-setup" : "setup"}`,
 
@@ -95,14 +81,24 @@ export const typescript = async (
 			...makeParser(filesTypeAware, ignoresTypeAware),
 		},
 
+		...renamePluginInConfigs(
+			tsEslint.configs[isTypeAware ? "strictTypeChecked" : "strict"],
+			{ "@typescript-eslint": "ts-eslint" },
+			{ files, name: `zayne/ts-eslint/${isTypeAware ? "stylisticTypeChecked" : "stylistic"}` }
+		),
+
+		...(stylistic
+			? renamePluginInConfigs(
+					tsEslint.configs[isTypeAware ? "stylisticTypeChecked" : "stylistic"],
+					{ "@typescript-eslint": "ts-eslint" },
+					{ files, name: `zayne/ts-eslint/${isTypeAware ? "stylisticTypeChecked" : "stylistic"}` }
+				)
+			: []),
+
 		{
 			files,
 
 			name: "zayne/ts-eslint/rules",
-
-			plugins: {
-				"ts-eslint": tsEslint.plugin,
-			},
 
 			rules: {
 				"ts-eslint/array-type": ["error", { default: "array-simple" }],

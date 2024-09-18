@@ -1,11 +1,10 @@
 import type { Linter } from "eslint";
 import type { EcmaVersion, Parser, ParserOptions, SourceType } from "./parser-options";
-import type { meta } from "eslint-plugin-unicorn";
 
 /**
  * An object containing settings related to how JavaScript is configured for linting
  */
-export interface LanguageOptions {
+export interface LanguageOptions extends Linter.LanguageOptions {
 	/**
 	 * The version of ECMAScript to support. May be any year (i.e., `2022`) or version (i.e., `5`). Set to `"latest"` for the most recent supported version.
 	 *

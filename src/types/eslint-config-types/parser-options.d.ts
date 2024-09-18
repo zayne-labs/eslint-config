@@ -178,7 +178,7 @@ export interface CustomParserOptions {}
  *
  * @see [Specifying Parser Options](https://eslint.org/docs/user-guide/configuring/language-options#specifying-parser-options)
  */
-export interface ParserOptions extends Partial<Linter.ParserOptions> {
+export interface ParserOptions extends Linter.ParserOptions {
 	/**
 	 * Accepts any valid ECMAScript version number or `'latest'`:
 	 *

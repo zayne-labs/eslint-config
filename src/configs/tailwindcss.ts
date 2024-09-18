@@ -1,10 +1,12 @@
-import type { OptionsOverrides, TypedFlatConfigItem } from "@/types";
+import type { OptionsOverrides, OptionsTailwindCss, TypedFlatConfigItem } from "@/types";
 import { interopDefault } from "@/utils";
 
-const tailwindcss = async (options: OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> => {
+const tailwindcss = async (
+	options: OptionsOverrides & OptionsTailwindCss = {}
+): Promise<TypedFlatConfigItem[]> => {
 	const eslintPluginTailwindCss = await interopDefault(await import("eslint-plugin-tailwindcss"));
 
-	const { overrides } = options;
+	const { overrides, settings: tailwindCssSettings } = options;
 
 	return [
 		{
@@ -15,9 +17,9 @@ const tailwindcss = async (options: OptionsOverrides = {}): Promise<TypedFlatCon
 			settings: {
 				tailwindcss: {
 					callees: ["tv", "cnMerge", "cn", "cnJoin", "twMerge", "twJoin"],
-					config: "./tailwind.config.ts",
 					cssFiles: [],
 					removeDuplicates: false, // Turned off cuz prettier already handles this via plugin
+					...tailwindCssSettings,
 				},
 			},
 		},

@@ -1,27 +1,20 @@
-import type { StylisticCustomizeOptions } from "@stylistic/eslint-plugin";
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type { ParserOptions } from "@typescript-eslint/parser";
 import type { Linter } from "eslint";
 import type { FlatGitignoreOptions } from "eslint-config-flat-gitignore";
-import type { ConfigNames, Rules } from "../typegen";
+import type { Rules } from "../typegen";
 import type { FlatESLintConfigItem } from "./eslint-config-types";
 
-export type Awaitable<T> = T | Promise<T>;
+export type Awaitable<T> = Promise<T> | T;
 
-export type { ConfigNames, Rules };
+export { type ConfigNames, type Rules } from "../typegen";
 
-export type TypedFlatConfigItem = Omit<
-	Linter.Config<Linter.RulesRecord & Rules>,
-	"plugins" | "languageOptions"
-> &
-	Omit<FlatESLintConfigItem, "plugins"> & {
-		// Relax plugins type limitation, as most of the plugins did not have correct type info yet.
-		/**
-		 * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
-		 *
-		 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
-		 */
-		plugins?: Record<string, any>;
-	};
+export interface TypedFlatConfigItem extends FlatESLintConfigItem<Linter.RulesRecord & Rules> {
+	// Relax plugins type limitation, as most of the plugins did not have correct type info yet.
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	plugins?: Record<string, any>;
+}
 
 export interface OptionsFiles {
 	/**
@@ -33,7 +26,6 @@ export interface OptionsFiles {
 export interface OptionsVue extends OptionsOverrides {
 	/**
 	 * Create virtual files for Vue SFC blocks to enable linting.
-	 *
 	 * @see https://github.com/antfu/eslint-processor-vue-blocks
 	 * @default true
 	 */
@@ -41,20 +33,18 @@ export interface OptionsVue extends OptionsOverrides {
 
 	/**
 	 * Vue version. Apply different rules set from `eslint-plugin-vue`.
-	 *
 	 * @default 3
 	 */
 	vueVersion?: 2 | 3;
 }
 
 export type OptionsTypescript =
-	| (OptionsTypeScriptWithTypes & OptionsOverrides)
-	| (OptionsTypeScriptParserOptions & OptionsOverrides);
+	| (OptionsOverrides & OptionsTypeScriptParserOptions)
+	| (OptionsOverrides & OptionsTypeScriptWithTypes);
 
 export interface OptionsComponentExts {
 	/**
 	 * Additional extensions for components.
-	 *
 	 * @example ['vue']
 	 * @default []
 	 */
@@ -63,9 +53,10 @@ export interface OptionsComponentExts {
 
 export interface OptionsTypeScriptParserOptions {
 	/**
-	 * Additional parser options for TypeScript.
+	 *	Default projects to allow in the parser project service.
+	 * @default ['./*.js']
 	 */
-	parserOptions?: Partial<ParserOptions>;
+	allowedDefaultProjects?: string[];
 
 	/**
 	 * Glob patterns for files that should be type aware.
@@ -80,10 +71,9 @@ export interface OptionsTypeScriptParserOptions {
 	ignoresTypeAware?: string[];
 
 	/**
-	 *	Default projects to allow in the parser project service.
-	 * @default ['./*.js']
-	 **/
-	allowedDefaultProjects?: string[];
+	 * Additional parser options for TypeScript.
+	 */
+	parserOptions?: Partial<ParserOptions>;
 }
 
 export interface OptionsTypeScriptWithTypes {
@@ -99,18 +89,25 @@ export interface OptionsHasTypeScript {
 }
 
 export interface OptionsStylistic {
-	stylistic?: boolean | StylisticConfig;
+	stylistic?: boolean;
 }
-
-export interface StylisticConfig
-	extends Pick<StylisticCustomizeOptions, "indent" | "quotes" | "jsx" | "semi"> {}
 
 export interface OptionsOverrides {
 	overrides?: TypedFlatConfigItem["rules"];
 }
 
 export interface OptionsTailwindCss {
-	settings?: TypedFlatConfigItem["settings"];
+	settings?: {
+		callees: string[];
+		classRegex: string;
+		config: string;
+		cssFiles: string[];
+		cssFilesRefreshRate: number;
+		removeDuplicates: boolean;
+		skipClassAttribute: boolean;
+		tags: string[];
+		whitelist: string[];
+	};
 }
 
 export interface OptionsRegExp {
@@ -122,10 +119,21 @@ export interface OptionsRegExp {
 
 export interface OptionsConfig extends OptionsComponentExts {
 	/**
+	 * Enable ASTRO support.
+	 *
+	 * Requires installing:
+	 * - `eslint-plugin-astro`
+	 *
+	 * Requires installing for formatting .astro:
+	 * - `prettier-plugin-astro`
+	 * @default false
+	 */
+	astro?: boolean | OptionsOverrides;
+
+	/**
 	 * Enable gitignore support.
 	 *
 	 * Passing an object to configure the options.
-	 *
 	 * @see https://github.com/antfu/eslint-config-flat-gitignore
 	 * @default true
 	 */
@@ -137,95 +145,26 @@ export interface OptionsConfig extends OptionsComponentExts {
 	javascript?: OptionsOverrides;
 
 	/**
-	 * Enable TypeScript support.
-	 *
-	 * Passing an object to enable TypeScript Language Server support.
-	 *
-	 * @default auto-detect based on the dependencies
-	 */
-	typescript?: boolean | OptionsTypescript;
-
-	/**
-	 * Enable JSX related rules.
-	 *
-	 * Currently only stylistic rules are included.
-	 *
-	 * @default true
-	 */
-	jsx?: boolean;
-
-	/**
-	 * Options for eslint-plugin-unicorn.
-	 *
-	 * @default true
-	 */
-	unicorn?: boolean | OptionsOverrides;
-
-	/**
-	 * Enable Vue support.
-	 *
-	 * @default auto-detect based on the dependencies
-	 */
-	vue?: boolean | OptionsVue;
-
-	/**
 	 * Enable JSONC support.
-	 *
 	 * @default true
 	 */
 	jsonc?: boolean | OptionsOverrides;
 
 	/**
-	 * Enable YAML support.
+	 * Enable JSX related rules.
 	 *
+	 * Currently only stylistic rules are included.
 	 * @default true
 	 */
-	yaml?: boolean | OptionsOverrides;
-
-	/**
-	 * Enable TOML support.
-	 *
-	 * @default true
-	 */
-	toml?: boolean | OptionsOverrides;
-
-	/**
-	 * Enable ASTRO support.
-	 *
-	 * Requires installing:
-	 * - `eslint-plugin-astro`
-	 *
-	 * Requires installing for formatting .astro:
-	 * - `prettier-plugin-astro`
-	 *
-	 * @default false
-	 */
-	astro?: boolean | OptionsOverrides;
+	jsx?: boolean;
 
 	/**
 	 * Enable linting for **code snippets** in Markdown.
 	 *
 	 * For formatting Markdown content, enable also `formatters.markdown`.
-	 *
 	 * @default true
 	 */
 	markdown?: boolean | OptionsOverrides;
-
-	/**
-	 * Enable stylistic rules.
-	 *
-	 * @see https://eslint.style/
-	 * @default true
-	 */
-	stylistic?: boolean | (StylisticConfig & OptionsOverrides);
-
-	/**
-	 * Enable regexp rules.
-	 *
-	 * @see https://ota-meshi.github.io/eslint-plugin-regexp/
-	 * @default true
-	 */
-	regexp?: boolean | (OptionsRegExp & OptionsOverrides);
 
 	/**
 	 * Enable react rules.
@@ -234,27 +173,70 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * - `@eslint-react/eslint-plugin`
 	 * - `eslint-plugin-react-hooks`
 	 * - `eslint-plugin-react-refresh`
-	 *
 	 * @default false
 	 */
 	react?: boolean | OptionsOverrides;
+
+	/**
+	 * Enable regexp rules.
+	 * @see https://ota-meshi.github.io/eslint-plugin-regexp/
+	 * @default true
+	 */
+	regexp?: (OptionsOverrides & OptionsRegExp) | boolean;
+
 	/**
 	 * Enable solid rules.
 	 *
 	 * Requires installing:
 	 * - `eslint-plugin-solid`
-	 *
 	 * @default false
 	 */
 	solid?: boolean | OptionsOverrides;
+
+	/**
+	 * Enable stylistic rules.
+	 * @see https://eslint.style/
+	 * @default true
+	 */
+	stylistic?: boolean | OptionsOverrides;
 
 	/**
 	 * Enable svelte rules.
 	 *
 	 * Requires installing:
 	 * - `eslint-plugin-svelte`
-	 *
 	 * @default false
 	 */
 	svelte?: boolean;
+
+	/**
+	 * Enable TOML support.
+	 * @default true
+	 */
+	toml?: boolean | OptionsOverrides;
+
+	/**
+	 * Enable TypeScript support.
+	 *
+	 * Passing an object to enable TypeScript Language Server support.
+	 * @default auto-detect based on the dependencies
+	 */
+	typescript?: boolean | OptionsTypescript;
+
+	/**
+	 * Options for eslint-plugin-unicorn.
+	 * @default true
+	 */
+	unicorn?: boolean | OptionsOverrides;
+	/**
+	 * Enable Vue support.
+	 * @default auto-detect based on the dependencies
+	 */
+	vue?: boolean | OptionsVue;
+
+	/**
+	 * Enable YAML support.
+	 * @default true
+	 */
+	yaml?: boolean | OptionsOverrides;
 }

@@ -7,7 +7,8 @@ import type { LinterOptions } from "./linter-options";
  *
  * @see [Configuration Files (New)](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new)
  */
-export interface FlatESLintConfigItem {
+export interface FlatESLintConfigItem<TRules extends Linter.Config["rules"] = Linter.Config["rules"]>
+	extends Linter.Config<TRules> {
 	/**
 	 * An array of glob patterns indicating the files that the configuration object should apply to. If not specified, the configuration object applies to all files.
 	 *
@@ -46,7 +47,7 @@ export interface FlatESLintConfigItem {
 	 *
 	 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
 	 */
-	plugins?: Linter.Config["plugins"];
+	plugins?: TRules;
 
 	/**
 	 * An object containing the configured rules. When `files` or `ignores` are specified, these rule configurations are only available to the matching files.

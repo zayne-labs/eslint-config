@@ -16,7 +16,7 @@ const eslintConfigArray = [
 			"src/typegen.d.ts",
 			"config/**",
 			"eslint.config.js",
-			"src/types/**",
+			"src/types/eslint-config-types/**",
 		],
 		name: "zayne/defaults/ignores",
 	},
@@ -289,13 +289,27 @@ const eslintConfigArray = [
 					type: "alphabetical",
 				},
 			],
-			// "perfectionist/sort-intersection-types": [
-			// 	"warn",
-			// 	{
-			// 		order: "asc",
-			// 		type: "alphabetical",
-			// 	},
-			// ],
+			"perfectionist/sort-intersection-types": [
+				"warn",
+				{
+					groups: [
+						"conditional",
+						"literal",
+						"import",
+						"intersection",
+						"keyword",
+						"tuple",
+						"named",
+						"object",
+						"function",
+						"operator",
+						"union",
+						"nullish",
+					],
+					order: "asc",
+					type: "alphabetical",
+				},
+			],
 			"perfectionist/sort-jsx-props": [
 				"warn",
 				{

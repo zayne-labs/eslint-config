@@ -3,7 +3,7 @@ import type { Linter } from "eslint";
 /**
  * An object containing settings related to the linting process.
  */
-export interface LinterOptions {
+export interface LinterOptions extends Linter.LinterOptions {
 	/**
 	 * A boolean value indicating if inline configuration is allowed.
 	 *
