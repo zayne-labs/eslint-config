@@ -47,14 +47,14 @@ export interface FlatESLintConfigItem<TRules extends Linter.Config["rules"] = Li
 	 *
 	 * @see [Using plugins in your configuration](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#using-plugins-in-your-configuration)
 	 */
-	plugins?: TRules;
+	plugins?: Linter.Config["plugins"];
 
 	/**
 	 * An object containing the configured rules. When `files` or `ignores` are specified, these rule configurations are only available to the matching files.
 	 *
 	 * @see [Configuring rules](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#configuring-rules)
 	 */
-	rules?: Linter.Config["rules"];
+	rules?: TRules;
 
 	/**
 	 * An object containing name-value pairs of information that should be available to all rules.

@@ -9,7 +9,7 @@ export type Awaitable<T> = Promise<T> | T;
 
 export { type ConfigNames, type Rules } from "../typegen";
 
-export interface TypedFlatConfigItem extends FlatESLintConfigItem<Linter.RulesRecord & Rules> {
+export interface TypedFlatConfigItem extends FlatESLintConfigItem<Partial<Linter.RulesRecord> & Rules> {
 	// Relax plugins type limitation, as most of the plugins did not have correct type info yet.
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,9 +54,9 @@ export interface OptionsComponentExts {
 export interface OptionsTypeScriptParserOptions {
 	/**
 	 *	Default projects to allow in the parser project service.
-	 * @default ['./*.js']
+	 * Ensure you don't use more than 8 defaultProjects.
 	 */
-	allowedDefaultProjects?: string[];
+	allowDefaultProjects?: [string?, string?, string?, string?, string?, string?, string?, string?];
 
 	/**
 	 * Glob patterns for files that should be type aware.
