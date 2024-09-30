@@ -2,7 +2,7 @@
 	"name": "@zayne-labs/eslint-config",
 	"type": "module",
 	"version": "0.0.0",
-	"description": "Zayne's ESLint config preset",
+	"description": "Zayne Labs' ESLint config preset",
 	"author": "Ryan Zayne",
 	"license": "MIT",
 	"homepage": "https://github.com/zayne-labs/eslint-config#readme",
