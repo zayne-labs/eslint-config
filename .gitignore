@@ -2,5 +2,3 @@ dist
 node_modules
 .eslintcache
 *.tsbuildinfo
-eslint-typegen.d.ts
-src/typegen.d.ts
