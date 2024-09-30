@@ -15,6 +15,7 @@ import {
 	sortPackageJson,
 	sortTsconfig,
 	stylistic,
+	tailwindcss,
 	typescript,
 	unicorn,
 } from "./configs";
@@ -50,6 +51,7 @@ export const defaultPluginRenaming = {
  *  The merged ESLint configurations.
  */
 
+// eslint-disable-next-line complexity
 export const zayne = (
 	options: OptionsConfig & Pick<TypedFlatConfigItem, "ignores"> = {},
 	userConfigs: Array<
@@ -65,6 +67,7 @@ export const zayne = (
 		perfectionist: enablePerfectionist = true,
 		react: enableReact = false,
 		stylistic: enableStylistic = true,
+		tailwindcss: enableTailwindCSS = false,
 		typescript: enableTypeScript = isPackageExists("typescript"),
 		unicorn: enableUnicorn = true,
 		...restOfOptions
@@ -131,6 +134,10 @@ export const zayne = (
 		!Object.hasOwn(stylisticOptions, "jsx") && (stylisticOptions.jsx = enableJsx);
 
 		configs.push(stylistic(stylisticOptions));
+	}
+
+	if (enableTailwindCSS) {
+		configs.push(tailwindcss({ ...(isObject(enableTailwindCSS) && enableTailwindCSS) }));
 	}
 
 	if (enableReact) {

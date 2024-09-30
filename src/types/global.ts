@@ -100,7 +100,7 @@ export interface OptionsHasJsx {
 	jsx?: boolean;
 }
 
-export interface OptionsTailwindCss {
+export interface OptionsTailwindCSS {
 	settings?: {
 		callees: string[];
 		classRegex: string;
@@ -225,11 +225,15 @@ export interface OptionsConfig extends OptionsComponentExts {
 	svelte?: boolean;
 
 	/**
+	 * Enable TailwindCSS support.
+	 */
+	tailwindcss?: boolean | OptionsTailwindCSS;
+
+	/**
 	 * Enable TOML support.
 	 * @default true
 	 */
 	toml?: boolean | OptionsOverrides;
-
 	/**
 	 * Enable TypeScript support.
 	 *

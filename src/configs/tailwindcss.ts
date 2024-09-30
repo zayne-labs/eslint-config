@@ -1,12 +1,14 @@
-import type { OptionsOverrides, OptionsTailwindCss, TypedFlatConfigItem } from "@/types";
-import { interopDefault } from "@/utils";
+import type { OptionsOverrides, OptionsTailwindCSS, TypedFlatConfigItem } from "@/types";
+import { ensurePackages, interopDefault } from "@/utils";
 
 const tailwindcss = async (
-	options: OptionsOverrides & OptionsTailwindCss = {}
+	options: OptionsOverrides & OptionsTailwindCSS = {}
 ): Promise<TypedFlatConfigItem[]> => {
 	const eslintPluginTailwindCss = await interopDefault(await import("eslint-plugin-tailwindcss"));
 
 	const { overrides, settings: tailwindCssSettings } = options;
+
+	await ensurePackages(["eslint-plugin-tailwindcss"]);
 
 	return [
 		{
