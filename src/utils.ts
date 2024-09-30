@@ -53,7 +53,9 @@ export const renamePlugins = (plugins: Record<string, unknown>, renameMap: Recor
 	return renamedPlugins;
 };
 
-export const isObject = (value: unknown) => typeof value === "object" && value !== null;
+export const isObject = <TObject extends object>(value: unknown): value is TObject => {
+	return typeof value === "object" && value !== null && !Array.isArray(value);
+};
 
 export const renamePluginInConfigs = (
 	configs: TypedFlatConfigItem[],

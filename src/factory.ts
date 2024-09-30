@@ -135,7 +135,7 @@ export const zayne = (
 	if (enableReact) {
 		configs.push(
 			react({
-				overrides: isObject(enableReact) ? enableReact.overrides : {},
+				overrides: getOverrides(enableReact),
 				typescript: Boolean(tsconfigPath),
 			})
 		);
