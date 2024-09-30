@@ -114,6 +114,7 @@
 		"@types/eslint-plugin-tailwindcss": "^3.17.0",
 		"@types/eslint__js": "^8.42.3",
 		"@types/node": "^22.7.4",
+		"@zayne-labs/eslint-config": "link:",
 		"@zayne-labs/tsconfig": "^0.1.1",
 		"concurrently": "^9.0.1",
 		"cross-env": "^7.0.3",

@@ -123,6 +123,9 @@ importers:
       '@types/node':
         specifier: ^22.7.4
         version: 22.7.4
+      '@zayne-labs/eslint-config':
+        specifier: 'link:'
+        version: 'link:'
       '@zayne-labs/tsconfig':
         specifier: ^0.1.1
         version: 0.1.1
