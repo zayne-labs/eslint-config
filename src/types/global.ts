@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import type { ParserOptions } from "@typescript-eslint/parser";
 import type { Linter } from "eslint";
 import type { FlatGitignoreOptions } from "eslint-config-flat-gitignore";
@@ -7,13 +6,18 @@ import type { FlatESLintConfigItem } from "./eslint-config-types";
 
 export type Awaitable<T> = Promise<T> | T;
 
-export { type ConfigNames, type Rules } from "../typegen";
+export type { ConfigNames, Rules } from "../typegen";
 
+/* eslint-disable ts-eslint/consistent-type-definitions */
 export interface TypedFlatConfigItem extends FlatESLintConfigItem<Partial<Linter.RulesRecord> & Rules> {
 	// Relax plugins type limitation, as most of the plugins did not have correct type info yet.
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// eslint-disable-next-line ts-eslint/no-explicit-any
 	plugins?: Record<string, any>;
+}
+
+export interface OptionsOverrides {
+	overrides?: TypedFlatConfigItem["rules"];
 }
 
 export interface OptionsFiles {
@@ -37,10 +41,6 @@ export interface OptionsVue extends OptionsOverrides {
 	 */
 	vueVersion?: 2 | 3;
 }
-
-export type OptionsTypescript =
-	| (OptionsOverrides & OptionsTypeScriptParserOptions)
-	| (OptionsOverrides & OptionsTypeScriptWithTypes);
 
 export interface OptionsComponentExts {
 	/**
@@ -84,6 +84,10 @@ export interface OptionsTypeScriptWithTypes {
 	tsconfigPath?: string;
 }
 
+export type OptionsTypescript =
+	| (OptionsOverrides & OptionsTypeScriptParserOptions)
+	| (OptionsOverrides & OptionsTypeScriptWithTypes);
+
 export interface OptionsHasTypeScript {
 	typescript?: boolean;
 }
@@ -92,8 +96,8 @@ export interface OptionsStylistic {
 	stylistic?: boolean;
 }
 
-export interface OptionsOverrides {
-	overrides?: TypedFlatConfigItem["rules"];
+export interface OptionsHasJsx {
+	jsx?: boolean;
 }
 
 export interface OptionsTailwindCss {
@@ -129,6 +133,12 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @default false
 	 */
 	astro?: boolean | OptionsOverrides;
+
+	/**
+	 * Automatically rename plugins in the config.
+	 * @default true
+	 */
+	autoRenamePlugins?: boolean;
 
 	/**
 	 * Enable gitignore support.
@@ -167,6 +177,11 @@ export interface OptionsConfig extends OptionsComponentExts {
 	markdown?: boolean | OptionsOverrides;
 
 	/**
+	 * Enable `perfectionist` rules.
+	 */
+	perfectionist?: boolean | OptionsOverrides;
+
+	/**
 	 * Enable react rules.
 	 *
 	 * Requires installing:
@@ -198,7 +213,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @see https://eslint.style/
 	 * @default true
 	 */
-	stylistic?: boolean | OptionsOverrides;
+	stylistic?: (OptionsHasJsx & OptionsOverrides) | boolean;
 
 	/**
 	 * Enable svelte rules.

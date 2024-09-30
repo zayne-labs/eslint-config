@@ -1,13 +1,36 @@
 import fs from "node:fs/promises";
 import { flatConfigsToRulesDTS } from "eslint-typegen/core";
 import { builtinRules } from "eslint/use-at-your-own-risk";
-import { combine, javascript, perfectionist, tailwindcss, typescript, unicorn } from "../src";
+import {
+	combine,
+	javascript,
+	jsdoc,
+	jsonc,
+	perfectionist,
+	react,
+	stylistic,
+	tailwindcss,
+	typescript,
+	unicorn,
+} from "../src";
 
 const coreRules = () => ({
+	// eslint-disable-next-line ts-eslint/no-deprecated
 	plugins: { "": { rules: Object.fromEntries(builtinRules) } },
 });
 
-const configs = await combine(coreRules(), javascript(), unicorn(), typescript(), tailwindcss(), perfectionist());
+const configs = await combine(
+	coreRules(),
+	javascript(),
+	unicorn(),
+	typescript(),
+	tailwindcss(),
+	perfectionist(),
+	stylistic(),
+	jsdoc(),
+	jsonc(),
+	react()
+);
 
 const dts = await flatConfigsToRulesDTS(configs, {
 	exportTypeName: "Rules",

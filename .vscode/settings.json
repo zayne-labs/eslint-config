@@ -14,5 +14,6 @@
 		"source.addMissingImports": "never",
 		"source.organizeImports.biome": "explicit"
 	},
-	"openctx.enable": false
+
+	"cSpell.words": ["antfu"]
 }

@@ -8,13 +8,12 @@ const perfectionist = async (options: OptionsOverrides = {}): Promise<TypedFlatC
 
 	return [
 		{
-			name: "zayne/perfectionist/setup",
+			name: "zayne/perfectionist/rules",
+
 			plugins: {
 				perfectionist: eslintPluginPerfectionist,
 			},
-		},
-		{
-			name: "zayne/perfectionist/rules",
+
 			rules: {
 				"perfectionist/sort-array-includes": [
 					"warn",

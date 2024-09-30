@@ -14,42 +14,42 @@ const imports = (
 	return [
 		{
 			plugins: {
-				"import-x": eslintPluginImportX,
+				import: eslintPluginImportX,
 			},
 			...(typescript && { settings: eslintPluginImportX.flatConfigs.typescript.settings }),
-			name: "zayne/import-x/setup",
+			name: "zayne/import/setup",
 		},
 
 		{
-			name: "zayne/import-x/rules",
+			name: "zayne/import/rules",
 
 			rules: {
 				...eslintPluginImportX.flatConfigs.recommended.rules,
 				...(typescript && eslintPluginImportX.flatConfigs.typescript.rules),
 
-				"import-x/export": "error",
-				"import-x/extensions": [
+				"import/export": "error",
+				"import/extensions": [
 					"error",
 					"never",
 					{ ignorePackages: true, pattern: { png: "always", svg: "always" } },
 				],
-				"import-x/first": "error",
-				"import-x/namespace": "off",
-				"import-x/no-absolute-path": "error",
-				"import-x/no-cycle": ["error", { ignoreExternal: true, maxDepth: 3 }],
-				"import-x/no-duplicates": "error",
-				"import-x/no-extraneous-dependencies": ["error", { devDependencies: true }],
-				"import-x/no-mutable-exports": "error",
-				"import-x/no-named-as-default": "error",
-				"import-x/no-named-as-default-member": "error",
-				"import-x/no-named-default": "error",
-				"import-x/no-relative-packages": "error",
-				"import-x/no-self-import": "error",
-				"import-x/no-unresolved": "off",
-				"import-x/no-useless-path-segments": ["error", { commonjs: true }],
-				"import-x/prefer-default-export": "off",
+				"import/first": "error",
+				"import/namespace": "off",
+				"import/no-absolute-path": "error",
+				"import/no-cycle": ["error", { ignoreExternal: true, maxDepth: 3 }],
+				"import/no-duplicates": "error",
+				"import/no-extraneous-dependencies": ["error", { devDependencies: true }],
+				"import/no-mutable-exports": "error",
+				"import/no-named-as-default": "error",
+				"import/no-named-as-default-member": "error",
+				"import/no-named-default": "error",
+				"import/no-relative-packages": "error",
+				"import/no-self-import": "error",
+				"import/no-unresolved": "off",
+				"import/no-useless-path-segments": ["error", { commonjs: true }],
+				"import/prefer-default-export": "off",
 
-				...(stylistic && { "import-x/newline-after-import": "error" }),
+				...(stylistic && { "import/newline-after-import": "error" }),
 
 				...overrides,
 			},

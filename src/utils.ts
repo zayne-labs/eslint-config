@@ -1,7 +1,8 @@
+import { fileURLToPath } from "node:url";
 import type { ESLint } from "eslint";
+import { isPackageExists } from "local-pkg";
 import type { Awaitable, TypedFlatConfigItem } from "./types";
 
-// eslint-disable-next-line jsdoc/require-returns, jsdoc/require-param
 /**
  * Combine array and non-array configs into a single array.
  */
@@ -18,7 +19,7 @@ export const interopDefault = async <TModule>(
 ): Promise<TModule extends { default: infer TDefaultExport } ? TDefaultExport : TModule> => {
 	const resolved = await module;
 
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+	// eslint-disable-next-line ts-eslint/no-unnecessary-condition
 	return (resolved as { default: never }).default ?? resolved;
 };
 
@@ -52,7 +53,7 @@ export const renamePlugins = (plugins: Record<string, unknown>, renameMap: Recor
 	return renamedPlugins;
 };
 
-const isObject = (value: unknown) => typeof value === "object" && value !== null;
+export const isObject = (value: unknown) => typeof value === "object" && value !== null;
 
 export const renamePluginInConfigs = (
 	configs: TypedFlatConfigItem[],
@@ -68,3 +69,32 @@ export const renamePluginInConfigs = (
 
 	return renamedConfigs;
 };
+
+const scopeUrl = fileURLToPath(new URL(".", import.meta.url));
+const isCwdInScope = isPackageExists("@zayne-labs/eslint-config");
+
+export const isPackageInScope = (name: string): boolean => isPackageExists(name, { paths: [scopeUrl] });
+
+export const ensurePackages = async (packages: Array<string | undefined>): Promise<void> => {
+	if (process.env.CI || !process.stdout.isTTY || !isCwdInScope) return;
+
+	const nonExistingPackages = packages.filter((pkg) => pkg && !isPackageInScope(pkg)) as string[];
+
+	if (nonExistingPackages.length === 0) return;
+
+	const clackPrompt = await import("@clack/prompts");
+
+	const result = await clackPrompt.confirm({
+		message: `${nonExistingPackages.length === 1 ? "Package is" : "Packages are"} required for this config: ${nonExistingPackages.join(", ")}. Do you want to install them?`,
+	});
+
+	if (result) {
+		const antfuPkg = await import("@antfu/install-pkg");
+
+		await antfuPkg.installPackage(nonExistingPackages, { dev: true });
+	}
+};
+
+// export const toArray = <TValue>(value: TValue | TValue[]): TValue[] => {
+// 	return Array.isArray(value) ? value : [value];
+// };

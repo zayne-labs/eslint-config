@@ -2,7 +2,7 @@
 	/* Extend Base tsconfig settings from:
 	 *LINK: https://github.com/zayne-labs/tsconfig
 	 */
-	"extends": "@zayne-labs/tsconfig/bundler/dom/library",
+	"extends": "@zayne-labs/tsconfig/bundler/no-dom/library",
 
 	"compilerOptions": {
 		"baseUrl": ".",
@@ -11,6 +11,6 @@
 		}
 	},
 
-	"exclude": ["dist", "node_modules"],
-	"include": ["src/**/*.ts", "scripts/**/*.ts"]
+	"include": ["**/*.ts"],
+	"exclude": ["dist", "node_modules"]
 }
