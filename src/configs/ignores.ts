@@ -1,7 +1,7 @@
-import type { OptionsConfig, TypedFlatConfigItem } from "../types";
-
-import { interopDefault, isObject } from "@/utils";
+import { interopDefault } from "@/utils";
+import { isObject } from "@zayne-labs/toolkit/type-helpers";
 import { GLOB_EXCLUDE } from "../globs";
+import type { OptionsConfig, TypedFlatConfigItem } from "../types";
 
 export const ignores = (userIgnores: string[] = []): TypedFlatConfigItem[] => [
 	{

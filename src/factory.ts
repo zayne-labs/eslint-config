@@ -1,3 +1,4 @@
+import { isObject } from "@zayne-labs/toolkit/type-helpers";
 import type { Linter } from "eslint";
 import { FlatConfigComposer } from "eslint-flat-config-utils";
 import { isPackageExists } from "local-pkg";
@@ -25,10 +26,10 @@ import type {
 	OptionsOverrides,
 	TypedFlatConfigItem,
 } from "./types";
-import { isObject } from "./utils";
 
 const getOverrides = (option: boolean | OptionsOverrides | undefined) => {
-	return isObject(option) ? option.overrides : {};
+	// eslint-disable-next-line ts-eslint/no-explicit-any
+	return isObject<Record<string, any>>(option) ? option.overrides : {};
 };
 
 export const defaultPluginRenaming = {

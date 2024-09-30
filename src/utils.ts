@@ -1,4 +1,5 @@
 import { fileURLToPath } from "node:url";
+import { isObject } from "@zayne-labs/toolkit/type-helpers";
 import type { ESLint } from "eslint";
 import { isPackageExists } from "local-pkg";
 import type { Awaitable, TypedFlatConfigItem } from "./types";
@@ -23,6 +24,24 @@ export const interopDefault = async <TModule>(
 	return (resolved as { default: never }).default ?? resolved;
 };
 
+/**
+ * Rename plugin prefixes in a rule object.
+ * Accepts a map of prefixes to rename.
+ *
+ * @example
+ * ```ts
+ * import { renameRules } from '@zayne-labs/eslint-config'
+ *
+ * export default [{
+ *   rules: renameRules(
+ *     {
+ *       '@typescript-eslint/indent': 'error'
+ *     },
+ *     { '@typescript-eslint': 'ts' }
+ *   )
+ * }]
+ * ```
+ */
 export const renameRules = (rules: Record<string, unknown>, renameMap: Record<string, string>) => {
 	const renamedRulesEntries = Object.entries(rules).map(([ruleKey, ruleValue]) => {
 		for (const [oldRuleName, newRuleName] of Object.entries(renameMap)) {
@@ -53,10 +72,20 @@ export const renamePlugins = (plugins: Record<string, unknown>, renameMap: Recor
 	return renamedPlugins;
 };
 
-export const isObject = <TObject extends object>(value: unknown): value is TObject => {
-	return typeof value === "object" && value !== null && !Array.isArray(value);
-};
-
+/**
+ * Rename plugin names a flat configs array
+ *
+ * @example
+ * ```ts
+ * import { renamePluginInConfigs } from '@zayne-labs/eslint-config'
+ * import someConfigs from './some-configs'
+ *
+ * export default renamePluginInConfigs(someConfigs, {
+ *   '@typescript-eslint': 'ts',
+ *   'import-x': 'import',
+ * })
+ * ```
+ */
 export const renamePluginInConfigs = (
 	configs: TypedFlatConfigItem[],
 	renameMap: Record<string, string>,
