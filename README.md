@@ -4,7 +4,7 @@
 - Designed to work with TypeScript, JSX, Vue, JSON, YAML, Toml, Markdown, etc. Out-of-box.
 - Opinionated, but [very customizable](#customization)
 - [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new), compose easily!
-- Optional [React](#react), [Svelte](#svelte), [UnoCSS](#unocss), [Astro](#astro), [Solid](#solid) support
+- Optional [React](#react), [Svelte](#svelte), [TailwindCSS](#tailwindcss), [Astro](#astro), [Solid](#solid) support
 - Respects `.gitignore` by default
 - Requires ESLint v9.5.0+
 
