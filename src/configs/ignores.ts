@@ -1,7 +1,7 @@
 import { interopDefault } from "@/utils";
-import { isObject } from "@zayne-labs/toolkit/type-helpers";
+import type { FlatGitignoreOptions } from "eslint-config-flat-gitignore";
 import { GLOB_EXCLUDE } from "../globs";
-import type { OptionsConfig, TypedFlatConfigItem } from "../types";
+import type { TypedFlatConfigItem } from "../types";
 
 export const ignores = (userIgnores: string[] = []): TypedFlatConfigItem[] => [
 	{
@@ -10,12 +10,13 @@ export const ignores = (userIgnores: string[] = []): TypedFlatConfigItem[] => [
 	},
 ];
 
-export const gitIgnores = async (options: OptionsConfig["gitignore"]): Promise<TypedFlatConfigItem[]> => {
+export const gitIgnores = async (options?: FlatGitignoreOptions): Promise<TypedFlatConfigItem[]> => {
 	const antfuGitIgnore = await interopDefault(import("eslint-config-flat-gitignore"));
 
 	const config = antfuGitIgnore({
 		name: "zayne/gitignore",
-		...(isObject(options) ? options : { strict: false }),
+		strict: false,
+		...options,
 	});
 
 	return [config];

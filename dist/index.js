@@ -491,7 +491,7 @@ var tailwindcss = async (options = {}) => {
     {
       name: "zayne/tailwindcss/rules",
       rules: {
-        ...eslintPluginTailwindCss.rules,
+        ...eslintPluginTailwindCss.configs["flat/recommended"][1]?.rules,
         "tailwindcss/no-contradicting-classname": "off",
         // Turned off cuz tw intellisense already handles this
         "tailwindcss/no-custom-classname": [
@@ -1306,7 +1306,7 @@ var zayne = (options = {}, userConfigs = []) => {
     perfectionist: enablePerfectionist = true,
     react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
     stylistic: enableStylistic = true,
-    tailwindcss: enableTailwindCSS = isPackageExists("tailwindcss"),
+    tailwindcss: enableTailwindCSS,
     typescript: enableTypeScript = isPackageExists("typescript"),
     unicorn: enableUnicorn = true,
     ...restOfOptions

@@ -21,6 +21,9 @@ export const typescript = async (
 	const {
 		allowDefaultProjects,
 		componentExts = [],
+		files = [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)],
+		filesTypeAware = [GLOB_TS, GLOB_TSX],
+		ignoresTypeAware = [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS],
 		overrides,
 		parserOptions,
 		stylistic = true,
@@ -28,9 +31,6 @@ export const typescript = async (
 	} = options;
 
 	const isTypeAware = Boolean(tsconfigPath);
-	const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)];
-	const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
-	const ignoresTypeAware = options.ignoresTypeAware ?? [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS];
 
 	const tsEslint = await interopDefault(import("typescript-eslint"));
 

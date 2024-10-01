@@ -20,18 +20,7 @@ import {
 	unicorn,
 } from "./configs";
 import { jsx } from "./configs/jsx";
-import type {
-	Awaitable,
-	ConfigNames,
-	OptionsConfig,
-	OptionsOverrides,
-	TypedFlatConfigItem,
-} from "./types";
-
-const getOverrides = (option: boolean | OptionsOverrides | undefined) => {
-	// eslint-disable-next-line ts-eslint/no-explicit-any
-	return isObject<Record<string, any>>(option) ? option.overrides : {};
-};
+import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from "./types";
 
 const ReactPackages = ["react", "react-dom", "next", "remix"];
 
@@ -42,6 +31,8 @@ export const defaultPluginRenaming = {
 	"import-x": "import",
 	n: "node",
 };
+
+const resolveOptions = (option: unknown) => (isObject(option) ? option : {});
 
 /**
  * Construct an array of ESLint flat config items.
@@ -68,7 +59,6 @@ export const zayne = (
 		perfectionist: enablePerfectionist = true,
 		react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
 		stylistic: enableStylistic = true,
-		tailwindcss: enableTailwindCSS,
 		typescript: enableTypeScript = isPackageExists("typescript"),
 		unicorn: enableUnicorn = true,
 		...restOfOptions
@@ -84,7 +74,7 @@ export const zayne = (
 	const configs: Array<Awaitable<TypedFlatConfigItem[]>> = [];
 
 	if (enableGitignore) {
-		configs.push(gitIgnores(enableGitignore));
+		configs.push(gitIgnores(resolveOptions(enableGitignore)));
 	}
 
 	// Base configs
@@ -96,18 +86,18 @@ export const zayne = (
 	);
 
 	if (enablePerfectionist) {
-		configs.push(perfectionist({ overrides: getOverrides(enablePerfectionist) }));
+		configs.push(perfectionist(resolveOptions(enablePerfectionist)));
 	}
 
 	if (enableUnicorn) {
-		configs.push(unicorn({ overrides: getOverrides(enableUnicorn) }));
+		configs.push(unicorn(resolveOptions(enableUnicorn)));
 	}
 
 	if (enableJsonc) {
 		configs.push(
 			jsonc({
-				overrides: getOverrides(enableJsonc),
 				stylistic: isStylistic,
+				...resolveOptions(enableJsonc),
 			}),
 			sortPackageJson(),
 			sortTsconfig()
@@ -117,10 +107,9 @@ export const zayne = (
 	if (enableTypeScript) {
 		configs.push(
 			typescript({
-				...(isObject(enableTypeScript) && enableTypeScript),
 				componentExts,
-				overrides: getOverrides(enableTypeScript),
-				stylistic: true,
+				stylistic: isStylistic,
+				...resolveOptions(enableTypeScript),
 			})
 		);
 	}
@@ -130,21 +119,21 @@ export const zayne = (
 	}
 
 	if (enableStylistic) {
-		const stylisticOptions = isObject(enableStylistic) ? enableStylistic : {};
+		const stylisticOptions = resolveOptions(enableStylistic);
 
 		!Object.hasOwn(stylisticOptions, "jsx") && (stylisticOptions.jsx = enableJsx);
 
 		configs.push(stylistic(stylisticOptions));
 	}
 
-	if (enableTailwindCSS) {
-		configs.push(tailwindcss({ ...(isObject(enableTailwindCSS) && enableTailwindCSS) }));
+	if (restOfOptions.tailwindcss) {
+		configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
 	}
 
 	if (enableReact) {
 		configs.push(
 			react({
-				overrides: getOverrides(enableReact),
+				...resolveOptions(enableReact),
 				typescript: Boolean(tsconfigPath),
 			})
 		);
