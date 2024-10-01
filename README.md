@@ -214,8 +214,9 @@ export default zayne({
   // Enable stylistic formatting rules
   stylistic: true,
 
-  // TypeScript is autodetected, you can also explicitly enable it:
+  // TypeScript and React are autodetected, you can also explicitly enable it:
   typescript: true,
+  react: true
 
   // Disable jsonc and yaml support
   jsonc: false,
@@ -352,14 +353,13 @@ import zayne from '@zayne-labs/eslint-config'
 
 export default zayne(
   {
-    vue: true,
+    react: true,
     typescript: true
   },
   {
-    // Remember to specify the file glob here, otherwise it might cause the vue plugin to handle non-vue files
-    files: ['**/*.vue'],
+    files: ['**/*.jsx','**/*.tsx' ],
     rules: {
-      'vue/operator-linebreak': ['error', 'before'],
+      'react/no-unstable-context-value': "off",
     },
   },
   {
@@ -378,9 +378,9 @@ We also provided the `overrides` options in each integration to make it easier:
 import zayne from '@zayne-labs/eslint-config'
 
 export default zayne({
-  vue: {
+  react: {
     overrides: {
-      'vue/operator-linebreak': ['error', 'before'],
+       'react/no-unstable-context-value': "off",
     },
   },
   typescript: {
