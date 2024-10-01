@@ -54,7 +54,6 @@ export const renameRules = (rules: Record<string, unknown>, renameMap: Record<st
 	});
 
 	return Object.fromEntries(renamedRulesEntries) as TypedFlatConfigItem["rules"];
-
 };
 
 export const renamePlugins = (plugins: Record<string, unknown>, renameMap: Record<string, string>) => {
@@ -65,8 +64,6 @@ export const renamePlugins = (plugins: Record<string, unknown>, renameMap: Recor
 
 		return [pluginKey, pluginValue];
 	});
-
-
 
 	return Object.fromEntries(renamedPluginEntries) as Record<string, ESLint.Plugin>;
 };
