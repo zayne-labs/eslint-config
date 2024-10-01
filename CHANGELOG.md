@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.0.5
+
+### Patch Changes
+
+-  a2ff5fb: fix name collision reeact
+
 ## 0.0.4
 
 ### Patch Changes
