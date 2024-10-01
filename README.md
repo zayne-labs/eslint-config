@@ -7,6 +7,7 @@
 - Optional [React](#react), [Svelte](#svelte), [TailwindCSS](#tailwindcss), [Astro](#astro), [Solid](#solid) support
 - Respects `.gitignore` by default
 - Requires ESLint v9.5.0+
+- Inspired by the legendary open sourcerer, [antfu](https://github.com/antfu)
 
 
 ## Usage
