@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.0.6
+
+### Patch Changes
+
+-  93180c1: fix types for tailwind
+
 ## 0.0.5
 
 ### Patch Changes
