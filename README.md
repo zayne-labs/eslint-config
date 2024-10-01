@@ -1,7 +1,5 @@
 # @zayne-labs/eslint-config
 
-[![npm](https://img.shields.io/npm/v@zayne-labs/eslint-config?color=444&label=)](https://npmjs.com/package/@zayne-labs/eslint-config) [![code style]](https://github.com/zayne-/eslint-config)
-
 - Reasonable defaults, best practices, only one line of config
 - Designed to work with TypeScript, JSX, Vue, JSON, YAML, Toml, Markdown, etc. Out-of-box.
 - Opinionated, but [very customizable](#customization)
