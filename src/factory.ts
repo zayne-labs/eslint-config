@@ -114,6 +114,10 @@ export const zayne = (
 		);
 	}
 
+	if (restOfOptions.tailwindcss) {
+		configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
+	}
+
 	if (enableJsx) {
 		configs.push(jsx());
 	}
@@ -121,13 +125,12 @@ export const zayne = (
 	if (enableStylistic) {
 		const stylisticOptions = resolveOptions(enableStylistic);
 
-		!Object.hasOwn(stylisticOptions, "jsx") && (stylisticOptions.jsx = enableJsx);
-
-		configs.push(stylistic(stylisticOptions));
-	}
-
-	if (restOfOptions.tailwindcss) {
-		configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
+		configs.push(
+			stylistic({
+				...stylisticOptions,
+				...(!("jsx" in stylisticOptions) && { jsx: enableJsx }),
+			})
+		);
 	}
 
 	if (enableReact) {

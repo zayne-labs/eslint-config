@@ -9352,7 +9352,7 @@ type Yoda = []|[("always" | "never")]|[("always" | "never"), {
 }]
 
 // Names of all the configs
-type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/rules"
+type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/recommended" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/recommended" | "zayne/react/rules"
 
 type LiteralUnion<TUnion extends TBase, TBase = string> = TUnion | (TBase & { _ignore?: never });
 
@@ -9739,6 +9739,7 @@ interface OptionsConfig extends OptionsComponentExts {
     markdown?: boolean | OptionsOverrides;
     /**
      * Enable `perfectionist` rules.
+     * @default true
      */
     perfectionist?: boolean | OptionsOverrides;
     /**
@@ -9782,7 +9783,7 @@ interface OptionsConfig extends OptionsComponentExts {
     /**
      * Enable TailwindCSS support.
      */
-    tailwindcss?: boolean | OptionsTailwindCSS;
+    tailwindcss?: (OptionsOverrides & OptionsTailwindCSS) | boolean;
     /**
      * Enable TOML support.
      * @default true

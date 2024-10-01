@@ -178,6 +178,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 
 	/**
 	 * Enable `perfectionist` rules.
+	 * @default true
 	 */
 	perfectionist?: boolean | OptionsOverrides;
 

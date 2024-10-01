@@ -25,7 +25,7 @@ export const eslintReactRenameMap = {
 const react = async (
 	options: OptionsFiles & OptionsHasTypeScript & OptionsOverrides = {}
 ): Promise<TypedFlatConfigItem[]> => {
-	const { files, overrides, typescript = true } = options;
+	const { files = [GLOB_SRC], overrides, typescript = true } = options;
 
 	await ensurePackages([
 		"@eslint-react/eslint-plugin",
@@ -61,26 +61,35 @@ const react = async (
 		},
 
 		{
-			files: files ?? [GLOB_SRC],
+			files,
+
+			name: "zayne/react/recommended",
+
+			rules: renameRules(recommendedReactConfig.rules, eslintReactRenameMap),
+		},
+
+		{
+			files,
 
 			name: "zayne/react/rules",
 
 			rules: {
-				...renameRules(recommendedReactConfig.rules, eslintReactRenameMap),
 				"react/avoid-shorthand-boolean": "error",
 				"react/function-component-definition": "off",
 				"react/no-array-index-key": "error",
 				"react/no-children-count": "off",
 				"react/no-children-only": "off",
 				"react/no-children-prop": "error",
-				"react/no-children-to-array": "off",
 				"react/no-clone-element": "off",
+				"react/no-complex-conditional-rendering": "warn",
 				"react/no-missing-component-display-name": "error",
+				"react/no-useless-fragment": "error",
 				"react/prefer-destructuring-assignment": "error",
-				"react/prefer-read-only-props": "off",
 				"react/prefer-shorthand-fragment": "error",
 				// eslint-disable-next-line perfectionist/sort-objects
 				"react-hooks-extra/ensure-custom-hooks-using-other-hooks": "error",
+				"react-hooks-extra/no-unnecessary-use-callback": "warn",
+				"react-hooks-extra/no-unnecessary-use-memo": "warn",
 				"react-hooks-extra/prefer-use-state-lazy-initialization": "error",
 				"react-naming-convention/component-name": "warn",
 				"react-naming-convention/use-state": "warn",

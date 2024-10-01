@@ -488,9 +488,12 @@ var tailwindcss = async (options = {}) => {
       }
     },
     {
+      name: "zayne/tailwindcss/recommended",
+      rules: eslintPluginTailwindCss.configs["flat/recommended"][1]?.rules
+    },
+    {
       name: "zayne/tailwindcss/rules",
       rules: {
-        ...eslintPluginTailwindCss.configs["flat/recommended"][1]?.rules,
         "tailwindcss/no-contradicting-classname": "off",
         // Turned off cuz tw intellisense already handles this
         "tailwindcss/no-custom-classname": [
@@ -971,7 +974,7 @@ var eslintReactRenameMap = {
   "@eslint-react": "react"
 };
 var react = async (options = {}) => {
-  const { files, overrides, typescript: typescript2 = true } = options;
+  const { files = [GLOB_SRC], overrides, typescript: typescript2 = true } = options;
   await ensurePackages([
     "@eslint-react/eslint-plugin",
     "eslint-plugin-react-hooks",
@@ -998,23 +1001,30 @@ var react = async (options = {}) => {
       settings: recommendedReactConfig.settings
     },
     {
-      files: files ?? [GLOB_SRC],
+      files,
+      name: "zayne/react/recommended",
+      rules: renameRules(recommendedReactConfig.rules, eslintReactRenameMap)
+    },
+    {
+      files,
       name: "zayne/react/rules",
       rules: {
-        ...renameRules(recommendedReactConfig.rules, eslintReactRenameMap),
         "react/avoid-shorthand-boolean": "error",
         "react/function-component-definition": "off",
         "react/no-array-index-key": "error",
         "react/no-children-count": "off",
         "react/no-children-only": "off",
         "react/no-children-prop": "error",
-        "react/no-children-to-array": "off",
         "react/no-clone-element": "off",
+        "react/no-complex-conditional-rendering": "warn",
         "react/no-missing-component-display-name": "error",
+        "react/no-useless-fragment": "error",
         "react/prefer-destructuring-assignment": "error",
-        "react/prefer-read-only-props": "off",
         "react/prefer-shorthand-fragment": "error",
+        // eslint-disable-next-line perfectionist/sort-objects
         "react-hooks-extra/ensure-custom-hooks-using-other-hooks": "error",
+        "react-hooks-extra/no-unnecessary-use-callback": "warn",
+        "react-hooks-extra/no-unnecessary-use-memo": "warn",
         "react-hooks-extra/prefer-use-state-lazy-initialization": "error",
         "react-naming-convention/component-name": "warn",
         "react-naming-convention/use-state": "warn",
@@ -1346,16 +1356,20 @@ var zayne = (options = {}, userConfigs = []) => {
       })
     );
   }
+  if (restOfOptions.tailwindcss) {
+    configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
+  }
   if (enableJsx) {
     configs.push(jsx());
   }
   if (enableStylistic) {
     const stylisticOptions = resolveOptions(enableStylistic);
-    !Object.hasOwn(stylisticOptions, "jsx") && (stylisticOptions.jsx = enableJsx);
-    configs.push(stylistic(stylisticOptions));
-  }
-  if (restOfOptions.tailwindcss) {
-    configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
+    configs.push(
+      stylistic({
+        ...stylisticOptions,
+        ...!("jsx" in stylisticOptions) && { jsx: enableJsx }
+      })
+    );
   }
   if (enableReact) {
     configs.push(

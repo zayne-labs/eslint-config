@@ -27,11 +27,14 @@ const tailwindcss = async (
 		},
 
 		{
+			name: "zayne/tailwindcss/recommended",
+			rules: eslintPluginTailwindCss.configs["flat/recommended"][1]?.rules,
+		},
+
+		{
 			name: "zayne/tailwindcss/rules",
 
 			rules: {
-				...eslintPluginTailwindCss.configs["flat/recommended"][1]?.rules,
-
 				"tailwindcss/no-contradicting-classname": "off", // Turned off cuz tw intellisense already handles this
 				"tailwindcss/no-custom-classname": [
 					"warn",
