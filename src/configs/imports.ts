@@ -21,12 +21,18 @@ const imports = (
 		},
 
 		{
-			name: "zayne/import/rules",
+			name: "zayne/import/recommended",
 
 			rules: {
 				...eslintPluginImportX.flatConfigs.recommended.rules,
 				...(typescript && eslintPluginImportX.flatConfigs.typescript.rules),
+			},
+		},
 
+		{
+			name: "zayne/import/rules",
+
+			rules: {
 				"import/export": "error",
 				"import/extensions": [
 					"error",
