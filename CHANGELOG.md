@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.0.2
+
+### Patch Changes
+
+-  fa77bf5: enable react and tailwind byh default
+
 ## 0.0.1
 
 ### Patch Changes
