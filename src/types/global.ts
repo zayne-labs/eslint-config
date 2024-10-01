@@ -227,7 +227,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	/**
 	 * Enable TailwindCSS support.
 	 */
-	tailwindcss?: boolean | OptionsTailwindCSS;
+	tailwindcss?: (OptionsOverrides & OptionsTailwindCSS) | boolean;
 
 	/**
 	 * Enable TOML support.
