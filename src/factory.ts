@@ -22,8 +22,6 @@ import {
 import { jsx } from "./configs/jsx";
 import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from "./types";
 
-const ReactPackages = ["react", "react-dom", "next", "remix"];
-
 export const defaultPluginRenaming = {
 	...eslintReactRenameMap,
 	"@stylistic": "stylistic",
@@ -31,6 +29,8 @@ export const defaultPluginRenaming = {
 	"import-x": "import",
 	n: "node",
 };
+
+const ReactPackages = ["react", "react-dom"];
 
 const resolveOptions = (option: unknown) => (isObject(option) ? option : {});
 
