@@ -1288,6 +1288,7 @@ var jsx = () => {
 var getOverrides = (option) => {
   return isObject(option) ? option.overrides : {};
 };
+var ReactPackages = ["react", "react-dom", "next", "remix"];
 var defaultPluginRenaming = {
   ...eslintReactRenameMap,
   "@stylistic": "stylistic",
@@ -1303,9 +1304,9 @@ var zayne = (options = {}, userConfigs = []) => {
     jsonc: enableJsonc = true,
     jsx: enableJsx = true,
     perfectionist: enablePerfectionist = true,
-    react: enableReact = false,
+    react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
     stylistic: enableStylistic = true,
-    tailwindcss: enableTailwindCSS = false,
+    tailwindcss: enableTailwindCSS = isPackageExists("tailwindcss"),
     typescript: enableTypeScript = isPackageExists("typescript"),
     unicorn: enableUnicorn = true,
     ...restOfOptions
