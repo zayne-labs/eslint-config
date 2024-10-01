@@ -53,7 +53,6 @@ export const defaultPluginRenaming = {
  *  The merged ESLint configurations.
  */
 
-// eslint-disable-next-line complexity
 export const zayne = (
 	options: OptionsConfig & Pick<TypedFlatConfigItem, "ignores"> = {},
 	userConfigs: Array<
@@ -69,7 +68,7 @@ export const zayne = (
 		perfectionist: enablePerfectionist = true,
 		react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
 		stylistic: enableStylistic = true,
-		tailwindcss: enableTailwindCSS = isPackageExists("tailwindcss"),
+		tailwindcss: enableTailwindCSS,
 		typescript: enableTypeScript = isPackageExists("typescript"),
 		unicorn: enableUnicorn = true,
 		...restOfOptions
