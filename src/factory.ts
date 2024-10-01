@@ -33,6 +33,8 @@ const getOverrides = (option: boolean | OptionsOverrides | undefined) => {
 	return isObject<Record<string, any>>(option) ? option.overrides : {};
 };
 
+const ReactPackages = ["react", "react-dom", "next", "remix"];
+
 export const defaultPluginRenaming = {
 	...eslintReactRenameMap,
 	"@stylistic": "stylistic",
@@ -65,9 +67,9 @@ export const zayne = (
 		jsonc: enableJsonc = true,
 		jsx: enableJsx = true,
 		perfectionist: enablePerfectionist = true,
-		react: enableReact = false,
+		react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
 		stylistic: enableStylistic = true,
-		tailwindcss: enableTailwindCSS = false,
+		tailwindcss: enableTailwindCSS = isPackageExists("tailwindcss"),
 		typescript: enableTypeScript = isPackageExists("typescript"),
 		unicorn: enableUnicorn = true,
 		...restOfOptions
