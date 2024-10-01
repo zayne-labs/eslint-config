@@ -156,7 +156,8 @@ var gitIgnores = async (options) => {
   const antfuGitIgnore = await interopDefault(import('eslint-config-flat-gitignore'));
   const config = antfuGitIgnore({
     name: "zayne/gitignore",
-    ...isObject(options) ? options : { strict: false }
+    strict: false,
+    ...options
   });
   return [config];
 };
@@ -509,15 +510,15 @@ var typescript = async (options = {}) => {
   const {
     allowDefaultProjects,
     componentExts = [],
+    files = [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)],
+    filesTypeAware = [GLOB_TS, GLOB_TSX],
+    ignoresTypeAware = [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS],
     overrides,
     parserOptions,
     stylistic: stylistic2 = true,
     tsconfigPath
   } = options;
   const isTypeAware = Boolean(tsconfigPath);
-  const files = options.files ?? [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)];
-  const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
-  const ignoresTypeAware = options.ignoresTypeAware ?? [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS];
   const tsEslint = await interopDefault(import('typescript-eslint'));
   const makeParser = (parsedFiles, ignores2) => ({
     files: parsedFiles,
@@ -1285,9 +1286,6 @@ var jsx = () => {
 };
 
 // src/factory.ts
-var getOverrides = (option) => {
-  return isObject(option) ? option.overrides : {};
-};
 var ReactPackages = ["react", "react-dom", "next", "remix"];
 var defaultPluginRenaming = {
   ...eslintReactRenameMap,
@@ -1296,6 +1294,7 @@ var defaultPluginRenaming = {
   "import-x": "import",
   n: "node"
 };
+var resolveOptions = (option) => isObject(option) ? option : {};
 var zayne = (options = {}, userConfigs = []) => {
   const {
     autoRenamePlugins = true,
@@ -1306,7 +1305,6 @@ var zayne = (options = {}, userConfigs = []) => {
     perfectionist: enablePerfectionist = true,
     react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
     stylistic: enableStylistic = true,
-    tailwindcss: enableTailwindCSS,
     typescript: enableTypeScript = isPackageExists("typescript"),
     unicorn: enableUnicorn = true,
     ...restOfOptions
@@ -1315,7 +1313,7 @@ var zayne = (options = {}, userConfigs = []) => {
   const tsconfigPath = isObject(enableTypeScript) && "tsconfigPath" in enableTypeScript ? enableTypeScript.tsconfigPath : null;
   const configs = [];
   if (enableGitignore) {
-    configs.push(gitIgnores(enableGitignore));
+    configs.push(gitIgnores(resolveOptions(enableGitignore)));
   }
   configs.push(
     ignores(restOfOptions.ignores),
@@ -1324,16 +1322,16 @@ var zayne = (options = {}, userConfigs = []) => {
     jsdoc({ stylistic: isStylistic })
   );
   if (enablePerfectionist) {
-    configs.push(perfectionist({ overrides: getOverrides(enablePerfectionist) }));
+    configs.push(perfectionist(resolveOptions(enablePerfectionist)));
   }
   if (enableUnicorn) {
-    configs.push(unicorn({ overrides: getOverrides(enableUnicorn) }));
+    configs.push(unicorn(resolveOptions(enableUnicorn)));
   }
   if (enableJsonc) {
     configs.push(
       jsonc({
-        overrides: getOverrides(enableJsonc),
-        stylistic: isStylistic
+        stylistic: isStylistic,
+        ...resolveOptions(enableJsonc)
       }),
       sortPackageJson(),
       sortTsconfig()
@@ -1342,10 +1340,9 @@ var zayne = (options = {}, userConfigs = []) => {
   if (enableTypeScript) {
     configs.push(
       typescript({
-        ...isObject(enableTypeScript) && enableTypeScript,
         componentExts,
-        overrides: getOverrides(enableTypeScript),
-        stylistic: true
+        stylistic: isStylistic,
+        ...resolveOptions(enableTypeScript)
       })
     );
   }
@@ -1353,17 +1350,17 @@ var zayne = (options = {}, userConfigs = []) => {
     configs.push(jsx());
   }
   if (enableStylistic) {
-    const stylisticOptions = isObject(enableStylistic) ? enableStylistic : {};
+    const stylisticOptions = resolveOptions(enableStylistic);
     !Object.hasOwn(stylisticOptions, "jsx") && (stylisticOptions.jsx = enableJsx);
     configs.push(stylistic(stylisticOptions));
   }
-  if (enableTailwindCSS) {
-    configs.push(tailwindcss({ ...isObject(enableTailwindCSS) && enableTailwindCSS }));
+  if (restOfOptions.tailwindcss) {
+    configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
   }
   if (enableReact) {
     configs.push(
       react({
-        overrides: getOverrides(enableReact),
+        ...resolveOptions(enableReact),
         typescript: Boolean(tsconfigPath)
       })
     );

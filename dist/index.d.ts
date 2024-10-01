@@ -1,7 +1,7 @@
+import { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import { ParserOptions as ParserOptions$1 } from '@typescript-eslint/parser';
 import * as eslint from 'eslint';
 import { Linter, ESLint } from 'eslint';
-import { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 /* eslint-disable */
@@ -9795,7 +9795,7 @@ interface OptionsConfig extends OptionsComponentExts {
      * Passing an object to enable TypeScript Language Server support.
      * @default auto-detect based on the dependencies
      */
-    typescript?: boolean | OptionsTypescript;
+    typescript?: (OptionsStylistic & OptionsTypescript) | boolean;
     /**
      * Options for eslint-plugin-unicorn.
      * @default true
@@ -9814,7 +9814,7 @@ interface OptionsConfig extends OptionsComponentExts {
 }
 
 declare const ignores: (userIgnores?: string[]) => TypedFlatConfigItem[];
-declare const gitIgnores: (options: OptionsConfig["gitignore"]) => Promise<TypedFlatConfigItem[]>;
+declare const gitIgnores: (options?: FlatGitignoreOptions) => Promise<TypedFlatConfigItem[]>;
 
 declare const javascript: (options?: OptionsOverrides) => TypedFlatConfigItem[];
 
