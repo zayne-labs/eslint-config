@@ -1,6 +1,5 @@
 import { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import { ParserOptions as ParserOptions$1 } from '@typescript-eslint/parser';
-import * as eslint from 'eslint';
 import { Linter, ESLint } from 'eslint';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 
@@ -1990,236 +1989,6 @@ interface Rules {
    */
   'radix'?: Linter.RuleEntry<Radix>
   /**
-   * disallow using shorthand boolean attributes
-   * @see https://eslint-react.xyz/docs/rules/avoid-shorthand-boolean
-   */
-  'react-base/avoid-shorthand-boolean'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using shorthand fragment syntax
-   * @see https://eslint-react.xyz/docs/rules/avoid-shorthand-fragment
-   */
-  'react-base/avoid-shorthand-fragment'?: Linter.RuleEntry<[]>
-  /**
-   * require a 'ref' parameter to be set when using 'forwardRef'
-   * @see https://eslint-react.xyz/docs/rules/ensure-forward-ref-using-ref
-   */
-  'react-base/ensure-forward-ref-using-ref'?: Linter.RuleEntry<[]>
-  /**
-   * disallow accessing 'this.state' within 'setState'
-   * @see https://eslint-react.xyz/docs/rules/no-access-state-in-setstate
-   */
-  'react-base/no-access-state-in-setstate'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using Array index as 'key'
-   * @see https://eslint-react.xyz/docs/rules/no-array-index-key
-   */
-  'react-base/no-array-index-key'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'Children.count'
-   * @see https://eslint-react.xyz/docs/rules/no-children-count
-   */
-  'react-base/no-children-count'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'Children.forEach'
-   * @see https://eslint-react.xyz/docs/rules/no-children-for-each
-   */
-  'react-base/no-children-for-each'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'Children.map'
-   * @see https://eslint-react.xyz/docs/rules/no-children-map
-   */
-  'react-base/no-children-map'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'Children.only'
-   * @see https://eslint-react.xyz/docs/rules/no-children-only
-   */
-  'react-base/no-children-only'?: Linter.RuleEntry<[]>
-  /**
-   * disallow passing 'children' as props
-   * @see https://eslint-react.xyz/docs/rules/no-children-prop
-   */
-  'react-base/no-children-prop'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'Children.toArray'
-   * @see https://eslint-react.xyz/docs/rules/no-children-to-array
-   */
-  'react-base/no-children-to-array'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using class components
-   * @see https://eslint-react.xyz/docs/rules/no-class-component
-   */
-  'react-base/no-class-component'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'cloneElement'
-   * @see https://eslint-react.xyz/docs/rules/no-clone-element
-   */
-  'react-base/no-clone-element'?: Linter.RuleEntry<[]>
-  /**
-   * disallow comments from being inserted as text nodes
-   * @see https://eslint-react.xyz/docs/rules/no-comment-textnodes
-   */
-  'react-base/no-comment-textnodes'?: Linter.RuleEntry<[]>
-  /**
-   * disallow complex conditional rendering
-   * @see https://eslint-react.xyz/docs/rules/no-complex-conditional-rendering
-   */
-  'react-base/no-complex-conditional-rendering'?: Linter.RuleEntry<[]>
-  /**
-   * disallow complex conditional rendering
-   * @see https://eslint-react.xyz/docs/rules/no-complex-conditional-rendering
-   */
-  'react-base/no-complicated-conditional-rendering'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'componentWillMount'
-   * @see https://eslint-react.xyz/docs/rules/no-component-will-mount
-   */
-  'react-base/no-component-will-mount'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'componentWillReceiveProps'
-   * @see https://eslint-react.xyz/docs/rules/no-component-will-receive-props
-   */
-  'react-base/no-component-will-receive-props'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'componentWillReceiveProps'
-   * @see https://eslint-react.xyz/docs/rules/no-component-will-update
-   */
-  'react-base/no-component-will-update'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'createRef' in function components
-   * @see https://eslint-react.xyz/docs/rules/no-create-ref
-   */
-  'react-base/no-create-ref'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'defaultProps' property in components
-   * @see https://eslint-react.xyz/docs/rules/no-default-props
-   */
-  'react-base/no-default-props'?: Linter.RuleEntry<[]>
-  /**
-   * disallow direct mutation of state
-   * @see https://eslint-react.xyz/docs/rules/no-direct-mutation-state
-   */
-  'react-base/no-direct-mutation-state'?: Linter.RuleEntry<[]>
-  /**
-   * disallow duplicate keys when rendering list
-   * @see https://eslint-react.xyz/docs/rules/no-duplicate-key
-   */
-  'react-base/no-duplicate-key'?: Linter.RuleEntry<[]>
-  /**
-   * disallow implicit 'key' props
-   * @see https://eslint-react.xyz/docs/rules/no-implicit-key
-   */
-  'react-base/no-implicit-key'?: Linter.RuleEntry<[]>
-  /**
-   * disallow problematic leaked values from being rendered
-   * @see https://eslint-react.xyz/docs/rules/no-leaked-conditional-rendering
-   */
-  'react-base/no-leaked-conditional-rendering'?: Linter.RuleEntry<[]>
-  /**
-   * require 'displayName' for 'memo' and 'forwardRef' components
-   * @see https://eslint-react.xyz/docs/rules/no-missing-component-display-name
-   */
-  'react-base/no-missing-component-display-name'?: Linter.RuleEntry<[]>
-  /**
-   * require 'key' when rendering list
-   * @see https://eslint-react.xyz/docs/rules/no-missing-key
-   */
-  'react-base/no-missing-key'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using unstable nested components
-   * @see https://eslint-react.xyz/docs/rules/no-nested-components
-   */
-  'react-base/no-nested-components'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'propTypes' property in components
-   * @see https://eslint-react.xyz/docs/rules/no-prop-types
-   */
-  'react-base/no-prop-types'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'shouldComponentUpdate' in class component extends 'React.PureComponent'
-   * @see https://eslint-react.xyz/docs/rules/no-redundant-should-component-update
-   */
-  'react-base/no-redundant-should-component-update'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'setState' in 'componentDidMount'
-   * @see https://eslint-react.xyz/docs/rules/no-set-state-in-component-did-mount
-   */
-  'react-base/no-set-state-in-component-did-mount'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'setState' in 'componentDidUpdate'
-   * @see https://eslint-react.xyz/docs/rules/no-set-state-in-component-did-update
-   */
-  'react-base/no-set-state-in-component-did-update'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'setState' in 'componentWillUpdate'
-   * @see https://eslint-react.xyz/docs/rules/no-set-state-in-component-will-update
-   */
-  'react-base/no-set-state-in-component-will-update'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using deprecated string refs
-   * @see https://eslint-react.xyz/docs/rules/no-string-refs
-   */
-  'react-base/no-string-refs'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'UNSAFE_componentWillMount'
-   * @see https://eslint-react.xyz/docs/rules/no-unsafe-component-will-mount
-   */
-  'react-base/no-unsafe-component-will-mount'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'UNSAFE_componentWillReceiveProps'
-   * @see https://eslint-react.xyz/docs/rules/no-unsafe-component-will-receive-props
-   */
-  'react-base/no-unsafe-component-will-receive-props'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using 'UNSAFE_componentWillUpdate'
-   * @see https://eslint-react.xyz/docs/rules/no-unsafe-component-will-update
-   */
-  'react-base/no-unsafe-component-will-update'?: Linter.RuleEntry<[]>
-  /**
-   * disallow passing constructed values to context providers
-   * @see https://eslint-react.xyz/docs/rules/no-unstable-context-value
-   */
-  'react-base/no-unstable-context-value'?: Linter.RuleEntry<[]>
-  /**
-   * disallow using unstable value as default param in function component
-   * @see https://eslint-react.xyz/docs/rules/no-unstable-default-props
-   */
-  'react-base/no-unstable-default-props'?: Linter.RuleEntry<[]>
-  /**
-   * disallow unused class component members
-   * @see https://eslint-react.xyz/docs/rules/no-unused-class-component-members
-   */
-  'react-base/no-unused-class-component-members'?: Linter.RuleEntry<[]>
-  /**
-   * disallow unused state of class component
-   * @see https://eslint-react.xyz/docs/rules/no-unused-state
-   */
-  'react-base/no-unused-state'?: Linter.RuleEntry<[]>
-  /**
-   * disallow unnecessary fragments
-   * @see https://eslint-react.xyz/docs/rules/no-useless-fragment
-   */
-  'react-base/no-useless-fragment'?: Linter.RuleEntry<[]>
-  /**
-   * enforce using destructuring assignment in component props and context
-   * @see https://eslint-react.xyz/docs/rules/prefer-destructuring-assignment
-   */
-  'react-base/prefer-destructuring-assignment'?: Linter.RuleEntry<[]>
-  /**
-   * enforce read-only props in components
-   * @see https://eslint-react.xyz/docs/rules/prefer-read-only-props
-   */
-  'react-base/prefer-read-only-props'?: Linter.RuleEntry<[]>
-  /**
-   * enforce using shorthand boolean attributes
-   * @see https://eslint-react.xyz/docs/rules/prefer-shorthand-boolean
-   */
-  'react-base/prefer-shorthand-boolean'?: Linter.RuleEntry<[]>
-  /**
-   * enforce using fragment syntax instead of 'Fragment' component
-   * @see https://eslint-react.xyz/docs/rules/prefer-shorthand-fragment
-   */
-  'react-base/prefer-shorthand-fragment'?: Linter.RuleEntry<[]>
-  /**
    * report all class components, including anonymous ones
    * @see https://eslint-react.xyz/docs/rules/debug-class-component
    */
@@ -2390,6 +2159,236 @@ interface Rules {
    * @see https://eslint-react.xyz/docs/rules/web-api-no-leaked-timeout
    */
   'react-web-api/no-leaked-timeout'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using shorthand boolean attributes
+   * @see https://eslint-react.xyz/docs/rules/avoid-shorthand-boolean
+   */
+  'react/avoid-shorthand-boolean'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using shorthand fragment syntax
+   * @see https://eslint-react.xyz/docs/rules/avoid-shorthand-fragment
+   */
+  'react/avoid-shorthand-fragment'?: Linter.RuleEntry<[]>
+  /**
+   * require a 'ref' parameter to be set when using 'forwardRef'
+   * @see https://eslint-react.xyz/docs/rules/ensure-forward-ref-using-ref
+   */
+  'react/ensure-forward-ref-using-ref'?: Linter.RuleEntry<[]>
+  /**
+   * disallow accessing 'this.state' within 'setState'
+   * @see https://eslint-react.xyz/docs/rules/no-access-state-in-setstate
+   */
+  'react/no-access-state-in-setstate'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using Array index as 'key'
+   * @see https://eslint-react.xyz/docs/rules/no-array-index-key
+   */
+  'react/no-array-index-key'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'Children.count'
+   * @see https://eslint-react.xyz/docs/rules/no-children-count
+   */
+  'react/no-children-count'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'Children.forEach'
+   * @see https://eslint-react.xyz/docs/rules/no-children-for-each
+   */
+  'react/no-children-for-each'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'Children.map'
+   * @see https://eslint-react.xyz/docs/rules/no-children-map
+   */
+  'react/no-children-map'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'Children.only'
+   * @see https://eslint-react.xyz/docs/rules/no-children-only
+   */
+  'react/no-children-only'?: Linter.RuleEntry<[]>
+  /**
+   * disallow passing 'children' as props
+   * @see https://eslint-react.xyz/docs/rules/no-children-prop
+   */
+  'react/no-children-prop'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'Children.toArray'
+   * @see https://eslint-react.xyz/docs/rules/no-children-to-array
+   */
+  'react/no-children-to-array'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using class components
+   * @see https://eslint-react.xyz/docs/rules/no-class-component
+   */
+  'react/no-class-component'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'cloneElement'
+   * @see https://eslint-react.xyz/docs/rules/no-clone-element
+   */
+  'react/no-clone-element'?: Linter.RuleEntry<[]>
+  /**
+   * disallow comments from being inserted as text nodes
+   * @see https://eslint-react.xyz/docs/rules/no-comment-textnodes
+   */
+  'react/no-comment-textnodes'?: Linter.RuleEntry<[]>
+  /**
+   * disallow complex conditional rendering
+   * @see https://eslint-react.xyz/docs/rules/no-complex-conditional-rendering
+   */
+  'react/no-complex-conditional-rendering'?: Linter.RuleEntry<[]>
+  /**
+   * disallow complex conditional rendering
+   * @see https://eslint-react.xyz/docs/rules/no-complex-conditional-rendering
+   */
+  'react/no-complicated-conditional-rendering'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'componentWillMount'
+   * @see https://eslint-react.xyz/docs/rules/no-component-will-mount
+   */
+  'react/no-component-will-mount'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'componentWillReceiveProps'
+   * @see https://eslint-react.xyz/docs/rules/no-component-will-receive-props
+   */
+  'react/no-component-will-receive-props'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'componentWillReceiveProps'
+   * @see https://eslint-react.xyz/docs/rules/no-component-will-update
+   */
+  'react/no-component-will-update'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'createRef' in function components
+   * @see https://eslint-react.xyz/docs/rules/no-create-ref
+   */
+  'react/no-create-ref'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'defaultProps' property in components
+   * @see https://eslint-react.xyz/docs/rules/no-default-props
+   */
+  'react/no-default-props'?: Linter.RuleEntry<[]>
+  /**
+   * disallow direct mutation of state
+   * @see https://eslint-react.xyz/docs/rules/no-direct-mutation-state
+   */
+  'react/no-direct-mutation-state'?: Linter.RuleEntry<[]>
+  /**
+   * disallow duplicate keys when rendering list
+   * @see https://eslint-react.xyz/docs/rules/no-duplicate-key
+   */
+  'react/no-duplicate-key'?: Linter.RuleEntry<[]>
+  /**
+   * disallow implicit 'key' props
+   * @see https://eslint-react.xyz/docs/rules/no-implicit-key
+   */
+  'react/no-implicit-key'?: Linter.RuleEntry<[]>
+  /**
+   * disallow problematic leaked values from being rendered
+   * @see https://eslint-react.xyz/docs/rules/no-leaked-conditional-rendering
+   */
+  'react/no-leaked-conditional-rendering'?: Linter.RuleEntry<[]>
+  /**
+   * require 'displayName' for 'memo' and 'forwardRef' components
+   * @see https://eslint-react.xyz/docs/rules/no-missing-component-display-name
+   */
+  'react/no-missing-component-display-name'?: Linter.RuleEntry<[]>
+  /**
+   * require 'key' when rendering list
+   * @see https://eslint-react.xyz/docs/rules/no-missing-key
+   */
+  'react/no-missing-key'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using unstable nested components
+   * @see https://eslint-react.xyz/docs/rules/no-nested-components
+   */
+  'react/no-nested-components'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'propTypes' property in components
+   * @see https://eslint-react.xyz/docs/rules/no-prop-types
+   */
+  'react/no-prop-types'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'shouldComponentUpdate' in class component extends 'React.PureComponent'
+   * @see https://eslint-react.xyz/docs/rules/no-redundant-should-component-update
+   */
+  'react/no-redundant-should-component-update'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'setState' in 'componentDidMount'
+   * @see https://eslint-react.xyz/docs/rules/no-set-state-in-component-did-mount
+   */
+  'react/no-set-state-in-component-did-mount'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'setState' in 'componentDidUpdate'
+   * @see https://eslint-react.xyz/docs/rules/no-set-state-in-component-did-update
+   */
+  'react/no-set-state-in-component-did-update'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'setState' in 'componentWillUpdate'
+   * @see https://eslint-react.xyz/docs/rules/no-set-state-in-component-will-update
+   */
+  'react/no-set-state-in-component-will-update'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using deprecated string refs
+   * @see https://eslint-react.xyz/docs/rules/no-string-refs
+   */
+  'react/no-string-refs'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'UNSAFE_componentWillMount'
+   * @see https://eslint-react.xyz/docs/rules/no-unsafe-component-will-mount
+   */
+  'react/no-unsafe-component-will-mount'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'UNSAFE_componentWillReceiveProps'
+   * @see https://eslint-react.xyz/docs/rules/no-unsafe-component-will-receive-props
+   */
+  'react/no-unsafe-component-will-receive-props'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using 'UNSAFE_componentWillUpdate'
+   * @see https://eslint-react.xyz/docs/rules/no-unsafe-component-will-update
+   */
+  'react/no-unsafe-component-will-update'?: Linter.RuleEntry<[]>
+  /**
+   * disallow passing constructed values to context providers
+   * @see https://eslint-react.xyz/docs/rules/no-unstable-context-value
+   */
+  'react/no-unstable-context-value'?: Linter.RuleEntry<[]>
+  /**
+   * disallow using unstable value as default param in function component
+   * @see https://eslint-react.xyz/docs/rules/no-unstable-default-props
+   */
+  'react/no-unstable-default-props'?: Linter.RuleEntry<[]>
+  /**
+   * disallow unused class component members
+   * @see https://eslint-react.xyz/docs/rules/no-unused-class-component-members
+   */
+  'react/no-unused-class-component-members'?: Linter.RuleEntry<[]>
+  /**
+   * disallow unused state of class component
+   * @see https://eslint-react.xyz/docs/rules/no-unused-state
+   */
+  'react/no-unused-state'?: Linter.RuleEntry<[]>
+  /**
+   * disallow unnecessary fragments
+   * @see https://eslint-react.xyz/docs/rules/no-useless-fragment
+   */
+  'react/no-useless-fragment'?: Linter.RuleEntry<[]>
+  /**
+   * enforce using destructuring assignment in component props and context
+   * @see https://eslint-react.xyz/docs/rules/prefer-destructuring-assignment
+   */
+  'react/prefer-destructuring-assignment'?: Linter.RuleEntry<[]>
+  /**
+   * enforce read-only props in components
+   * @see https://eslint-react.xyz/docs/rules/prefer-read-only-props
+   */
+  'react/prefer-read-only-props'?: Linter.RuleEntry<[]>
+  /**
+   * enforce using shorthand boolean attributes
+   * @see https://eslint-react.xyz/docs/rules/prefer-shorthand-boolean
+   */
+  'react/prefer-shorthand-boolean'?: Linter.RuleEntry<[]>
+  /**
+   * enforce using fragment syntax instead of 'Fragment' component
+   * @see https://eslint-react.xyz/docs/rules/prefer-shorthand-fragment
+   */
+  'react/prefer-shorthand-fragment'?: Linter.RuleEntry<[]>
   /**
    * Disallow assignments that can lead to race conditions due to usage of `await` or `yield`
    * @see https://eslint.org/docs/latest/rules/require-atomic-updates
@@ -9835,12 +9834,12 @@ declare const jsonc: (options?: OptionsFiles & OptionsOverrides & OptionsStylist
 declare const jsdoc: (options?: OptionsOverrides & OptionsStylistic) => Promise<TypedFlatConfigItem[]>;
 
 declare const eslintReactRenameMap: {
-    "@eslint-react": string;
     "@eslint-react/debug": string;
     "@eslint-react/dom": string;
     "@eslint-react/hooks-extra": string;
     "@eslint-react/naming-convention": string;
     "@eslint-react/web-api": string;
+    "@eslint-react": string;
 };
 declare const react: (options?: OptionsFiles & OptionsHasTypeScript & OptionsOverrides) => Promise<TypedFlatConfigItem[]>;
 
@@ -9862,12 +9861,12 @@ declare const defaultPluginRenaming: {
     "@typescript-eslint": string;
     "import-x": string;
     n: string;
-    "@eslint-react": string;
     "@eslint-react/debug": string;
     "@eslint-react/dom": string;
     "@eslint-react/hooks-extra": string;
     "@eslint-react/naming-convention": string;
     "@eslint-react/web-api": string;
+    "@eslint-react": string;
 };
 /**
  * Construct an array of ESLint flat config items.
@@ -9936,7 +9935,7 @@ declare const interopDefault: <TModule>(module: Awaitable<TModule>) => Promise<T
  * }]
  * ```
  */
-declare const renameRules: (rules: Record<string, unknown>, renameMap: Record<string, string>) => (Partial<eslint.Linter.RulesRecord> & Rules) | undefined;
+declare const renameRules: (rules: Record<string, unknown>, renameMap: Record<string, string>) => TypedFlatConfigItem["rules"];
 declare const renamePlugins: (plugins: Record<string, unknown>, renameMap: Record<string, string>) => Record<string, ESLint.Plugin>;
 /**
  * Rename plugin names a flat configs array

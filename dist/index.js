@@ -25,8 +25,7 @@ var renameRules = (rules, renameMap) => {
     }
     return [ruleKey, ruleValue];
   });
-  const renamedRules = Object.fromEntries(renamedRulesEntries);
-  return renamedRules;
+  return Object.fromEntries(renamedRulesEntries);
 };
 var renamePlugins = (plugins, renameMap) => {
   const renamedPluginEntries = Object.entries(plugins).map(([pluginKey, pluginValue]) => {
@@ -35,8 +34,7 @@ var renamePlugins = (plugins, renameMap) => {
     }
     return [pluginKey, pluginValue];
   });
-  const renamedPlugins = Object.fromEntries(renamedPluginEntries);
-  return renamedPlugins;
+  return Object.fromEntries(renamedPluginEntries);
 };
 var renamePluginInConfigs = (configs, renameMap, extraOverrides) => {
   const renamedConfigs = configs.map((config) => ({
@@ -963,12 +961,14 @@ var ReactRefreshAllowConstantExportPackages = ["vite"];
 var RemixPackages = ["@remix-run/node", "@remix-run/react", "@remix-run/serve", "@remix-run/dev"];
 var NextJsPackages = ["next"];
 var eslintReactRenameMap = {
-  "@eslint-react": "react-base",
   "@eslint-react/debug": "react-debug",
   "@eslint-react/dom": "react-dom",
   "@eslint-react/hooks-extra": "react-hooks-extra",
   "@eslint-react/naming-convention": "react-naming-convention",
-  "@eslint-react/web-api": "react-web-api"
+  "@eslint-react/web-api": "react-web-api",
+  // It has to be last to avoid rename issues
+  // eslint-disable-next-line perfectionist/sort-objects
+  "@eslint-react": "react"
 };
 var react = async (options = {}) => {
   const { files, overrides, typescript: typescript2 = true } = options;
@@ -1002,18 +1002,18 @@ var react = async (options = {}) => {
       name: "zayne/react/rules",
       rules: {
         ...renameRules(recommendedReactConfig.rules, eslintReactRenameMap),
-        "react-base/avoid-shorthand-boolean": "error",
-        "react-base/function-component-definition": "off",
-        "react-base/no-array-index-key": "error",
-        "react-base/no-children-count": "off",
-        "react-base/no-children-only": "off",
-        "react-base/no-children-prop": "error",
-        "react-base/no-children-to-array": "off",
-        "react-base/no-clone-element": "off",
-        "react-base/no-missing-component-display-name": "error",
-        "react-base/prefer-destructuring-assignment": "error",
-        "react-base/prefer-read-only-props": "off",
-        "react-base/prefer-shorthand-fragment": "error",
+        "react/avoid-shorthand-boolean": "error",
+        "react/function-component-definition": "off",
+        "react/no-array-index-key": "error",
+        "react/no-children-count": "off",
+        "react/no-children-only": "off",
+        "react/no-children-prop": "error",
+        "react/no-children-to-array": "off",
+        "react/no-clone-element": "off",
+        "react/no-missing-component-display-name": "error",
+        "react/prefer-destructuring-assignment": "error",
+        "react/prefer-read-only-props": "off",
+        "react/prefer-shorthand-fragment": "error",
         "react-hooks-extra/ensure-custom-hooks-using-other-hooks": "error",
         "react-hooks-extra/prefer-use-state-lazy-initialization": "error",
         "react-naming-convention/component-name": "warn",

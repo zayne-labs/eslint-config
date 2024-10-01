@@ -12,12 +12,14 @@ const RemixPackages = ["@remix-run/node", "@remix-run/react", "@remix-run/serve"
 const NextJsPackages = ["next"];
 
 export const eslintReactRenameMap = {
-	"@eslint-react": "react-base",
 	"@eslint-react/debug": "react-debug",
 	"@eslint-react/dom": "react-dom",
 	"@eslint-react/hooks-extra": "react-hooks-extra",
 	"@eslint-react/naming-convention": "react-naming-convention",
 	"@eslint-react/web-api": "react-web-api",
+	// It has to be last to avoid rename issues
+	// eslint-disable-next-line perfectionist/sort-objects
+	"@eslint-react": "react",
 };
 
 const react = async (
@@ -65,18 +67,19 @@ const react = async (
 
 			rules: {
 				...renameRules(recommendedReactConfig.rules, eslintReactRenameMap),
-				"react-base/avoid-shorthand-boolean": "error",
-				"react-base/function-component-definition": "off",
-				"react-base/no-array-index-key": "error",
-				"react-base/no-children-count": "off",
-				"react-base/no-children-only": "off",
-				"react-base/no-children-prop": "error",
-				"react-base/no-children-to-array": "off",
-				"react-base/no-clone-element": "off",
-				"react-base/no-missing-component-display-name": "error",
-				"react-base/prefer-destructuring-assignment": "error",
-				"react-base/prefer-read-only-props": "off",
-				"react-base/prefer-shorthand-fragment": "error",
+				"react/avoid-shorthand-boolean": "error",
+				"react/function-component-definition": "off",
+				"react/no-array-index-key": "error",
+				"react/no-children-count": "off",
+				"react/no-children-only": "off",
+				"react/no-children-prop": "error",
+				"react/no-children-to-array": "off",
+				"react/no-clone-element": "off",
+				"react/no-missing-component-display-name": "error",
+				"react/prefer-destructuring-assignment": "error",
+				"react/prefer-read-only-props": "off",
+				"react/prefer-shorthand-fragment": "error",
+				// eslint-disable-next-line perfectionist/sort-objects
 				"react-hooks-extra/ensure-custom-hooks-using-other-hooks": "error",
 				"react-hooks-extra/prefer-use-state-lazy-initialization": "error",
 				"react-naming-convention/component-name": "warn",
