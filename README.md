@@ -18,7 +18,7 @@
 If you prefer to set up manually:
 
 ```bash
-pnpm i -D eslint @zayne-labs/eslint-config
+pnpm add -D eslint @zayne-labs/eslint-config
 ```
 
 And create `eslint.config.js` in your project root:
