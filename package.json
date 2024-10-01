@@ -31,7 +31,7 @@
 		"build:dev": "pnpm typegen & cross-env NODE_ENV=development tsup",
 		"build:test": "pnpm typegen & concurrently --prefix-colors \"yellow.bold,#7da4f8.bold,magenta\" --names PUBLINT,TSUP,ATTW 'pnpm:lint:publint' 'pnpm:build:dev' 'pnpm:lint:attw'",
 		"build": "pnpm typegen & tsup",
-		"inspect:eslint-config": "pnpx @eslint/config-inspector@latest --config eslint.config.ts",
+		"inspect:eslint-config": "pnpx @eslint/config-inspector@latest --config eslint.config.js",
 		"lint:attw": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
 		"lint:check-types": "tsc --pretty -p tsconfig.json",
 		"lint:commitlint": "commitlint --edit",
