@@ -3,9 +3,11 @@ import { flatConfigsToRulesDTS } from "eslint-typegen/core";
 import { builtinRules } from "eslint/use-at-your-own-risk";
 import {
 	combine,
+	imports,
 	javascript,
 	jsdoc,
 	jsonc,
+	node,
 	perfectionist,
 	react,
 	stylistic,
@@ -27,9 +29,11 @@ const configs = await combine(
 	tailwindcss(),
 	perfectionist(),
 	stylistic(),
+	imports(),
 	jsdoc(),
 	jsonc(),
-	react()
+	react(),
+	node()
 );
 
 const dts = await flatConfigsToRulesDTS(configs, {

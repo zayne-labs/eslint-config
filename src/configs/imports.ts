@@ -7,7 +7,7 @@ import type {
 } from "@/types";
 
 const imports = (
-	options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic
+	options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}
 ): TypedFlatConfigItem[] => {
 	const { overrides, stylistic = true, typescript = true } = options;
 
@@ -33,27 +33,23 @@ const imports = (
 			name: "zayne/import/rules",
 
 			rules: {
-				"import/export": "error",
 				"import/extensions": [
 					"error",
 					"never",
 					{ ignorePackages: true, pattern: { png: "always", svg: "always" } },
 				],
 				"import/first": "error",
-				"import/namespace": "off",
 				"import/no-absolute-path": "error",
 				"import/no-cycle": ["error", { ignoreExternal: true, maxDepth: 3 }],
 				"import/no-duplicates": "error",
 				"import/no-extraneous-dependencies": ["error", { devDependencies: true }],
 				"import/no-mutable-exports": "error",
-				"import/no-named-as-default": "error",
-				"import/no-named-as-default-member": "error",
 				"import/no-named-default": "error",
 				"import/no-relative-packages": "error",
 				"import/no-self-import": "error",
 				"import/no-unresolved": "off",
 				"import/no-useless-path-segments": ["error", { commonjs: true }],
-				"import/prefer-default-export": "off",
+				"import/no-webpack-loader-syntax": "error",
 
 				...(stylistic && { "import/newline-after-import": "error" }),
 

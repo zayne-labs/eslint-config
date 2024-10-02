@@ -42,7 +42,12 @@ export const interopDefault = async <TModule>(
  * }]
  * ```
  */
-export const renameRules = (rules: Record<string, unknown>, renameMap: Record<string, string>) => {
+export const renameRules = (
+	rules: Record<string, unknown> | undefined,
+	renameMap: Record<string, string>
+) => {
+	if (!rules) return;
+
 	const renamedRulesEntries = Object.entries(rules).map(([ruleKey, ruleValue]) => {
 		for (const [oldRuleName, newRuleName] of Object.entries(renameMap)) {
 			if (ruleKey.startsWith(`${oldRuleName}/`)) {
@@ -56,7 +61,12 @@ export const renameRules = (rules: Record<string, unknown>, renameMap: Record<st
 	return Object.fromEntries(renamedRulesEntries) as TypedFlatConfigItem["rules"];
 };
 
-export const renamePlugins = (plugins: Record<string, unknown>, renameMap: Record<string, string>) => {
+export const renamePlugins = (
+	plugins: Record<string, unknown> | undefined,
+	renameMap: Record<string, string>
+) => {
+	if (!plugins) return;
+
 	const renamedPluginEntries = Object.entries(plugins).map(([pluginKey, pluginValue]) => {
 		if (pluginKey in renameMap) {
 			return [renameMap[pluginKey], pluginValue];

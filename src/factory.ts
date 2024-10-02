@@ -10,6 +10,7 @@ import {
 	javascript,
 	jsdoc,
 	jsonc,
+	node,
 	perfectionist,
 	react,
 	sortPackageJson,
@@ -56,6 +57,7 @@ export const zayne = (
 		gitignore: enableGitignore = true,
 		jsonc: enableJsonc = true,
 		jsx: enableJsx = true,
+		node: enableNode = true,
 		perfectionist: enablePerfectionist = true,
 		react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
 		stylistic: enableStylistic = true,
@@ -84,6 +86,10 @@ export const zayne = (
 		imports({ stylistic: isStylistic }),
 		jsdoc({ stylistic: isStylistic })
 	);
+
+	if (enableNode) {
+		configs.push(node(resolveOptions(enableNode)));
+	}
 
 	if (enablePerfectionist) {
 		configs.push(perfectionist(resolveOptions(enablePerfectionist)));

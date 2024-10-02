@@ -121,6 +121,14 @@ export interface OptionsRegExp {
 	level?: "error" | "warn";
 }
 
+export interface OptionsNode {
+	/**
+	 *  Enable eslint-plugin-security
+	 * @default false
+	 */
+	security?: boolean;
+}
+
 export interface OptionsConfig extends OptionsComponentExts {
 	/**
 	 * Enable ASTRO support.
@@ -171,10 +179,16 @@ export interface OptionsConfig extends OptionsComponentExts {
 	/**
 	 * Enable linting for **code snippets** in Markdown.
 	 *
-	 * For formatting Markdown content, enable also `formatters.markdown`.
 	 * @default true
 	 */
 	markdown?: boolean | OptionsOverrides;
+
+	/**
+	 * Enable linting for node.
+	 *
+	 * @default true
+	 */
+	node?: (OptionsNode & OptionsOverrides) | boolean;
 
 	/**
 	 * Enable `perfectionist` rules.

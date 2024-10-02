@@ -3,7 +3,6 @@ import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, TypedFlatCon
 import { GLOB_SRC } from "@/globs";
 import { ensurePackages, interopDefault, renamePlugins, renameRules } from "@/utils";
 import { fixupPluginRules } from "@eslint/compat";
-import type { ESLint } from "eslint";
 import { isPackageExists } from "local-pkg";
 
 // react refresh
@@ -36,8 +35,8 @@ const react = async (
 
 	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh] = await Promise.all([
 		interopDefault(import("@eslint-react/eslint-plugin")),
-		interopDefault(import("eslint-plugin-react-hooks") as ESLint.Plugin),
-		interopDefault(import("eslint-plugin-react-refresh") as ESLint.Plugin),
+		interopDefault(import("eslint-plugin-react-hooks")),
+		interopDefault(import("eslint-plugin-react-refresh")),
 	] as const);
 
 	const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some((i) => isPackageExists(i));

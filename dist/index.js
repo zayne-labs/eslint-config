@@ -3,6 +3,7 @@ import { isObject } from '@zayne-labs/toolkit/type-helpers';
 import { isPackageExists } from 'local-pkg';
 import default2 from '@eslint/js';
 import default3 from 'eslint-plugin-import-x';
+import default4 from 'eslint-plugin-n';
 import globals from 'globals';
 import { fixupPluginRules } from '@eslint/compat';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
@@ -17,6 +18,7 @@ var interopDefault = async (module) => {
   return resolved.default ?? resolved;
 };
 var renameRules = (rules, renameMap) => {
+  if (!rules) return;
   const renamedRulesEntries = Object.entries(rules).map(([ruleKey, ruleValue]) => {
     for (const [oldRuleName, newRuleName] of Object.entries(renameMap)) {
       if (ruleKey.startsWith(`${oldRuleName}/`)) {
@@ -28,6 +30,7 @@ var renameRules = (rules, renameMap) => {
   return Object.fromEntries(renamedRulesEntries);
 };
 var renamePlugins = (plugins, renameMap) => {
+  if (!plugins) return;
   const renamedPluginEntries = Object.entries(plugins).map(([pluginKey, pluginValue]) => {
     if (pluginKey in renameMap) {
       return [renameMap[pluginKey], pluginValue];
@@ -636,7 +639,7 @@ var unicorn = async (options = {}) => {
 };
 
 // src/configs/imports.ts
-var imports = (options) => {
+var imports = (options = {}) => {
   const { overrides, stylistic: stylistic2 = true, typescript: typescript2 = true } = options;
   return [
     {
@@ -647,31 +650,32 @@ var imports = (options) => {
       name: "zayne/import/setup"
     },
     {
-      name: "zayne/import/rules",
+      name: "zayne/import/recommended",
       rules: {
         ...default3.flatConfigs.recommended.rules,
-        ...typescript2 && default3.flatConfigs.typescript.rules,
-        "import/export": "error",
+        ...typescript2 && default3.flatConfigs.typescript.rules
+      }
+    },
+    {
+      name: "zayne/import/rules",
+      rules: {
         "import/extensions": [
           "error",
           "never",
           { ignorePackages: true, pattern: { png: "always", svg: "always" } }
         ],
         "import/first": "error",
-        "import/namespace": "off",
         "import/no-absolute-path": "error",
         "import/no-cycle": ["error", { ignoreExternal: true, maxDepth: 3 }],
         "import/no-duplicates": "error",
         "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
         "import/no-mutable-exports": "error",
-        "import/no-named-as-default": "error",
-        "import/no-named-as-default-member": "error",
         "import/no-named-default": "error",
         "import/no-relative-packages": "error",
         "import/no-self-import": "error",
         "import/no-unresolved": "off",
         "import/no-useless-path-segments": ["error", { commonjs: true }],
-        "import/prefer-default-export": "off",
+        "import/no-webpack-loader-syntax": "error",
         ...stylistic2 && { "import/newline-after-import": "error" },
         ...overrides
       }
@@ -1278,6 +1282,46 @@ var sortTsconfig = () => [
   }
 ];
 
+// src/configs/node.ts
+var node = async (options = {}) => {
+  const { overrides, security = false } = options;
+  const eslintPluginSecurity = await interopDefault(import('eslint-plugin-security'));
+  return [
+    {
+      name: "zayne/node/setup",
+      plugins: {
+        node: default4,
+        ...security && { security: eslintPluginSecurity }
+      }
+    },
+    {
+      name: "zayne/node/recommended",
+      rules: {
+        ...renameRules(default4.configs["flat/recommended-module"].rules, { n: "node" }),
+        ...security && eslintPluginSecurity.configs.recommended.rules
+      }
+    },
+    {
+      name: "zayne/node/rules",
+      rules: {
+        "node/handle-callback-err": ["error", "^(err|error)$"],
+        "node/no-deprecated-api": "error",
+        "node/no-exports-assign": "error",
+        "node/no-extraneous-import": "off",
+        // eslint-plugin-import-x handles this
+        "node/no-missing-import": "off",
+        "node/no-new-require": "error",
+        "node/no-path-concat": "error",
+        "node/no-unpublished-import": "off",
+        // "node/prefer-global/buffer": ["error", "never"],
+        // "node/prefer-global/process": ["error", "never"],
+        "node/process-exit-as-throw": "error"
+      },
+      ...overrides
+    }
+  ];
+};
+
 // src/configs/jsx.ts
 var jsx = () => {
   return [
@@ -1312,6 +1356,7 @@ var zayne = (options = {}, userConfigs = []) => {
     gitignore: enableGitignore = true,
     jsonc: enableJsonc = true,
     jsx: enableJsx = true,
+    node: enableNode = true,
     perfectionist: enablePerfectionist = true,
     react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
     stylistic: enableStylistic = true,
@@ -1331,6 +1376,9 @@ var zayne = (options = {}, userConfigs = []) => {
     imports({ stylistic: isStylistic }),
     jsdoc({ stylistic: isStylistic })
   );
+  if (enableNode) {
+    configs.push(node(resolveOptions(enableNode)));
+  }
   if (enablePerfectionist) {
     configs.push(perfectionist(resolveOptions(enablePerfectionist)));
   }
@@ -1392,6 +1440,6 @@ var zayne = (options = {}, userConfigs = []) => {
   return composer;
 };
 
-export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, defaultPluginRenaming, ensurePackages, eslintReactRenameMap, gitIgnores, ignores, imports, interopDefault, isPackageInScope, javascript, jsdoc, jsonc, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, typescript, unicorn, zayne };
+export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, defaultPluginRenaming, ensurePackages, eslintReactRenameMap, gitIgnores, ignores, imports, interopDefault, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, typescript, unicorn, zayne };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map
