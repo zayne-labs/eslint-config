@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.1.1
+
+### Patch Changes
+
+-  a1fcc2d: added new option to ts-eslint no unsed vars rule
+
 ## 0.1.0
 
 ### Minor Changes
