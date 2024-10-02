@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.1.0
+
+### Minor Changes
+
+-  5d7f5ea: add node config
+
 ## 0.0.7
 
 ### Patch Changes
