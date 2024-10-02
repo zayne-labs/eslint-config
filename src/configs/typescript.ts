@@ -125,7 +125,7 @@ export const typescript = async (
 						allowTernary: true,
 					},
 				],
-				"ts-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
+				"ts-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", ignoreRestSiblings: true }],
 				"ts-eslint/no-use-before-define": "off",
 				"ts-eslint/no-useless-constructor": "error",
 
