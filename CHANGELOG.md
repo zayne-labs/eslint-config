@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.0.7
+
+### Patch Changes
+
+-  397a218: add new options to a few configs
+
 ## 0.0.6
 
 ### Patch Changes
