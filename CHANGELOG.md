@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.1.2
+
+### Patch Changes
+
+-  04576cd: fix tailwind plugin bug
+
 ## 0.1.1
 
 ### Patch Changes
