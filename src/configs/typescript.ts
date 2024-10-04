@@ -69,7 +69,7 @@ export const typescript = async (
 
 	const typeAwareRules: TypedFlatConfigItem["rules"] = {
 		"ts-eslint/no-unnecessary-type-parameters": "off",
-		// "ts-eslint/non-nullable-type-assertion-style": "off",
+		"ts-eslint/non-nullable-type-assertion-style": "off",
 		"ts-eslint/prefer-nullish-coalescing": ["error", { ignoreConditionalTests: true }],
 		"ts-eslint/restrict-template-expressions": [
 			"error",
