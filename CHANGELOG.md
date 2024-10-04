@@ -1,5 +1,13 @@
 # @zayne-labs/eslint-config
 
+## 0.1.3
+
+### Patch Changes
+
+-  f04d587: fix bug in node overrides
+   change all imports to async
+   update deps
+
 ## 0.1.2
 
 ### Patch Changes
