@@ -4,11 +4,11 @@ import { ensurePackages, interopDefault } from "@/utils";
 const tailwindcss = async (
 	options: OptionsOverrides & OptionsTailwindCSS = {}
 ): Promise<TypedFlatConfigItem[]> => {
-	const eslintPluginTailwindCss = await interopDefault(await import("eslint-plugin-tailwindcss"));
-
 	const { overrides, settings: tailwindCssSettings } = options;
 
 	await ensurePackages(["eslint-plugin-tailwindcss"]);
+
+	const eslintPluginTailwindCss = await interopDefault(import("eslint-plugin-tailwindcss"));
 
 	return [
 		{
