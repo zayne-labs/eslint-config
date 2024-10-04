@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.1.4
+
+### Patch Changes
+
+-  75e4353: turn off ts rule no use before define
+
 ## 0.1.3
 
 ### Patch Changes
