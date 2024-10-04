@@ -1,15 +1,17 @@
-import { eslintPluginImportX } from "@/plugins";
 import type {
 	OptionsHasTypeScript,
 	OptionsOverrides,
 	OptionsStylistic,
 	TypedFlatConfigItem,
 } from "@/types";
+import { interopDefault } from "@/utils";
 
-const imports = (
+const imports = async (
 	options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}
-): TypedFlatConfigItem[] => {
+): Promise<TypedFlatConfigItem[]> => {
 	const { overrides, stylistic = true, typescript = true } = options;
+
+	const eslintPluginImportX = await interopDefault(import("eslint-plugin-import-x"));
 
 	return [
 		{

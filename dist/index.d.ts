@@ -10742,7 +10742,7 @@ interface OptionsConfig extends OptionsComponentExts {
 declare const ignores: (userIgnores?: string[]) => TypedFlatConfigItem[];
 declare const gitIgnores: (options?: FlatGitignoreOptions) => Promise<TypedFlatConfigItem[]>;
 
-declare const javascript: (options?: OptionsOverrides) => TypedFlatConfigItem[];
+declare const javascript: (options?: OptionsOverrides) => Promise<TypedFlatConfigItem[]>;
 
 declare const tailwindcss: (options?: OptionsOverrides & OptionsTailwindCSS) => Promise<TypedFlatConfigItem[]>;
 
@@ -10750,7 +10750,7 @@ declare const typescript: (options?: OptionsComponentExts & OptionsFiles & Optio
 
 declare const unicorn: (options?: OptionsOverrides) => Promise<TypedFlatConfigItem[]>;
 
-declare const imports: (options?: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic) => TypedFlatConfigItem[];
+declare const imports: (options?: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic) => Promise<TypedFlatConfigItem[]>;
 
 declare const perfectionist: (options?: OptionsOverrides) => Promise<TypedFlatConfigItem[]>;
 

@@ -126,7 +126,6 @@ const react = async (
 					},
 				],
 
-				// overrides
 				...overrides,
 			},
 		},

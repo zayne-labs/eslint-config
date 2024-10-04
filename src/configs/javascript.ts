@@ -1,9 +1,11 @@
-import { eslintJs } from "@/plugins";
 import type { OptionsOverrides, TypedFlatConfigItem } from "@/types";
+import { interopDefault } from "@/utils";
 import globals from "globals";
 
-const javascript = (options: OptionsOverrides = {}): TypedFlatConfigItem[] => {
+const javascript = async (options: OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> => {
 	const { overrides } = options;
+
+	const eslintJs = await interopDefault(import("@eslint/js"));
 
 	return [
 		{
@@ -253,7 +255,6 @@ const javascript = (options: OptionsOverrides = {}): TypedFlatConfigItem[] => {
 						vars: "all",
 					},
 				],
-				// "no-use-before-define": ["error", { classes: false, functions: false, variables: true }],
 				"no-useless-backreference": "error",
 				"no-useless-call": "error",
 				"no-useless-catch": "error",

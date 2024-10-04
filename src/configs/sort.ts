@@ -74,6 +74,10 @@ export const sortPackageJson = (): TypedFlatConfigItem[] => [
 				},
 				{
 					order: { type: "asc" },
+					pathPattern: "scripts",
+				},
+				{
+					order: { type: "asc" },
 					pathPattern: "^(?:resolutions|overrides|pnpm.overrides)$",
 				},
 				{
@@ -110,7 +114,9 @@ export const sortPackageJson = (): TypedFlatConfigItem[] => [
 export const sortTsconfig = (): TypedFlatConfigItem[] => [
 	{
 		files: ["**/tsconfig.json", "**/tsconfig.*.json"],
+
 		name: "zayne/sort/tsconfig-json",
+
 		rules: {
 			"jsonc/sort-keys": [
 				"error",

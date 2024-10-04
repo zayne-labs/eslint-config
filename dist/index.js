@@ -1,9 +1,6 @@
 import { fileURLToPath } from 'node:url';
 import { isObject } from '@zayne-labs/toolkit/type-helpers';
 import { isPackageExists } from 'local-pkg';
-import default2 from '@eslint/js';
-import default3 from 'eslint-plugin-import-x';
-import default4 from 'eslint-plugin-n';
 import globals from 'globals';
 import { fixupPluginRules } from '@eslint/compat';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
@@ -162,8 +159,9 @@ var gitIgnores = async (options) => {
   });
   return [config];
 };
-var javascript = (options = {}) => {
+var javascript = async (options = {}) => {
   const { overrides } = options;
+  const eslintJs = await interopDefault(import('@eslint/js'));
   return [
     {
       languageOptions: {
@@ -191,7 +189,7 @@ var javascript = (options = {}) => {
     },
     {
       name: "zayne/js-eslint/recommended",
-      ...default2.configs.recommended
+      ...eslintJs.configs.recommended
     },
     {
       name: "zayne/js-eslint/rules",
@@ -417,7 +415,6 @@ var javascript = (options = {}) => {
             vars: "all"
           }
         ],
-        // "no-use-before-define": ["error", { classes: false, functions: false, variables: true }],
         "no-useless-backreference": "error",
         "no-useless-call": "error",
         "no-useless-catch": "error",
@@ -471,9 +468,9 @@ var javascript = (options = {}) => {
 
 // src/configs/tailwindcss.ts
 var tailwindcss = async (options = {}) => {
-  const eslintPluginTailwindCss = await interopDefault(await import('eslint-plugin-tailwindcss'));
   const { overrides, settings: tailwindCssSettings } = options;
   await ensurePackages(["eslint-plugin-tailwindcss"]);
+  const eslintPluginTailwindCss = await interopDefault(import('eslint-plugin-tailwindcss'));
   return [
     {
       name: "zayne/tailwindcss/setup",
@@ -595,8 +592,8 @@ var typescript = async (options = {}) => {
             allowTernary: true
           }
         ],
-        "ts-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
-        "ts-eslint/no-use-before-define": "off",
+        "ts-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", ignoreRestSiblings: true }],
+        "ts-eslint/no-use-before-define": ["error", { functions: false, ignoreTypeReferences: true }],
         "ts-eslint/no-useless-constructor": "error",
         ...isTypeAware && typeAwareRules,
         ...overrides
@@ -639,21 +636,22 @@ var unicorn = async (options = {}) => {
 };
 
 // src/configs/imports.ts
-var imports = (options = {}) => {
+var imports = async (options = {}) => {
   const { overrides, stylistic: stylistic2 = true, typescript: typescript2 = true } = options;
+  const eslintPluginImportX = await interopDefault(import('eslint-plugin-import-x'));
   return [
     {
       plugins: {
-        import: default3
+        import: eslintPluginImportX
       },
-      ...typescript2 && { settings: default3.flatConfigs.typescript.settings },
+      ...typescript2 && { settings: eslintPluginImportX.flatConfigs.typescript.settings },
       name: "zayne/import/setup"
     },
     {
       name: "zayne/import/recommended",
       rules: {
-        ...default3.flatConfigs.recommended.rules,
-        ...typescript2 && default3.flatConfigs.typescript.rules
+        ...eslintPluginImportX.flatConfigs.recommended.rules,
+        ...typescript2 && eslintPluginImportX.flatConfigs.typescript.rules
       }
     },
     {
@@ -1061,7 +1059,6 @@ var react = async (options = {}) => {
             ]
           }
         ],
-        // overrides
         ...overrides
       }
     }
@@ -1135,6 +1132,10 @@ var sortPackageJson = () => [
         {
           order: { type: "asc" },
           pathPattern: "^(?:dev|peer|optional|bundled)?[Dd]ependencies(Meta)?$"
+        },
+        {
+          order: { type: "asc" },
+          pathPattern: "scripts"
         },
         {
           order: { type: "asc" },
@@ -1285,39 +1286,36 @@ var sortTsconfig = () => [
 // src/configs/node.ts
 var node = async (options = {}) => {
   const { overrides, security = false } = options;
+  const eslintPluginNode = await interopDefault(import('eslint-plugin-n'));
   const eslintPluginSecurity = await interopDefault(import('eslint-plugin-security'));
   return [
     {
       name: "zayne/node/setup",
       plugins: {
-        node: default4,
+        node: eslintPluginNode,
         ...security && { security: eslintPluginSecurity }
       }
     },
     {
       name: "zayne/node/recommended",
       rules: {
-        ...renameRules(default4.configs["flat/recommended-module"].rules, { n: "node" }),
+        ...renameRules(eslintPluginNode.configs["flat/recommended-module"].rules, { n: "node" }),
         ...security && eslintPluginSecurity.configs.recommended.rules
       }
     },
     {
       name: "zayne/node/rules",
       rules: {
-        "node/handle-callback-err": ["error", "^(err|error)$"],
         "node/no-deprecated-api": "error",
         "node/no-exports-assign": "error",
         "node/no-extraneous-import": "off",
         // eslint-plugin-import-x handles this
         "node/no-missing-import": "off",
-        "node/no-new-require": "error",
         "node/no-path-concat": "error",
         "node/no-unpublished-import": "off",
-        // "node/prefer-global/buffer": ["error", "never"],
-        // "node/prefer-global/process": ["error", "never"],
-        "node/process-exit-as-throw": "error"
-      },
-      ...overrides
+        "node/process-exit-as-throw": "error",
+        ...overrides
+      }
     }
   ];
 };
