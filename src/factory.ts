@@ -61,6 +61,7 @@ export const zayne = (
 		perfectionist: enablePerfectionist = true,
 		react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
 		stylistic: enableStylistic = true,
+		type = "app",
 		typescript: enableTypeScript = isPackageExists("typescript"),
 		unicorn: enableUnicorn = true,
 		...restOfOptions
@@ -88,7 +89,7 @@ export const zayne = (
 	);
 
 	if (enableNode) {
-		configs.push(node(resolveOptions(enableNode)));
+		configs.push(node({ type, ...resolveOptions(enableNode) }));
 	}
 
 	if (enablePerfectionist) {
@@ -96,7 +97,7 @@ export const zayne = (
 	}
 
 	if (enableUnicorn) {
-		configs.push(unicorn(resolveOptions(enableUnicorn)));
+		configs.push(unicorn({ type, ...resolveOptions(enableUnicorn) }));
 	}
 
 	if (enableJsonc) {

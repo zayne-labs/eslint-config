@@ -1,8 +1,10 @@
 import { interopDefault } from "@/utils";
-import type { OptionsOverrides, TypedFlatConfigItem } from "../types";
+import type { OptionsAppType, OptionsOverrides, TypedFlatConfigItem } from "../types";
 
-export const unicorn = async (options: OptionsOverrides = {}): Promise<TypedFlatConfigItem[]> => {
-	const { overrides } = options;
+export const unicorn = async (
+	options: OptionsAppType & OptionsOverrides = {}
+): Promise<TypedFlatConfigItem[]> => {
+	const { overrides, type = "app" } = options;
 
 	const eslintPluginUnicorn = await interopDefault(import("eslint-plugin-unicorn"));
 
@@ -10,6 +12,7 @@ export const unicorn = async (options: OptionsOverrides = {}): Promise<TypedFlat
 		{ ...eslintPluginUnicorn.configs["flat/recommended"], name: "zayne/unicorn/recommended" },
 		{
 			name: "zayne/unicorn/rules",
+
 			rules: {
 				"unicorn/filename-case": [
 					"warn",
@@ -21,6 +24,9 @@ export const unicorn = async (options: OptionsOverrides = {}): Promise<TypedFlat
 						},
 					},
 				],
+
+				...(type === "lib" && { "unicorn/prefer-global-this": "warn" }),
+
 				"unicorn/new-for-builtins": "off",
 				"unicorn/no-array-for-each": "off",
 				"unicorn/no-array-reduce": "off",

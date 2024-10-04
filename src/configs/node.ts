@@ -1,10 +1,10 @@
-import type { OptionsNode, OptionsOverrides, TypedFlatConfigItem } from "@/types";
+import type { OptionsAppType, OptionsNode, OptionsOverrides, TypedFlatConfigItem } from "@/types";
 import { interopDefault, renameRules } from "@/utils";
 
 export const node = async (
-	options: OptionsNode & OptionsOverrides = {}
+	options: OptionsAppType & OptionsNode & OptionsOverrides = {}
 ): Promise<TypedFlatConfigItem[]> => {
-	const { overrides, security = false } = options;
+	const { overrides, security = false, type } = options;
 
 	const eslintPluginNode = await interopDefault(import("eslint-plugin-n"));
 	const eslintPluginSecurity = await interopDefault(import("eslint-plugin-security"));
@@ -37,6 +37,11 @@ export const node = async (
 				"node/no-path-concat": "error",
 				"node/no-unpublished-import": "off",
 				"node/process-exit-as-throw": "error",
+
+				...(type === "app" && {
+					"node/no-unsupported-features/es-syntax": "off",
+					"node/no-unsupported-features/node-builtins": "off",
+				}),
 
 				...overrides,
 			},

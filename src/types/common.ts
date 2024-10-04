@@ -19,6 +19,9 @@ export interface TypedFlatConfigItem extends FlatESLintConfigItem<Partial<Linter
 export interface OptionsOverrides {
 	overrides?: TypedFlatConfigItem["rules"];
 }
+export interface OptionsAppType {
+	type?: "app" | "lib";
+}
 
 export interface OptionsFiles {
 	/**
@@ -249,6 +252,12 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @default true
 	 */
 	toml?: boolean | OptionsOverrides;
+
+	/**
+	 * Specifiy application type
+	 */
+	type?: OptionsAppType["type"];
+
 	/**
 	 * Enable TypeScript support.
 	 *
