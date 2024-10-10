@@ -50,11 +50,11 @@ export const typescript = async (
 				...(isTypeAware && {
 					...(allowDefaultProjects
 						? {
-							projectService: {
-								allowDefaultProject: allowDefaultProjects,
-								defaultProject: tsconfigPath,
-							},
-						}
+								projectService: {
+									allowDefaultProject: allowDefaultProjects,
+									defaultProject: tsconfigPath,
+								},
+							}
 						: { project: tsconfigPath }),
 
 					tsconfigRootDir: process.cwd(),
@@ -94,10 +94,10 @@ export const typescript = async (
 
 		...(stylistic
 			? renamePluginInConfigs(
-				tsEslint.configs[isTypeAware ? "stylisticTypeChecked" : "stylistic"],
-				{ "@typescript-eslint": "ts-eslint" },
-				{ files, name: `zayne/ts-eslint/${isTypeAware ? "stylisticTypeChecked" : "stylistic"}` }
-			)
+					tsEslint.configs[isTypeAware ? "stylisticTypeChecked" : "stylistic"],
+					{ "@typescript-eslint": "ts-eslint" },
+					{ files, name: `zayne/ts-eslint/${isTypeAware ? "stylisticTypeChecked" : "stylistic"}` }
+				)
 			: []),
 
 		{
