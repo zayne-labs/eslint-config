@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.1.6
+
+### Patch Changes
+
+-  0337c5d: stop ingonring rest unused vars
+
 ## 0.1.5
 
 ### Patch Changes
