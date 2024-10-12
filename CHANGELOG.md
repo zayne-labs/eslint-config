@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.2.1
+
+### Patch Changes
+
+-  1f9a717: fix: minor bug in tanstack
+
 ## 0.2.0
 
 ### Minor Changes
