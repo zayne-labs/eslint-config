@@ -3,7 +3,6 @@ import type { Linter } from "eslint";
 import { FlatConfigComposer } from "eslint-flat-config-utils";
 import { isPackageExists } from "local-pkg";
 import {
-	eslintReactRenameMap,
 	gitIgnores,
 	ignores,
 	imports,
@@ -17,19 +16,13 @@ import {
 	sortTsconfig,
 	stylistic,
 	tailwindcss,
+	tanstack,
 	typescript,
 	unicorn,
 } from "./configs";
 import { jsx } from "./configs/jsx";
+import { defaultPluginRenameMap } from "./constants";
 import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from "./types";
-
-export const defaultPluginRenaming = {
-	...eslintReactRenameMap,
-	"@stylistic": "stylistic",
-	"@typescript-eslint": "ts-eslint",
-	"import-x": "import",
-	n: "node",
-};
 
 const ReactPackages = ["react", "react-dom"];
 
@@ -125,6 +118,10 @@ export const zayne = (
 		configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
 	}
 
+	if (restOfOptions.tanstack) {
+		configs.push(tanstack(resolveOptions(restOfOptions.tanstack)));
+	}
+
 	if (enableJsx) {
 		configs.push(jsx());
 	}
@@ -160,7 +157,7 @@ export const zayne = (
 	composer = composer.append(...configs, ...(userConfigs as never[]));
 
 	if (autoRenamePlugins) {
-		composer = composer.renamePlugins(defaultPluginRenaming);
+		composer = composer.renamePlugins(defaultPluginRenameMap);
 	}
 
 	return composer;

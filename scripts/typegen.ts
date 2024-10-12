@@ -12,6 +12,7 @@ import {
 	react,
 	stylistic,
 	tailwindcss,
+	tanstack,
 	typescript,
 	unicorn,
 } from "../src";
@@ -33,7 +34,8 @@ const configs = await combine(
 	jsdoc(),
 	jsonc(),
 	react(),
-	node()
+	node(),
+	tanstack()
 );
 
 const dts = await flatConfigsToRulesDTS(configs, {

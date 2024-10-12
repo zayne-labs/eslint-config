@@ -1,5 +1,6 @@
 import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, TypedFlatConfigItem } from "@/types";
 
+import { defaultPluginRenameMap } from "@/constants";
 import { GLOB_SRC } from "@/globs";
 import { ensurePackages, interopDefault, renamePlugins, renameRules } from "@/utils";
 import { fixupPluginRules } from "@eslint/compat";
@@ -9,17 +10,6 @@ import { isPackageExists } from "local-pkg";
 const ReactRefreshAllowConstantExportPackages = ["vite"];
 const RemixPackages = ["@remix-run/node", "@remix-run/react", "@remix-run/serve", "@remix-run/dev"];
 const NextJsPackages = ["next"];
-
-export const eslintReactRenameMap = {
-	"@eslint-react/debug": "react-debug",
-	"@eslint-react/dom": "react-dom",
-	"@eslint-react/hooks-extra": "react-hooks-extra",
-	"@eslint-react/naming-convention": "react-naming-convention",
-	"@eslint-react/web-api": "react-web-api",
-	// It has to be last to avoid rename issues
-	// eslint-disable-next-line perfectionist/sort-objects
-	"@eslint-react": "react",
-};
 
 const react = async (
 	options: OptionsFiles & OptionsHasTypeScript & OptionsOverrides = {}
@@ -51,7 +41,7 @@ const react = async (
 			name: "zayne/react/setup",
 
 			plugins: {
-				...renamePlugins(recommendedReactConfig.plugins, eslintReactRenameMap),
+				...renamePlugins(recommendedReactConfig.plugins, defaultPluginRenameMap),
 				"react-hooks": fixupPluginRules(eslintReactHooks),
 				"react-refresh": eslintPluginReactRefresh,
 			},
@@ -64,7 +54,7 @@ const react = async (
 
 			name: "zayne/react/recommended",
 
-			rules: renameRules(recommendedReactConfig.rules, eslintReactRenameMap),
+			rules: renameRules(recommendedReactConfig.rules, defaultPluginRenameMap),
 		},
 
 		{

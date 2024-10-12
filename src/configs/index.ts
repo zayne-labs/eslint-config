@@ -9,5 +9,6 @@ export * from "./stylistic";
 export * from "./jsonc";
 export * from "./jsdoc";
 export * from "./react";
+export * from "./tanstack";
 export * from "./sort";
 export * from "./node";

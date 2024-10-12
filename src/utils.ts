@@ -112,6 +112,13 @@ const isCwdInScope = isPackageExists("@zayne-labs/eslint-config");
 
 export const isPackageInScope = (name: string): boolean => isPackageExists(name, { paths: [scopeUrl] });
 
+/**
+ * Ensure that packages are installed in the current scope. If they are not
+ * installed, and the user is in a TTY, and the user is not in a CI environment,
+ * and the user is in the same scope as this package, then prompt the user to
+ * install the packages.
+ * @param packages - The packages to ensure are installed.
+ */
 export const ensurePackages = async (packages: Array<string | undefined>): Promise<void> => {
 	if (process.env.CI || !process.stdout.isTTY || !isCwdInScope) return;
 

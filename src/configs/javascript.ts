@@ -49,7 +49,7 @@ const javascript = async (options: OptionsOverrides = {}): Promise<TypedFlatConf
 				"array-callback-return": ["error", { allowImplicit: true }],
 				"block-scoped-var": "error",
 				"class-methods-use-this": "error",
-				complexity: ["warn", 30],
+				complexity: ["warn", 50],
 				"constructor-super": "error",
 				curly: ["error", "multi-line"],
 				"default-case": ["error", { commentPattern: "^no default$" }],

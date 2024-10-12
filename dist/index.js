@@ -198,7 +198,7 @@ var javascript = async (options = {}) => {
         "array-callback-return": ["error", { allowImplicit: true }],
         "block-scoped-var": "error",
         "class-methods-use-this": "error",
-        complexity: ["warn", 30],
+        complexity: ["warn", 50],
         "constructor-super": "error",
         curly: ["error", "multi-line"],
         "default-case": ["error", { commentPattern: "^no default$" }],
@@ -545,7 +545,7 @@ var typescript = async (options = {}) => {
   });
   const typeAwareRules = {
     "ts-eslint/no-unnecessary-type-parameters": "off",
-    // "ts-eslint/non-nullable-type-assertion-style": "off",
+    "ts-eslint/non-nullable-type-assertion-style": "off",
     "ts-eslint/prefer-nullish-coalescing": ["error", { ignoreConditionalTests: true }],
     "ts-eslint/restrict-template-expressions": [
       "error",
@@ -592,8 +592,8 @@ var typescript = async (options = {}) => {
             allowTernary: true
           }
         ],
-        "ts-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_", ignoreRestSiblings: true }],
-        "ts-eslint/no-use-before-define": ["error", { functions: false, ignoreTypeReferences: true }],
+        "ts-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+        "ts-eslint/no-use-before-define": "off",
         "ts-eslint/no-useless-constructor": "error",
         ...isTypeAware && typeAwareRules,
         ...overrides
@@ -604,7 +604,7 @@ var typescript = async (options = {}) => {
 
 // src/configs/unicorn.ts
 var unicorn = async (options = {}) => {
-  const { overrides } = options;
+  const { overrides, type = "app" } = options;
   const eslintPluginUnicorn = await interopDefault(import('eslint-plugin-unicorn'));
   return [
     { ...eslintPluginUnicorn.configs["flat/recommended"], name: "zayne/unicorn/recommended" },
@@ -621,6 +621,7 @@ var unicorn = async (options = {}) => {
             }
           }
         ],
+        ...type === "lib" && { "unicorn/prefer-global-this": "warn" },
         "unicorn/new-for-builtins": "off",
         "unicorn/no-array-for-each": "off",
         "unicorn/no-array-reduce": "off",
@@ -962,19 +963,26 @@ var jsdoc = async (options = {}) => {
     }
   ];
 };
-var ReactRefreshAllowConstantExportPackages = ["vite"];
-var RemixPackages = ["@remix-run/node", "@remix-run/react", "@remix-run/serve", "@remix-run/dev"];
-var NextJsPackages = ["next"];
-var eslintReactRenameMap = {
+
+// src/constants.ts
+var defaultPluginRenameMap = {
   "@eslint-react/debug": "react-debug",
   "@eslint-react/dom": "react-dom",
   "@eslint-react/hooks-extra": "react-hooks-extra",
   "@eslint-react/naming-convention": "react-naming-convention",
   "@eslint-react/web-api": "react-web-api",
-  // It has to be last to avoid rename issues
+  // It has to be below the rest to avoid rename issues
   // eslint-disable-next-line perfectionist/sort-objects
-  "@eslint-react": "react"
+  "@eslint-react": "react",
+  "@stylistic": "stylistic",
+  "@tanstack/query": "tanstack/query",
+  "@typescript-eslint": "ts-eslint",
+  "import-x": "import",
+  n: "node"
 };
+var ReactRefreshAllowConstantExportPackages = ["vite"];
+var RemixPackages = ["@remix-run/node", "@remix-run/react", "@remix-run/serve", "@remix-run/dev"];
+var NextJsPackages = ["next"];
 var react = async (options = {}) => {
   const { files = [GLOB_SRC], overrides, typescript: typescript2 = true } = options;
   await ensurePackages([
@@ -996,7 +1004,7 @@ var react = async (options = {}) => {
     {
       name: "zayne/react/setup",
       plugins: {
-        ...renamePlugins(recommendedReactConfig.plugins, eslintReactRenameMap),
+        ...renamePlugins(recommendedReactConfig.plugins, defaultPluginRenameMap),
         "react-hooks": fixupPluginRules(eslintReactHooks),
         "react-refresh": eslintPluginReactRefresh
       },
@@ -1005,7 +1013,7 @@ var react = async (options = {}) => {
     {
       files,
       name: "zayne/react/recommended",
-      rules: renameRules(recommendedReactConfig.rules, eslintReactRenameMap)
+      rules: renameRules(recommendedReactConfig.rules, defaultPluginRenameMap)
     },
     {
       files,
@@ -1061,6 +1069,30 @@ var react = async (options = {}) => {
         ],
         ...overrides
       }
+    }
+  ];
+};
+
+// src/configs/tanstack.ts
+var tanstack = async (options = {}) => {
+  const { query = true } = options;
+  if (query) {
+    await ensurePackages(["@tanstack/eslint-plugin-query"]);
+  }
+  const eslintPluginTanstackQuery = await interopDefault(import('@tanstack/eslint-plugin-query'));
+  return [
+    {
+      name: "zayne/tanstack/setup",
+      plugins: {
+        "tanstack/query": eslintPluginTanstackQuery
+      }
+    },
+    {
+      name: "zayne/tanstack/query-recommended",
+      ...renameRules(
+        eslintPluginTanstackQuery.configs["flat/recommended"][0]?.rules,
+        defaultPluginRenameMap
+      )
     }
   ];
 };
@@ -1285,7 +1317,7 @@ var sortTsconfig = () => [
 
 // src/configs/node.ts
 var node = async (options = {}) => {
-  const { overrides, security = false } = options;
+  const { overrides, security = false, type } = options;
   const eslintPluginNode = await interopDefault(import('eslint-plugin-n'));
   const eslintPluginSecurity = await interopDefault(import('eslint-plugin-security'));
   return [
@@ -1314,6 +1346,10 @@ var node = async (options = {}) => {
         "node/no-path-concat": "error",
         "node/no-unpublished-import": "off",
         "node/process-exit-as-throw": "error",
+        ...type === "app" && {
+          "node/no-unsupported-features/es-syntax": "off",
+          "node/no-unsupported-features/node-builtins": "off"
+        },
         ...overrides
       }
     }
@@ -1338,13 +1374,6 @@ var jsx = () => {
 };
 
 // src/factory.ts
-var defaultPluginRenaming = {
-  ...eslintReactRenameMap,
-  "@stylistic": "stylistic",
-  "@typescript-eslint": "ts-eslint",
-  "import-x": "import",
-  n: "node"
-};
 var ReactPackages = ["react", "react-dom"];
 var resolveOptions = (option) => isObject(option) ? option : {};
 var zayne = (options = {}, userConfigs = []) => {
@@ -1358,6 +1387,7 @@ var zayne = (options = {}, userConfigs = []) => {
     perfectionist: enablePerfectionist = true,
     react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
     stylistic: enableStylistic = true,
+    type = "app",
     typescript: enableTypeScript = isPackageExists("typescript"),
     unicorn: enableUnicorn = true,
     ...restOfOptions
@@ -1375,13 +1405,13 @@ var zayne = (options = {}, userConfigs = []) => {
     jsdoc({ stylistic: isStylistic })
   );
   if (enableNode) {
-    configs.push(node(resolveOptions(enableNode)));
+    configs.push(node({ type, ...resolveOptions(enableNode) }));
   }
   if (enablePerfectionist) {
     configs.push(perfectionist(resolveOptions(enablePerfectionist)));
   }
   if (enableUnicorn) {
-    configs.push(unicorn(resolveOptions(enableUnicorn)));
+    configs.push(unicorn({ type, ...resolveOptions(enableUnicorn) }));
   }
   if (enableJsonc) {
     configs.push(
@@ -1404,6 +1434,9 @@ var zayne = (options = {}, userConfigs = []) => {
   }
   if (restOfOptions.tailwindcss) {
     configs.push(tailwindcss(resolveOptions(restOfOptions.tailwindcss)));
+  }
+  if (restOfOptions.tanstack) {
+    configs.push(tanstack(resolveOptions(restOfOptions.tanstack)));
   }
   if (enableJsx) {
     configs.push(jsx());
@@ -1433,11 +1466,11 @@ var zayne = (options = {}, userConfigs = []) => {
   let composer = new FlatConfigComposer();
   composer = composer.append(...configs, ...userConfigs);
   if (autoRenamePlugins) {
-    composer = composer.renamePlugins(defaultPluginRenaming);
+    composer = composer.renamePlugins(defaultPluginRenameMap);
   }
   return composer;
 };
 
-export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, defaultPluginRenaming, ensurePackages, eslintReactRenameMap, gitIgnores, ignores, imports, interopDefault, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, typescript, unicorn, zayne };
+export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, ensurePackages, gitIgnores, ignores, imports, interopDefault, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, tanstack, typescript, unicorn, zayne };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

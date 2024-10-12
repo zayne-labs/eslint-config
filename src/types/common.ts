@@ -84,7 +84,7 @@ export interface OptionsTypeScriptWithTypes {
 	 * When this options is provided, type aware rules will be enabled.
 	 * @see https://typescript-eslint.io/linting/typed-linting/
 	 */
-	tsconfigPath?: string;
+	tsconfigPath?: true | string | string[];
 }
 
 export type OptionsTypescript =
@@ -97,6 +97,10 @@ export interface OptionsHasTypeScript {
 
 export interface OptionsStylistic {
 	stylistic?: boolean;
+}
+
+export interface OptionsTanstack {
+	query?: boolean;
 }
 
 export interface OptionsHasJsx {
@@ -206,7 +210,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * - `@eslint-react/eslint-plugin`
 	 * - `eslint-plugin-react-hooks`
 	 * - `eslint-plugin-react-refresh`
-	 * @default false
+	 * @default auto-detect based on the dependencies
 	 */
 	react?: boolean | OptionsOverrides;
 
@@ -248,6 +252,13 @@ export interface OptionsConfig extends OptionsComponentExts {
 	tailwindcss?: (OptionsOverrides & OptionsTailwindCSS) | boolean;
 
 	/**
+	 * Enable TanStack Query support.
+	 *
+	 * Requires installing:
+	 */
+	tanstack?: (OptionsOverrides & OptionsTanstack) | boolean;
+
+	/**
 	 * Enable TOML support.
 	 * @default true
 	 */
@@ -271,9 +282,9 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * @default true
 	 */
 	unicorn?: boolean | OptionsOverrides;
+
 	/**
 	 * Enable Vue support.
-	 * @default auto-detect based on the dependencies
 	 */
 	vue?: boolean | OptionsVue;
 
