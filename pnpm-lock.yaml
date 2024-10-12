@@ -27,8 +27,8 @@ importers:
         specifier: ^2.8.0
         version: 2.9.0(eslint@9.11.1(jiti@2.1.2))(typescript@5.6.2)
       '@zayne-labs/toolkit':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.4.0
+        version: 0.4.12
       eslint:
         specifier: ^9.11.0
         version: 9.11.1(jiti@2.1.2)
@@ -1075,14 +1075,14 @@ packages:
     resolution: {integrity: sha512-0/TdC3aeRAsW7MDvYRwEc1Uwm0TIBfzjPFgg60UU2Haj5qsCs9cc3zNgY71edqE3LbWfF/WoZQd3lJoDXFQpag==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@zayne-labs/toolkit@0.2.0':
-    resolution: {integrity: sha512-7XJ3VPSzp13v3kRJgTrfYsyUhUNwRIrOJ3B3aVEsTyg5gVqUDRDgoWZPR/XRbPg2yxiTJ0kX0rzY9EaPB97YBw==}
+  '@zayne-labs/toolkit@0.4.12':
+    resolution: {integrity: sha512-shDM00h+5kF5qSQYT5B/NV/6Sz9E1eFKb4GzfDR2KVQY99j/Ru8Ego0bqrThtQwifqiDzOE1/9OhjY2y09wuMw==}
     engines: {node: '>=18.x'}
     peerDependencies:
-      '@types/react': '>=18.0.0'
-      react: '>=18.0.0'
-      sonner: '>=1.5.0'
-      zustand: '>=5.0.0-rc.2'
+      '@types/react': ^18.0.0
+      react: ^18.0.0
+      sonner: ^1.5.0
+      zustand: ^5.0.0-rc.2
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -4378,7 +4378,7 @@ snapshots:
       '@typescript-eslint/types': 8.8.1
       eslint-visitor-keys: 3.4.3
 
-  '@zayne-labs/toolkit@0.2.0': {}
+  '@zayne-labs/toolkit@0.4.12': {}
 
   '@zayne-labs/tsconfig@0.1.1': {}
 
