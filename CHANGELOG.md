@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.2.0
+
+### Minor Changes
+
+-  11655ee: feat: add tanstack config
+
 ## 0.1.6
 
 ### Patch Changes
