@@ -88,7 +88,7 @@
 		"@eslint/compat": "^1.1.1",
 		"@eslint/js": "^9.11.1",
 		"@stylistic/eslint-plugin": "^2.8.0",
-		"@zayne-labs/toolkit": "^0.2.0",
+		"@zayne-labs/toolkit": "^0.4.0",
 		"eslint-config-flat-gitignore": "^0.3.0",
 		"eslint-flat-config-utils": "^0.4.0",
 		"eslint-import-resolver-typescript": "^3.6.3",
