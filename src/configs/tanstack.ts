@@ -12,7 +12,7 @@ const tanstack = async (
 			name: "zayne/tanstack/setup",
 			plugins: {
 				...(query && {
-					"tanstack/query": await interopDefault(import("@tanstack/eslint-plugin-query")),
+					"tanstack-query": await interopDefault(import("@tanstack/eslint-plugin-query")),
 				}),
 			},
 		},

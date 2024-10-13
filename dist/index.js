@@ -975,7 +975,7 @@ var defaultPluginRenameMap = {
   // eslint-disable-next-line perfectionist/sort-objects
   "@eslint-react": "react",
   "@stylistic": "stylistic",
-  "@tanstack/query": "tanstack/query",
+  "@tanstack/query": "tanstack-query",
   "@typescript-eslint": "ts-eslint",
   "import-x": "import",
   n: "node"
@@ -1076,23 +1076,28 @@ var react = async (options = {}) => {
 // src/configs/tanstack.ts
 var tanstack = async (options = {}) => {
   const { query = true } = options;
-  await ensurePackages(["@tanstack/eslint-plugin-query"]);
-  const eslintPluginTanstackQuery = await interopDefault(import('@tanstack/eslint-plugin-query'));
-  return [
+  const tanstackConfig = [
     {
       name: "zayne/tanstack/setup",
       plugins: {
-        ...query && { "tanstack/query": eslintPluginTanstackQuery }
+        ...query && {
+          "tanstack-query": await interopDefault(import('@tanstack/eslint-plugin-query'))
+        }
       }
-    },
-    {
+    }
+  ];
+  if (query) {
+    await ensurePackages(["@tanstack/eslint-plugin-query"]);
+    const eslintPluginTanstackQuery = await interopDefault(import('@tanstack/eslint-plugin-query'));
+    tanstackConfig.push({
       name: "zayne/tanstack/query-recommended",
-      ...query && renameRules(
+      rules: renameRules(
         eslintPluginTanstackQuery.configs["flat/recommended"][0]?.rules,
         defaultPluginRenameMap
       )
-    }
-  ];
+    });
+  }
+  return tanstackConfig;
 };
 
 // src/configs/sort.ts

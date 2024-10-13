@@ -10,7 +10,7 @@ export const defaultPluginRenameMap = {
 
 	"@stylistic": "stylistic",
 
-	"@tanstack/query": "tanstack/query",
+	"@tanstack/query": "tanstack-query",
 
 	"@typescript-eslint": "ts-eslint",
 
