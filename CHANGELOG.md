@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.2.2
+
+### Patch Changes
+
+-  dcf5971: fix: another bug in tanstack
+
 ## 0.2.1
 
 ### Patch Changes
