@@ -100,6 +100,9 @@ export interface OptionsStylistic {
 }
 
 export interface OptionsTanstack {
+	/**
+	 *  Enable tanstack query linting
+	 */
 	query?: boolean;
 }
 
@@ -254,7 +257,8 @@ export interface OptionsConfig extends OptionsComponentExts {
 	/**
 	 * Enable TanStack Query support.
 	 *
-	 * Requires installing:
+	 * Might require installing the following:
+	 * - @tanstack/eslint-plugin-query
 	 */
 	tanstack?: (OptionsOverrides & OptionsTanstack) | boolean;
 
