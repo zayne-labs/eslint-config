@@ -1,5 +1,15 @@
 # @zayne-labs/eslint-config
 
+## 0.2.6
+
+### Patch Changes
+
+-  20318c4: chore 📦: update dependencies and refactor ♻️ import statements.
+
+   -  Update dependencies.
+   -  Refactor import statements.
+   -  Add type guard for objects.
+
 ## 0.2.5
 
 ### Patch Changes
