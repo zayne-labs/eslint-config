@@ -10489,7 +10489,7 @@ type Yoda = []|[("always" | "never")]|[("always" | "never"), {
 }]
 
 // Names of all the configs
-type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/recommended" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/import/setup" | "zayne/import/recommended" | "zayne/import/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/recommended" | "zayne/react/rules" | "zayne/node/setup" | "zayne/node/recommended" | "zayne/node/rules" | "zayne/tanstack/setup" | "zayne/tanstack/query-recommended"
+type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/recommended" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/import/setup" | "zayne/import/recommended" | "zayne/import/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/recommended" | "zayne/react/rules" | "zayne/node/setup" | "zayne/node/recommended" | "zayne/node/rules" | "zayne/tanstack/query-recommended"
 
 type LiteralUnion<TUnion extends TBase, TBase = string> = TUnion | (TBase & { _ignore?: never });
 
@@ -10808,6 +10808,9 @@ interface OptionsStylistic {
     stylistic?: boolean;
 }
 interface OptionsTanstack {
+    /**
+     *  Enable tanstack query linting
+     */
     query?: boolean;
 }
 interface OptionsHasJsx {
@@ -10942,7 +10945,8 @@ interface OptionsConfig extends OptionsComponentExts {
     /**
      * Enable TanStack Query support.
      *
-     * Requires installing:
+     * Might require installing the following:
+     * - @tanstack/eslint-plugin-query
      */
     tanstack?: (OptionsOverrides & OptionsTanstack) | boolean;
     /**

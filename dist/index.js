@@ -1042,7 +1042,7 @@ var react = async (options = {}) => {
         // eslint-disable-next-line perfectionist/sort-objects
         "react-hooks/exhaustive-deps": "warn",
         "react-hooks/rules-of-hooks": "error",
-        // react refresh
+        // React refresh rules
         "react-refresh/only-export-components": [
           "warn",
           {
@@ -1076,21 +1076,15 @@ var react = async (options = {}) => {
 // src/configs/tanstack.ts
 var tanstack = async (options = {}) => {
   const { query = true } = options;
-  const tanstackConfig = [
-    {
-      name: "zayne/tanstack/setup",
-      plugins: {
-        ...query && {
-          "tanstack-query": await interopDefault(import('@tanstack/eslint-plugin-query'))
-        }
-      }
-    }
-  ];
+  const tanstackConfig = [];
   if (query) {
     await ensurePackages(["@tanstack/eslint-plugin-query"]);
     const eslintPluginTanstackQuery = await interopDefault(import('@tanstack/eslint-plugin-query'));
     tanstackConfig.push({
       name: "zayne/tanstack/query-recommended",
+      plugins: {
+        "tanstack-query": eslintPluginTanstackQuery
+      },
       rules: renameRules(
         eslintPluginTanstackQuery.configs["flat/recommended"][0]?.rules,
         defaultPluginRenameMap
@@ -1475,5 +1469,3 @@ var zayne = (options = {}, userConfigs = []) => {
 };
 
 export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, ensurePackages, gitIgnores, ignores, imports, interopDefault, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, tanstack, typescript, unicorn, zayne };
-//# sourceMappingURL=index.js.map
-//# sourceMappingURL=index.js.map
