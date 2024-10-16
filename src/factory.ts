@@ -1,4 +1,4 @@
-import { isObject } from "@zayne-labs/toolkit/type-helpers";
+import { isObject } from "@/utils";
 import type { Linter } from "eslint";
 import { FlatConfigComposer } from "eslint-flat-config-utils";
 import { isPackageExists } from "local-pkg";

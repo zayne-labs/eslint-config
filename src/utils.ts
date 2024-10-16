@@ -1,8 +1,11 @@
 import { fileURLToPath } from "node:url";
-import { isObject } from "@zayne-labs/toolkit/type-helpers";
 import type { ESLint } from "eslint";
 import { isPackageExists } from "local-pkg";
 import type { Awaitable, TypedFlatConfigItem } from "./types";
+
+export const isObject = <TObject extends Record<string, unknown>>(value: unknown): value is TObject => {
+	return typeof value === "object" && value !== null && !Array.isArray(value);
+};
 
 /**
  * Combine array and non-array configs into a single array.
