@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.2.5
+
+### Patch Changes
+
+-  d87bf3a: update deps
+
 ## 0.2.4
 
 ### Patch Changes
