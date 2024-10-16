@@ -1,5 +1,13 @@
 # @zayne-labs/eslint-config
 
+## 0.2.4
+
+### Patch Changes
+
+-  d051260: feat(tanstack): add optional tanstack-query linting
+
+   BREAKING CHANGE: The `tanstack` option now requires installing the `@tanstack/eslint-plugin-query` package to enable TanStack Query linting.
+
 ## 0.2.3
 
 ### Patch Changes
