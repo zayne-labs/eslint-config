@@ -29,9 +29,6 @@ importers:
       '@tanstack/eslint-plugin-query':
         specifier: ^5.59.7
         version: 5.59.7(eslint@9.12.0(jiti@2.3.3))(typescript@5.6.3)
-      '@zayne-labs/toolkit':
-        specifier: ^0.5.0
-        version: 0.5.0
       eslint:
         specifier: ^9.12.0
         version: 9.12.0(jiti@2.3.3)
@@ -1059,24 +1056,6 @@ packages:
   '@typescript-eslint/visitor-keys@8.9.0':
     resolution: {integrity: sha512-Ht4y38ubk4L5/U8xKUBfKNYGmvKvA1CANoxiTRMM+tOLk3lbF3DvzZCxJCRSE+2GdCMSh6zq9VZJc3asc1XuAA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@zayne-labs/toolkit@0.5.0':
-    resolution: {integrity: sha512-O5+LIJwoQBnQiBTxGO48aQ4hBc1nWdlo/tczMsIE6m88H04Q3GblTBwBMu+u5Qa8zaP70VMoinBEJDiOWs21Jw==}
-    engines: {node: '>=18.x'}
-    peerDependencies:
-      '@types/react': ^18.0.0
-      react: ^18.0.0
-      sonner: ^1.5.0
-      zustand: ^5.0.0-rc.2
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      react:
-        optional: true
-      sonner:
-        optional: true
-      zustand:
-        optional: true
 
   '@zayne-labs/tsconfig@0.2.1':
     resolution: {integrity: sha512-nm8ePOZae5wPaYkXJiH382jUroUfTjfrSwLfKBkvMaIBp1mOB5awAkPRpsXA+RHU3sBlJnASZknnfgmQiQBO2g==}
@@ -4338,8 +4317,6 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.9.0
       eslint-visitor-keys: 3.4.3
-
-  '@zayne-labs/toolkit@0.5.0': {}
 
   '@zayne-labs/tsconfig@0.2.1': {}
 
