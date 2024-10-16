@@ -88,7 +88,7 @@ const react = async (
 				"react-hooks/exhaustive-deps": "warn",
 				"react-hooks/rules-of-hooks": "error",
 
-				// react refresh
+				// React refresh rules
 				"react-refresh/only-export-components": [
 					"warn",
 					{

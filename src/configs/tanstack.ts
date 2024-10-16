@@ -7,16 +7,7 @@ const tanstack = async (
 ): Promise<TypedFlatConfigItem[]> => {
 	const { query = true } = options;
 
-	const tanstackConfig: TypedFlatConfigItem[] = [
-		{
-			name: "zayne/tanstack/setup",
-			plugins: {
-				...(query && {
-					"tanstack-query": await interopDefault(import("@tanstack/eslint-plugin-query")),
-				}),
-			},
-		},
-	];
+	const tanstackConfig: TypedFlatConfigItem[] = [];
 
 	if (query) {
 		await ensurePackages(["@tanstack/eslint-plugin-query"]);
@@ -25,6 +16,10 @@ const tanstack = async (
 
 		tanstackConfig.push({
 			name: "zayne/tanstack/query-recommended",
+
+			plugins: {
+				"tanstack-query": eslintPluginTanstackQuery,
+			},
 
 			rules: renameRules(
 				eslintPluginTanstackQuery.configs["flat/recommended"][0]?.rules,

@@ -122,7 +122,7 @@ export const isPackageInScope = (name: string): boolean => isPackageExists(name,
 export const ensurePackages = async (packages: Array<string | undefined>): Promise<void> => {
 	if (process.env.CI || !process.stdout.isTTY || !isCwdInScope) return;
 
-	const nonExistingPackages = packages.filter((pkg) => pkg && !isPackageInScope(pkg)) as string[];
+	const nonExistingPackages = packages.filter((pkg) => pkg && !isPackageInScope(pkg));
 
 	if (nonExistingPackages.length === 0) return;
 
@@ -135,10 +135,6 @@ export const ensurePackages = async (packages: Array<string | undefined>): Promi
 	if (result) {
 		const antfuPkg = await import("@antfu/install-pkg");
 
-		await antfuPkg.installPackage(nonExistingPackages, { dev: true });
+		await antfuPkg.installPackage(nonExistingPackages as string[], { dev: true });
 	}
 };
-
-// export const toArray = <TValue>(value: TValue | TValue[]): TValue[] => {
-// 	return Array.isArray(value) ? value : [value];
-// };
