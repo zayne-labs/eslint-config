@@ -1,11 +1,13 @@
 import { fileURLToPath } from 'node:url';
-import { isObject } from '@zayne-labs/toolkit/type-helpers';
 import { isPackageExists } from 'local-pkg';
 import globals from 'globals';
 import { fixupPluginRules } from '@eslint/compat';
 import { FlatConfigComposer } from 'eslint-flat-config-utils';
 
 // src/utils.ts
+var isObject = (value) => {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+};
 var combine = async (...configs) => {
   const resolved = await Promise.all(configs);
   return resolved.flat();
@@ -1468,4 +1470,4 @@ var zayne = (options = {}, userConfigs = []) => {
   return composer;
 };
 
-export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, ensurePackages, gitIgnores, ignores, imports, interopDefault, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, tanstack, typescript, unicorn, zayne };
+export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, ensurePackages, gitIgnores, ignores, imports, interopDefault, isObject, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, tanstack, typescript, unicorn, zayne };
