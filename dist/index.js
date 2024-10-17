@@ -973,9 +973,10 @@ var defaultPluginRenameMap = {
   "@eslint-react/hooks-extra": "react-hooks-extra",
   "@eslint-react/naming-convention": "react-naming-convention",
   "@eslint-react/web-api": "react-web-api",
-  // It has to be below the rest to avoid rename issues
+  // @eslint-react has to be below the rest to avoid rename issues
   // eslint-disable-next-line perfectionist/sort-objects
   "@eslint-react": "react",
+  "@next/next": "nextjs-next",
   "@stylistic": "stylistic",
   "@tanstack/query": "tanstack-query",
   "@typescript-eslint": "ts-eslint",
@@ -985,24 +986,26 @@ var defaultPluginRenameMap = {
 var ReactRefreshAllowConstantExportPackages = ["vite"];
 var RemixPackages = ["@remix-run/node", "@remix-run/react", "@remix-run/serve", "@remix-run/dev"];
 var NextJsPackages = ["next"];
+var isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some((i) => isPackageExists(i));
+var isUsingRemix = RemixPackages.some((i) => isPackageExists(i));
+var isUsingNext = NextJsPackages.some((i) => isPackageExists(i));
 var react = async (options = {}) => {
-  const { files = [GLOB_SRC], overrides, typescript: typescript2 = true } = options;
+  const { files = [GLOB_SRC], nextjs = isUsingNext, overrides, typescript: typescript2 = true } = options;
   await ensurePackages([
     "@eslint-react/eslint-plugin",
     "eslint-plugin-react-hooks",
     "eslint-plugin-react-refresh",
+    ...nextjs ? ["@next/eslint-plugin-next"] : [],
     "typescript-eslint"
   ]);
-  const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh] = await Promise.all([
+  const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh, eslintPluginNextjs] = await Promise.all([
     interopDefault(import('@eslint-react/eslint-plugin')),
     interopDefault(import('eslint-plugin-react-hooks')),
-    interopDefault(import('eslint-plugin-react-refresh'))
+    interopDefault(import('eslint-plugin-react-refresh')),
+    ...nextjs ? [interopDefault(import('@next/eslint-plugin-next'))] : []
   ]);
-  const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some((i) => isPackageExists(i));
-  const isUsingRemix = RemixPackages.some((i) => isPackageExists(i));
-  const isUsingNext = NextJsPackages.some((i) => isPackageExists(i));
   const recommendedReactConfig = eslintPluginReact.configs[typescript2 ? "recommended-type-checked" : "recommended"];
-  return [
+  const config = [
     {
       name: "zayne/react/setup",
       plugins: {
@@ -1073,16 +1076,38 @@ var react = async (options = {}) => {
       }
     }
   ];
+  if (nextjs && eslintPluginNextjs) {
+    config.push({
+      files,
+      name: "zayne/react/next",
+      plugins: {
+        "nextjs-next": fixupPluginRules(eslintPluginNextjs)
+      },
+      rules: renameRules(
+        /* eslint-disable ts-eslint/no-unsafe-argument, ts-eslint/no-unsafe-member-access */
+        {
+          // @ts-expect-error - eslint-plugin-nextjs is not typed
+          ...eslintPluginNextjs.configs?.recommended?.rules,
+          // @ts-expect-error - eslint-plugin-nextjs is not typed
+          ...eslintPluginNextjs.configs?.["core-web-vitals"]?.rules
+        },
+        defaultPluginRenameMap
+      )
+    });
+  }
+  return config;
 };
 
 // src/configs/tanstack.ts
 var tanstack = async (options = {}) => {
   const { query = true } = options;
-  const tanstackConfig = [];
-  if (query) {
-    await ensurePackages(["@tanstack/eslint-plugin-query"]);
-    const eslintPluginTanstackQuery = await interopDefault(import('@tanstack/eslint-plugin-query'));
-    tanstackConfig.push({
+  const config = [];
+  await ensurePackages([...query ? ["@tanstack/eslint-plugin-query"] : []]);
+  const [eslintPluginTanstackQuery] = await Promise.all(
+    query ? [interopDefault(import('@tanstack/eslint-plugin-query'))] : []
+  );
+  if (query && eslintPluginTanstackQuery) {
+    config.push({
       name: "zayne/tanstack/query-recommended",
       plugins: {
         "tanstack-query": eslintPluginTanstackQuery
@@ -1093,7 +1118,7 @@ var tanstack = async (options = {}) => {
       )
     });
   }
-  return tanstackConfig;
+  return config;
 };
 
 // src/configs/sort.ts

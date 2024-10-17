@@ -1163,6 +1163,110 @@ export interface Rules {
    */
   'newline-per-chained-call'?: Linter.RuleEntry<NewlinePerChainedCall>
   /**
+   * Enforce font-display behavior with Google Fonts.
+   * @see https://nextjs.org/docs/messages/google-font-display
+   */
+  'nextjs-next/google-font-display'?: Linter.RuleEntry<[]>
+  /**
+   * Ensure `preconnect` is used with Google Fonts.
+   * @see https://nextjs.org/docs/messages/google-font-preconnect
+   */
+  'nextjs-next/google-font-preconnect'?: Linter.RuleEntry<[]>
+  /**
+   * Enforce `id` attribute on `next/script` components with inline content.
+   * @see https://nextjs.org/docs/messages/inline-script-id
+   */
+  'nextjs-next/inline-script-id'?: Linter.RuleEntry<[]>
+  /**
+   * Prefer `next/script` component when using the inline script for Google Analytics.
+   * @see https://nextjs.org/docs/messages/next-script-for-ga
+   */
+  'nextjs-next/next-script-for-ga'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent assignment to the `module` variable.
+   * @see https://nextjs.org/docs/messages/no-assign-module-variable
+   */
+  'nextjs-next/no-assign-module-variable'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent client components from being async functions.
+   * @see https://nextjs.org/docs/messages/no-async-client-component
+   */
+  'nextjs-next/no-async-client-component'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `next/script`'s `beforeInteractive` strategy outside of `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-before-interactive-script-outside-document
+   */
+  'nextjs-next/no-before-interactive-script-outside-document'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent manual stylesheet tags.
+   * @see https://nextjs.org/docs/messages/no-css-tags
+   */
+  'nextjs-next/no-css-tags'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent importing `next/document` outside of `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-document-import-in-page
+   */
+  'nextjs-next/no-document-import-in-page'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent duplicate usage of `<Head>` in `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-duplicate-head
+   */
+  'nextjs-next/no-duplicate-head'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `<head>` element.
+   * @see https://nextjs.org/docs/messages/no-head-element
+   */
+  'nextjs-next/no-head-element'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `next/head` in `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-head-import-in-document
+   */
+  'nextjs-next/no-head-import-in-document'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `<a>` elements to navigate to internal Next.js pages.
+   * @see https://nextjs.org/docs/messages/no-html-link-for-pages
+   */
+  'nextjs-next/no-html-link-for-pages'?: Linter.RuleEntry<NextjsNextNoHtmlLinkForPages>
+  /**
+   * Prevent usage of `<img>` element due to slower LCP and higher bandwidth.
+   * @see https://nextjs.org/docs/messages/no-img-element
+   */
+  'nextjs-next/no-img-element'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent page-only custom fonts.
+   * @see https://nextjs.org/docs/messages/no-page-custom-font
+   */
+  'nextjs-next/no-page-custom-font'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `next/script` in `next/head` component.
+   * @see https://nextjs.org/docs/messages/no-script-component-in-head
+   */
+  'nextjs-next/no-script-component-in-head'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `styled-jsx` in `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-styled-jsx-in-document
+   */
+  'nextjs-next/no-styled-jsx-in-document'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent synchronous scripts.
+   * @see https://nextjs.org/docs/messages/no-sync-scripts
+   */
+  'nextjs-next/no-sync-scripts'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `<title>` with `Head` component from `next/document`.
+   * @see https://nextjs.org/docs/messages/no-title-in-document-head
+   */
+  'nextjs-next/no-title-in-document-head'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent common typos in Next.js data fetching functions.
+   */
+  'nextjs-next/no-typos'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent duplicate polyfills from Polyfill.io.
+   * @see https://nextjs.org/docs/messages/no-unwanted-polyfillio
+   */
+  'nextjs-next/no-unwanted-polyfillio'?: Linter.RuleEntry<[]>
+  /**
    * Disallow the use of `alert`, `confirm`, and `prompt`
    * @see https://eslint.org/docs/latest/rules/no-alert
    */
@@ -6639,6 +6743,8 @@ type NewlineAfterVar = []|[("never" | "always")]
 type NewlinePerChainedCall = []|[{
   ignoreChainWithDepth?: number
 }]
+// ----- nextjs-next/no-html-link-for-pages -----
+type NextjsNextNoHtmlLinkForPages = []|[(string | string[])]
 // ----- no-bitwise -----
 type NoBitwise = []|[{
   allow?: ("^" | "|" | "&" | "<<" | ">>" | ">>>" | "^=" | "|=" | "&=" | "<<=" | ">>=" | ">>>=" | "~")[]
@@ -10531,4 +10637,4 @@ type Yoda = []|[("always" | "never")]|[("always" | "never"), {
 }]
 
 // Names of all the configs
-export type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/recommended" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/import/setup" | "zayne/import/recommended" | "zayne/import/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/recommended" | "zayne/react/rules" | "zayne/node/setup" | "zayne/node/recommended" | "zayne/node/rules" | "zayne/tanstack/query-recommended"
+export type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/recommended" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/import/setup" | "zayne/import/recommended" | "zayne/import/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/recommended" | "zayne/react/rules" | "zayne/react/next" | "zayne/node/setup" | "zayne/node/recommended" | "zayne/node/rules" | "zayne/tanstack/query-recommended"

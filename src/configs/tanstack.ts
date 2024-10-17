@@ -7,14 +7,16 @@ const tanstack = async (
 ): Promise<TypedFlatConfigItem[]> => {
 	const { query = true } = options;
 
-	const tanstackConfig: TypedFlatConfigItem[] = [];
+	const config: TypedFlatConfigItem[] = [];
 
-	if (query) {
-		await ensurePackages(["@tanstack/eslint-plugin-query"]);
+	await ensurePackages([...(query ? ["@tanstack/eslint-plugin-query"] : [])]);
 
-		const eslintPluginTanstackQuery = await interopDefault(import("@tanstack/eslint-plugin-query"));
+	const [eslintPluginTanstackQuery] = await Promise.all(
+		query ? [interopDefault(import("@tanstack/eslint-plugin-query"))] : []
+	);
 
-		tanstackConfig.push({
+	if (query && eslintPluginTanstackQuery) {
+		config.push({
 			name: "zayne/tanstack/query-recommended",
 
 			plugins: {
@@ -28,7 +30,7 @@ const tanstack = async (
 		});
 	}
 
-	return tanstackConfig;
+	return config;
 };
 
 export { tanstack };

@@ -88,11 +88,16 @@ export interface OptionsTypeScriptWithTypes {
 }
 
 export type OptionsTypescript =
-	| (OptionsOverrides & OptionsTypeScriptParserOptions)
-	| (OptionsOverrides & OptionsTypeScriptWithTypes);
+	| (OptionsComponentExts & OptionsOverrides & OptionsTypeScriptParserOptions)
+	| (OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes);
 
 export interface OptionsHasTypeScript {
 	typescript?: boolean;
+}
+
+export interface OptionsReact {
+	/** Enable nextjs rules. */
+	nextjs?: boolean;
 }
 
 export interface OptionsStylistic {
@@ -213,9 +218,13 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * - `@eslint-react/eslint-plugin`
 	 * - `eslint-plugin-react-hooks`
 	 * - `eslint-plugin-react-refresh`
+	 *
+	 * May require installing:
+	 * - `@next/eslint-plugin-next`
+	 *
 	 * @default auto-detect based on the dependencies
 	 */
-	react?: boolean | OptionsOverrides;
+	react?: (OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsReact) | boolean;
 
 	/**
 	 * Enable regexp rules.

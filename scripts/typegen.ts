@@ -33,7 +33,7 @@ const configs = await combine(
 	imports(),
 	jsdoc(),
 	jsonc(),
-	react(),
+	react({ nextjs: true }),
 	node(),
 	tanstack({ query: true })
 );

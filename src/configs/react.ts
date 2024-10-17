@@ -1,4 +1,10 @@
-import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, TypedFlatConfigItem } from "@/types";
+import type {
+	OptionsFiles,
+	OptionsHasTypeScript,
+	OptionsOverrides,
+	OptionsReact,
+	TypedFlatConfigItem,
+} from "@/types";
 
 import { defaultPluginRenameMap } from "@/constants";
 import { GLOB_SRC } from "@/globs";
@@ -11,32 +17,35 @@ const ReactRefreshAllowConstantExportPackages = ["vite"];
 const RemixPackages = ["@remix-run/node", "@remix-run/react", "@remix-run/serve", "@remix-run/dev"];
 const NextJsPackages = ["next"];
 
+const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some((i) => isPackageExists(i));
+const isUsingRemix = RemixPackages.some((i) => isPackageExists(i));
+const isUsingNext = NextJsPackages.some((i) => isPackageExists(i));
+
 const react = async (
-	options: OptionsFiles & OptionsHasTypeScript & OptionsOverrides = {}
+	options: OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsReact = {}
 ): Promise<TypedFlatConfigItem[]> => {
-	const { files = [GLOB_SRC], overrides, typescript = true } = options;
+	const { files = [GLOB_SRC], nextjs = isUsingNext, overrides, typescript = true } = options;
 
 	await ensurePackages([
 		"@eslint-react/eslint-plugin",
 		"eslint-plugin-react-hooks",
 		"eslint-plugin-react-refresh",
+		...(nextjs ? ["@next/eslint-plugin-next"] : []),
 		"typescript-eslint",
 	]);
 
-	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh] = await Promise.all([
-		interopDefault(import("@eslint-react/eslint-plugin")),
-		interopDefault(import("eslint-plugin-react-hooks")),
-		interopDefault(import("eslint-plugin-react-refresh")),
-	] as const);
-
-	const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some((i) => isPackageExists(i));
-	const isUsingRemix = RemixPackages.some((i) => isPackageExists(i));
-	const isUsingNext = NextJsPackages.some((i) => isPackageExists(i));
+	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh, eslintPluginNextjs] =
+		await Promise.all([
+			interopDefault(import("@eslint-react/eslint-plugin")),
+			interopDefault(import("eslint-plugin-react-hooks")),
+			interopDefault(import("eslint-plugin-react-refresh")),
+			...(nextjs ? [interopDefault(import("@next/eslint-plugin-next"))] : []),
+		] as const);
 
 	// prettier-ignore
 	const recommendedReactConfig = eslintPluginReact.configs[typescript ? "recommended-type-checked" : "recommended"];
 
-	return [
+	const config: TypedFlatConfigItem[] = [
 		{
 			name: "zayne/react/setup",
 
@@ -120,6 +129,31 @@ const react = async (
 			},
 		},
 	];
+
+	if (nextjs && eslintPluginNextjs) {
+		config.push({
+			files,
+
+			name: "zayne/react/next",
+
+			plugins: {
+				"nextjs-next": fixupPluginRules(eslintPluginNextjs),
+			},
+
+			rules: renameRules(
+				/* eslint-disable ts-eslint/no-unsafe-argument, ts-eslint/no-unsafe-member-access */
+				{
+					// @ts-expect-error - eslint-plugin-nextjs is not typed
+					...eslintPluginNextjs.configs?.recommended?.rules,
+					// @ts-expect-error - eslint-plugin-nextjs is not typed
+					...eslintPluginNextjs.configs?.["core-web-vitals"]?.rules,
+				},
+				defaultPluginRenameMap
+			),
+		});
+	}
+
+	return config;
 };
 
 export { react };

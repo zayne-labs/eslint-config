@@ -1168,6 +1168,110 @@ interface Rules {
    */
   'newline-per-chained-call'?: Linter.RuleEntry<NewlinePerChainedCall>
   /**
+   * Enforce font-display behavior with Google Fonts.
+   * @see https://nextjs.org/docs/messages/google-font-display
+   */
+  'nextjs-next/google-font-display'?: Linter.RuleEntry<[]>
+  /**
+   * Ensure `preconnect` is used with Google Fonts.
+   * @see https://nextjs.org/docs/messages/google-font-preconnect
+   */
+  'nextjs-next/google-font-preconnect'?: Linter.RuleEntry<[]>
+  /**
+   * Enforce `id` attribute on `next/script` components with inline content.
+   * @see https://nextjs.org/docs/messages/inline-script-id
+   */
+  'nextjs-next/inline-script-id'?: Linter.RuleEntry<[]>
+  /**
+   * Prefer `next/script` component when using the inline script for Google Analytics.
+   * @see https://nextjs.org/docs/messages/next-script-for-ga
+   */
+  'nextjs-next/next-script-for-ga'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent assignment to the `module` variable.
+   * @see https://nextjs.org/docs/messages/no-assign-module-variable
+   */
+  'nextjs-next/no-assign-module-variable'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent client components from being async functions.
+   * @see https://nextjs.org/docs/messages/no-async-client-component
+   */
+  'nextjs-next/no-async-client-component'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `next/script`'s `beforeInteractive` strategy outside of `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-before-interactive-script-outside-document
+   */
+  'nextjs-next/no-before-interactive-script-outside-document'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent manual stylesheet tags.
+   * @see https://nextjs.org/docs/messages/no-css-tags
+   */
+  'nextjs-next/no-css-tags'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent importing `next/document` outside of `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-document-import-in-page
+   */
+  'nextjs-next/no-document-import-in-page'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent duplicate usage of `<Head>` in `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-duplicate-head
+   */
+  'nextjs-next/no-duplicate-head'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `<head>` element.
+   * @see https://nextjs.org/docs/messages/no-head-element
+   */
+  'nextjs-next/no-head-element'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `next/head` in `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-head-import-in-document
+   */
+  'nextjs-next/no-head-import-in-document'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `<a>` elements to navigate to internal Next.js pages.
+   * @see https://nextjs.org/docs/messages/no-html-link-for-pages
+   */
+  'nextjs-next/no-html-link-for-pages'?: Linter.RuleEntry<NextjsNextNoHtmlLinkForPages>
+  /**
+   * Prevent usage of `<img>` element due to slower LCP and higher bandwidth.
+   * @see https://nextjs.org/docs/messages/no-img-element
+   */
+  'nextjs-next/no-img-element'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent page-only custom fonts.
+   * @see https://nextjs.org/docs/messages/no-page-custom-font
+   */
+  'nextjs-next/no-page-custom-font'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `next/script` in `next/head` component.
+   * @see https://nextjs.org/docs/messages/no-script-component-in-head
+   */
+  'nextjs-next/no-script-component-in-head'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `styled-jsx` in `pages/_document.js`.
+   * @see https://nextjs.org/docs/messages/no-styled-jsx-in-document
+   */
+  'nextjs-next/no-styled-jsx-in-document'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent synchronous scripts.
+   * @see https://nextjs.org/docs/messages/no-sync-scripts
+   */
+  'nextjs-next/no-sync-scripts'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent usage of `<title>` with `Head` component from `next/document`.
+   * @see https://nextjs.org/docs/messages/no-title-in-document-head
+   */
+  'nextjs-next/no-title-in-document-head'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent common typos in Next.js data fetching functions.
+   */
+  'nextjs-next/no-typos'?: Linter.RuleEntry<[]>
+  /**
+   * Prevent duplicate polyfills from Polyfill.io.
+   * @see https://nextjs.org/docs/messages/no-unwanted-polyfillio
+   */
+  'nextjs-next/no-unwanted-polyfillio'?: Linter.RuleEntry<[]>
+  /**
    * Disallow the use of `alert`, `confirm`, and `prompt`
    * @see https://eslint.org/docs/latest/rules/no-alert
    */
@@ -6644,6 +6748,8 @@ type NewlineAfterVar = []|[("never" | "always")]
 type NewlinePerChainedCall = []|[{
   ignoreChainWithDepth?: number
 }]
+// ----- nextjs-next/no-html-link-for-pages -----
+type NextjsNextNoHtmlLinkForPages = []|[(string | string[])]
 // ----- no-bitwise -----
 type NoBitwise = []|[{
   allow?: ("^" | "|" | "&" | "<<" | ">>" | ">>>" | "^=" | "|=" | "&=" | "<<=" | ">>=" | ">>>=" | "~")[]
@@ -10536,7 +10642,7 @@ type Yoda = []|[("always" | "never")]|[("always" | "never"), {
 }]
 
 // Names of all the configs
-type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/recommended" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/import/setup" | "zayne/import/recommended" | "zayne/import/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/recommended" | "zayne/react/rules" | "zayne/node/setup" | "zayne/node/recommended" | "zayne/node/rules" | "zayne/tanstack/query-recommended"
+type ConfigNames = "zayne/js-eslint/setup" | "zayne/js-eslint/recommended" | "zayne/js-eslint/rules" | "zayne/unicorn/recommended" | "zayne/unicorn/rules" | "zayne/ts-eslint/setup" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/strict" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/stylistic" | "zayne/ts-eslint/rules" | "zayne/tailwindcss/setup" | "zayne/tailwindcss/recommended" | "zayne/tailwindcss/rules" | "zayne/perfectionist/rules" | "zayne/stylistic/rules" | "zayne/import/setup" | "zayne/import/recommended" | "zayne/import/rules" | "zayne/jsdoc/rules" | "zayne/jsonc/setup" | "zayne/jsonc/rules" | "zayne/react/setup" | "zayne/react/recommended" | "zayne/react/rules" | "zayne/react/next" | "zayne/node/setup" | "zayne/node/recommended" | "zayne/node/rules" | "zayne/tanstack/query-recommended"
 
 type LiteralUnion<TUnion extends TBase, TBase = string> = TUnion | (TBase & { _ignore?: never });
 
@@ -10847,9 +10953,13 @@ interface OptionsTypeScriptWithTypes {
      */
     tsconfigPath?: true | string | string[];
 }
-type OptionsTypescript = (OptionsOverrides & OptionsTypeScriptParserOptions) | (OptionsOverrides & OptionsTypeScriptWithTypes);
+type OptionsTypescript = (OptionsComponentExts & OptionsOverrides & OptionsTypeScriptParserOptions) | (OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes);
 interface OptionsHasTypeScript {
     typescript?: boolean;
+}
+interface OptionsReact {
+    /** Enable nextjs rules. */
+    nextjs?: boolean;
 }
 interface OptionsStylistic {
     stylistic?: boolean;
@@ -10954,9 +11064,13 @@ interface OptionsConfig extends OptionsComponentExts {
      * - `@eslint-react/eslint-plugin`
      * - `eslint-plugin-react-hooks`
      * - `eslint-plugin-react-refresh`
+     *
+     * May require installing:
+     * - `@next/eslint-plugin-next`
+     *
      * @default auto-detect based on the dependencies
      */
-    react?: boolean | OptionsOverrides;
+    react?: (OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsReact) | boolean;
     /**
      * Enable regexp rules.
      * @see https://ota-meshi.github.io/eslint-plugin-regexp/
@@ -10987,13 +11101,15 @@ interface OptionsConfig extends OptionsComponentExts {
     svelte?: boolean;
     /**
      * Enable TailwindCSS support.
+     * @default false
      */
     tailwindcss?: (OptionsOverrides & OptionsTailwindCSS) | boolean;
     /**
      * Enable TanStack Query support.
      *
      * Might require installing the following:
-     * - @tanstack/eslint-plugin-query
+     * - `@tanstack/eslint-plugin-query`
+     * @default false
      */
     tanstack?: (OptionsOverrides & OptionsTanstack) | boolean;
     /**
@@ -11049,7 +11165,7 @@ declare const jsonc: (options?: OptionsFiles & OptionsOverrides & OptionsStylist
 
 declare const jsdoc: (options?: OptionsOverrides & OptionsStylistic) => Promise<TypedFlatConfigItem[]>;
 
-declare const react: (options?: OptionsFiles & OptionsHasTypeScript & OptionsOverrides) => Promise<TypedFlatConfigItem[]>;
+declare const react: (options?: OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsReact) => Promise<TypedFlatConfigItem[]>;
 
 declare const tanstack: (options?: OptionsOverrides & OptionsTanstack) => Promise<TypedFlatConfigItem[]>;
 
@@ -11163,4 +11279,4 @@ declare const isPackageInScope: (name: string) => boolean;
  */
 declare const ensurePackages: (packages: Array<string | undefined>) => Promise<void>;
 
-export { type Awaitable, type ConfigNames, GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, type OptionsAppType, type OptionsComponentExts, type OptionsConfig, type OptionsFiles, type OptionsHasJsx, type OptionsHasTypeScript, type OptionsNode, type OptionsOverrides, type OptionsRegExp, type OptionsStylistic, type OptionsTailwindCSS, type OptionsTanstack, type OptionsTypeScriptParserOptions, type OptionsTypeScriptWithTypes, type OptionsTypescript, type OptionsVue, type Rules, type TypedFlatConfigItem, combine, zayne as default, ensurePackages, gitIgnores, ignores, imports, interopDefault, isObject, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, tanstack, typescript, unicorn, zayne };
+export { type Awaitable, type ConfigNames, GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, type OptionsAppType, type OptionsComponentExts, type OptionsConfig, type OptionsFiles, type OptionsHasJsx, type OptionsHasTypeScript, type OptionsNode, type OptionsOverrides, type OptionsReact, type OptionsRegExp, type OptionsStylistic, type OptionsTailwindCSS, type OptionsTanstack, type OptionsTypeScriptParserOptions, type OptionsTypeScriptWithTypes, type OptionsTypescript, type OptionsVue, type Rules, type TypedFlatConfigItem, combine, zayne as default, ensurePackages, gitIgnores, ignores, imports, interopDefault, isObject, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, tanstack, typescript, unicorn, zayne };
