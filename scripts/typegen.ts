@@ -35,7 +35,7 @@ const configs = await combine(
 	jsonc(),
 	react(),
 	node(),
-	tanstack()
+	tanstack({ query: true })
 );
 
 const dts = await flatConfigsToRulesDTS(configs, {

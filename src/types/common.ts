@@ -251,6 +251,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 
 	/**
 	 * Enable TailwindCSS support.
+	 * @default false
 	 */
 	tailwindcss?: (OptionsOverrides & OptionsTailwindCSS) | boolean;
 
@@ -259,6 +260,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 *
 	 * Might require installing the following:
 	 * - `@tanstack/eslint-plugin-query`
+	 * @default false
 	 */
 	tanstack?: (OptionsOverrides & OptionsTanstack) | boolean;
 
