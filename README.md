@@ -321,7 +321,7 @@ When you want to override rules, or disable them inline, you need to update to t
 
 ```diff
 -// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-+// eslint-disable-next-line ts/consistent-type-definitions
++// eslint-disable-next-line ts-eslint/consistent-type-definitions
 type foo = { bar: 2 }
 ```
 
@@ -345,7 +345,7 @@ export default zayne()
 
 ### Rules Overrides
 
-Certain rules would only be enabled in specific files, for example, `ts/*` rules would only be enabled in `.ts` files and `vue/*` rules would only be enabled in `.vue` files. If you want to override the rules, you need to specify the file extension:
+Certain rules would only be enabled in specific files, for example, `ts-eslint/*` rules would only be enabled in `.ts` files and `vue/*` rules would only be enabled in `.vue` files. If you want to override the rules, you need to specify the file extension:
 
 ```js
 // eslint.config.js
@@ -428,7 +428,7 @@ export default zayne()
 
 #### React
 
-To enable React support, you need to explicitly turn it on:
+React support is auto-detected from installed dependencies. You can also explicitly turn it on:
 
 ```js
 // eslint.config.js
@@ -439,10 +439,10 @@ export default zayne({
 })
 ```
 
-Running `npx eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
+Running `pnpm eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
 
 ```bash
-npm i -D @eslint-react/eslint-plugin eslint-plugin-react-hooks eslint-plugin-react-refresh
+pnpm i -D @eslint-react/eslint-plugin eslint-plugin-react-hooks eslint-plugin-react-refresh
 ```
 
 #### Svelte
@@ -458,10 +458,10 @@ export default zayne({
 })
 ```
 
-Running `npx eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
+Running `pnpm eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
 
 ```bash
-npm i -D eslint-plugin-svelte
+pnpm i -D eslint-plugin-svelte
 ```
 
 #### Astro
@@ -477,10 +477,10 @@ export default zayne({
 })
 ```
 
-Running `npx eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
+Running `pnpm eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
 
 ```bash
-npm i -D eslint-plugin-astro
+pnpm i -D eslint-plugin-astro
 ```
 
 #### Solid
@@ -496,10 +496,10 @@ export default zayne({
 })
 ```
 
-Running `npx eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
+Running `pnpm eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
 
 ```bash
-npm i -D eslint-plugin-solid
+pnpm i -D eslint-plugin-solid
 ```
 
 #### tailwindcss
@@ -515,10 +515,10 @@ export default zayne({
 })
 ```
 
-Running `npx eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
+Running `pnpm eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
 
 ```bash
-npm i -D eslint-plugin-tailwindcss
+pnpm i -D eslint-plugin-tailwindcss
 ```
 
 
@@ -541,12 +541,12 @@ export default zayne({
 ## View what rules are enabled
 
 Eslint config inspecctor is visual tool to help you view what rules are enabled in your project and apply them to what files, [@eslint/config-inspector](https://github.com/eslint/config-inspector).
-It was built by the legendary Anthony Fu.
+It was built by the legendary [Anthony Fu](https://github.com/antfu).
 
 Go to your project root that contains `eslint.config.js` and run:
 
 ```bash
-npx @eslint/config-inspector
+pnpx @eslint/config-inspector@latest
 ```
 
 ## Versioning Policy
