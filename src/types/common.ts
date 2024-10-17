@@ -258,7 +258,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * Enable TanStack Query support.
 	 *
 	 * Might require installing the following:
-	 * - @tanstack/eslint-plugin-query
+	 * - `@tanstack/eslint-plugin-query`
 	 */
 	tanstack?: (OptionsOverrides & OptionsTanstack) | boolean;
 
