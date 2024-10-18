@@ -1,5 +1,13 @@
 # @zayne-labs/eslint-config
 
+## 0.2.8
+
+### Patch Changes
+
+-  d243e1e: feat 💎: enable unicorn/prefer-global-this rule for library code
+
+   -  Enable `unicorn/prefer-global-this` rule for library code.
+
 ## 0.2.7
 
 ### Patch Changes
