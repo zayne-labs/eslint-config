@@ -25,7 +25,9 @@ export const unicorn = async (
 					},
 				],
 
-				...(type === "lib" && { "unicorn/prefer-global-this": "warn" }),
+				...(type === "lib"
+					? { "unicorn/prefer-global-this": "warn" }
+					: { "unicorn/prefer-global-this": "off" }),
 
 				"unicorn/new-for-builtins": "off",
 				"unicorn/no-array-for-each": "off",
