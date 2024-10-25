@@ -4,7 +4,7 @@ import { interopDefault, renameRules } from "@/utils";
 export const node = async (
 	options: OptionsAppType & OptionsNode & OptionsOverrides = {}
 ): Promise<TypedFlatConfigItem[]> => {
-	const { overrides, security = false, type } = options;
+	const { overrides, security = false, type = "app" } = options;
 
 	const eslintPluginNode = await interopDefault(import("eslint-plugin-n"));
 	const eslintPluginSecurity = await interopDefault(import("eslint-plugin-security"));
@@ -38,10 +38,15 @@ export const node = async (
 				"node/no-unpublished-import": "off",
 				"node/process-exit-as-throw": "error",
 
-				...(type === "app" && {
-					"node/no-unsupported-features/es-syntax": "off",
-					"node/no-unsupported-features/node-builtins": "off",
-				}),
+				...(type === "lib-strict"
+					? {
+							"node/no-unsupported-features/es-syntax": "error",
+							"node/no-unsupported-features/node-builtins": "error",
+						}
+					: {
+							"node/no-unsupported-features/es-syntax": "off",
+							"node/no-unsupported-features/node-builtins": "off",
+						}),
 
 				...overrides,
 			},

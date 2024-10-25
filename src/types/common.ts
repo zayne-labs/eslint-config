@@ -20,7 +20,13 @@ export interface OptionsOverrides {
 	overrides?: TypedFlatConfigItem["rules"];
 }
 export interface OptionsAppType {
-	type?: "app" | "lib";
+	/**
+	 * Specifiy application type
+	 * @default true
+	 */
+
+	// eslint-disable-next-line perfectionist/sort-union-types
+	type?: "app" | "lib" | "lib-strict";
 }
 
 export interface OptionsFiles {
@@ -96,17 +102,25 @@ export interface OptionsHasTypeScript {
 }
 
 export interface OptionsReact {
-	/** Enable nextjs rules. */
+	/**
+	 * Enable nextjs rules.
+	 * @default auto-detect-from-dependencies
+	 */
 	nextjs?: boolean;
 }
 
 export interface OptionsStylistic {
+	/**
+	 *  Enable stylistic rules
+	 * @default true
+	 */
 	stylistic?: boolean;
 }
 
 export interface OptionsTanstack {
 	/**
 	 *  Enable tanstack query linting
+	 * @default false
 	 */
 	query?: boolean;
 }
@@ -281,6 +295,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 
 	/**
 	 * Specifiy application type
+	 * @default "app"
 	 */
 	type?: OptionsAppType["type"];
 

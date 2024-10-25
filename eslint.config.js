@@ -7,7 +7,7 @@ export default zayne({
 		nextjs: true,
 	},
 	tanstack: true,
-	type: "lib",
+	type: "lib-strict",
 	typescript: {
 		tsconfigPath: "tsconfig.eslint.json",
 	},

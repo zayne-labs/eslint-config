@@ -623,7 +623,11 @@ var unicorn = async (options = {}) => {
             }
           }
         ],
-        ...type === "lib" && { "unicorn/prefer-global-this": "warn" },
+        ...type === "app" ? {
+          "unicorn/prefer-global-this": "off"
+        } : {
+          "unicorn/prefer-global-this": "warn"
+        },
         "unicorn/new-for-builtins": "off",
         "unicorn/no-array-for-each": "off",
         "unicorn/no-array-reduce": "off",
@@ -1341,7 +1345,7 @@ var sortTsconfig = () => [
 
 // src/configs/node.ts
 var node = async (options = {}) => {
-  const { overrides, security = false, type } = options;
+  const { overrides, security = false, type = "app" } = options;
   const eslintPluginNode = await interopDefault(import('eslint-plugin-n'));
   const eslintPluginSecurity = await interopDefault(import('eslint-plugin-security'));
   return [
@@ -1370,7 +1374,10 @@ var node = async (options = {}) => {
         "node/no-path-concat": "error",
         "node/no-unpublished-import": "off",
         "node/process-exit-as-throw": "error",
-        ...type === "app" && {
+        ...type === "lib-strict" ? {
+          "node/no-unsupported-features/es-syntax": "error",
+          "node/no-unsupported-features/node-builtins": "error"
+        } : {
           "node/no-unsupported-features/es-syntax": "off",
           "node/no-unsupported-features/node-builtins": "off"
         },
@@ -1496,3 +1503,5 @@ var zayne = (options = {}, userConfigs = []) => {
 };
 
 export { GLOB_ALL_SRC, GLOB_ASTRO, GLOB_ASTRO_TS, GLOB_CSS, GLOB_EXCLUDE, GLOB_GRAPHQL, GLOB_HTML, GLOB_JS, GLOB_JSON, GLOB_JSON5, GLOB_JSONC, GLOB_JSX, GLOB_LESS, GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN, GLOB_POSTCSS, GLOB_SCSS, GLOB_SRC, GLOB_SRC_EXT, GLOB_STYLES, GLOB_SVELTE, GLOB_SVG, GLOB_TESTS, GLOB_TOML, GLOB_TS, GLOB_TSX, GLOB_VUE, GLOB_XML, GLOB_YAML, combine, zayne as default, ensurePackages, gitIgnores, ignores, imports, interopDefault, isObject, isPackageInScope, javascript, jsdoc, jsonc, node, perfectionist, react, renamePluginInConfigs, renamePlugins, renameRules, sortPackageJson, sortTsconfig, stylistic, tailwindcss, tanstack, typescript, unicorn, zayne };
+//# sourceMappingURL=index.js.map
+//# sourceMappingURL=index.js.map

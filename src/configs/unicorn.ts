@@ -25,9 +25,13 @@ export const unicorn = async (
 					},
 				],
 
-				...(type === "lib"
-					? { "unicorn/prefer-global-this": "warn" }
-					: { "unicorn/prefer-global-this": "off" }),
+				...(type === "app"
+					? {
+							"unicorn/prefer-global-this": "off",
+						}
+					: {
+							"unicorn/prefer-global-this": "warn",
+						}),
 
 				"unicorn/new-for-builtins": "off",
 				"unicorn/no-array-for-each": "off",

@@ -10897,7 +10897,11 @@ interface OptionsOverrides {
     overrides?: TypedFlatConfigItem["rules"];
 }
 interface OptionsAppType {
-    type?: "app" | "lib";
+    /**
+     * Specifiy application type
+     * @default true
+     */
+    type?: "app" | "lib" | "lib-strict";
 }
 interface OptionsFiles {
     /**
@@ -10958,15 +10962,23 @@ interface OptionsHasTypeScript {
     typescript?: boolean;
 }
 interface OptionsReact {
-    /** Enable nextjs rules. */
+    /**
+     * Enable nextjs rules.
+     * @default auto-detect-from-dependencies
+     */
     nextjs?: boolean;
 }
 interface OptionsStylistic {
+    /**
+     *  Enable stylistic rules
+     * @default true
+     */
     stylistic?: boolean;
 }
 interface OptionsTanstack {
     /**
      *  Enable tanstack query linting
+     * @default false
      */
     query?: boolean;
 }
@@ -11119,6 +11131,7 @@ interface OptionsConfig extends OptionsComponentExts {
     toml?: boolean | OptionsOverrides;
     /**
      * Specifiy application type
+     * @default "app"
      */
     type?: OptionsAppType["type"];
     /**
