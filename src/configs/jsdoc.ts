@@ -23,7 +23,7 @@ const jsdoc = async (
 				"jsdoc/implements-on-classes": "warn",
 				"jsdoc/no-defaults": "warn",
 				"jsdoc/no-multi-asterisks": "warn",
-				"jsdoc/require-description": "warn",
+				"jsdoc/require-description": ["warn", { descriptionStyle: "any" }],
 				"jsdoc/require-param-name": "warn",
 				"jsdoc/require-property": "warn",
 				"jsdoc/require-property-description": "warn",
@@ -35,6 +35,7 @@ const jsdoc = async (
 				...(stylistic && {
 					"jsdoc/check-alignment": "warn",
 					"jsdoc/multiline-blocks": "warn",
+					"jsdoc/require-description": ["warn", { descriptionStyle: "tag" }],
 				}),
 
 				...overrides,
