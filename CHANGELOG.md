@@ -1,5 +1,14 @@
 # @zayne-labs/eslint-config
 
+## 0.2.10
+
+### Patch Changes
+
+-  8ead26d: feat(jsdoc): update jsdoc rules
+
+   -  Update `jsdoc/require-description` rule to allow any description style
+   -  Add `jsdoc/require-description` rule with `tag` style for stylistic configs
+
 ## 0.2.9
 
 ### Patch Changes
