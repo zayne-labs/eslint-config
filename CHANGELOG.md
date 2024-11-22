@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.2.11
+
+### Patch Changes
+
+-  36caa99: feat: testing out classRegex setting on tailwind
+
 ## 0.2.10
 
 ### Patch Changes
