@@ -33,7 +33,7 @@
 		"build:test": "pnpm typegen & concurrently --prefix-colors \"yellow.bold,#7da4f8.bold,magenta\" --names PUBLINT,TSUP,ATTW 'pnpm:lint:publint' 'pnpm:build:dev' 'pnpm:lint:attw'",
 		"inspect:eslint-config": "pnpx @eslint/config-inspector@latest --config eslint.config.js",
 		"lint:attw": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
-		"lint:check-types": "pnpm typegen && --pretty -p tsconfig.json",
+		"lint:check-types": "pnpm typegen && tsc --pretty -p tsconfig.json",
 		"lint:commitlint": "commitlint --edit",
 		"lint:eslint": "pnpm build && pnpm lint:eslint:dev",
 		"lint:eslint:dev": "eslint . --cache --max-warnings 0 --report-unused-disable-directives",
