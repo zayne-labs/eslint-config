@@ -303,7 +303,7 @@ export default combine(
 
 Check out the [configs](https://github.com/zayne-labs/eslint-config/blob/main/src/configs) and [factory](https://github.com/zayne-labs/eslint-config/blob/main/src/factory.ts) for more details.
 
-> Thanks to [zayne/eslint-config](https://github.com/zayne/eslint-config) for the inspiration and reference.
+> Thanks to [antfu/eslint-config](https://github.com/antfu/eslint-config) for the inspiration and reference.
 
 ### Plugins Renaming
 
