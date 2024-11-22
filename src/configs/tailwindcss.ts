@@ -19,6 +19,7 @@ const tailwindcss = async (
 			settings: {
 				tailwindcss: {
 					callees: ["tv", "cnMerge", "cn", "cnJoin", "twMerge", "twJoin"],
+					classRegex: "^class(Name|Names)?$",
 					cssFiles: [],
 					removeDuplicates: false, // Turned off cuz prettier already handles this via plugin
 					...tailwindCssSettings,
