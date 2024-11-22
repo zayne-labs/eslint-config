@@ -28,8 +28,8 @@
 		"node": ">=18.x"
 	},
 	"scripts": {
-		"build": "pnpm typegen & tsup",
-		"build:dev": "pnpm typegen & cross-env NODE_ENV=development tsup",
+		"build": "pnpm typegen && tsup",
+		"build:dev": "pnpm typegen && cross-env NODE_ENV=development tsup",
 		"build:test": "pnpm typegen & concurrently --prefix-colors \"yellow.bold,#7da4f8.bold,magenta\" --names PUBLINT,TSUP,ATTW 'pnpm:lint:publint' 'pnpm:build:dev' 'pnpm:lint:attw'",
 		"inspect:eslint-config": "pnpx @eslint/config-inspector@latest --config eslint.config.js",
 		"lint:attw": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
@@ -41,8 +41,8 @@
 		"lint:packages": "pnpm dedupe --check",
 		"lint:publint": "publint --strict .",
 		"prepare": "husky",
-		"release": "changeset publish",
-		"test:release": "pkg-pr-new publish",
+		"release": "pnpm typegen && changeset publish",
+		"test:release": "pnpm typegen && pkg-pr-new publish",
 		"typegen": "tsx scripts/typegen.ts",
 		"version-package": "changeset version"
 	},
