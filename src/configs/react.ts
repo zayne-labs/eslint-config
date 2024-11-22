@@ -79,9 +79,11 @@ const react = async (
 				"react-hooks-extra/prefer-use-state-lazy-initialization": "error",
 				"react-hooks/exhaustive-deps": "warn",
 				"react-hooks/rules-of-hooks": "error",
+
 				// Naming convention rules
 				"react-naming-convention/component-name": "warn",
 				"react-naming-convention/use-state": "warn",
+
 				// React refresh rules
 				"react-refresh/only-export-components": [
 					"warn",
@@ -109,6 +111,7 @@ const react = async (
 						],
 					},
 				],
+
 				// Regular React rules
 				"react/avoid-shorthand-boolean": "error",
 				"react/function-component-definition": "off",
@@ -121,6 +124,7 @@ const react = async (
 				"react/no-missing-component-display-name": "error",
 				"react/no-useless-fragment": "error",
 				"react/prefer-destructuring-assignment": "error",
+				"react/prefer-read-only-props": "off",
 				"react/prefer-shorthand-fragment": "error",
 
 				...overrides,
