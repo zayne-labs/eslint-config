@@ -1,7 +1,7 @@
 import type { TypedFlatConfigItem } from "@/types";
 
 /**
- * Sort package.json
+ * @description - Sort package.json
  *
  * Requires `jsonc` config
  */

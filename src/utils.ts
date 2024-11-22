@@ -8,7 +8,7 @@ export const isObject = <TObject extends Record<string, unknown>>(value: unknown
 };
 
 /**
- * Combine array and non-array configs into a single array.
+ * @description - Combine array and non-array configs into a single array.
  */
 export const combine = async (
 	...configs: Array<Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>>
@@ -28,7 +28,7 @@ export const interopDefault = async <TModule>(
 };
 
 /**
- * Rename plugin prefixes in a rule object.
+ * @description - Rename plugin prefixes in a rule object.
  * Accepts a map of prefixes to rename.
  *
  * @example
@@ -82,7 +82,7 @@ export const renamePlugins = (
 };
 
 /**
- * Rename plugin names a flat configs array
+ * @description - Rename plugin names a flat configs array
  *
  * @example
  * ```ts
@@ -116,7 +116,7 @@ const isCwdInScope = isPackageExists("@zayne-labs/eslint-config");
 export const isPackageInScope = (name: string): boolean => isPackageExists(name, { paths: [scopeUrl] });
 
 /**
- * Ensure that packages are installed in the current scope. If they are not
+ * @description - Ensure that packages are installed in the current scope. If they are not
  * installed, and the user is in a TTY, and the user is not in a CI environment,
  * and the user is in the same scope as this package, then prompt the user to
  * install the packages.

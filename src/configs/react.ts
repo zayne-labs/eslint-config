@@ -72,31 +72,16 @@ const react = async (
 			name: "zayne/react/rules",
 
 			rules: {
-				"react/avoid-shorthand-boolean": "error",
-				"react/function-component-definition": "off",
-				"react/no-array-index-key": "error",
-				"react/no-children-count": "off",
-				"react/no-children-only": "off",
-				"react/no-children-prop": "error",
-				"react/no-clone-element": "off",
-				"react/no-complex-conditional-rendering": "warn",
-				"react/no-missing-component-display-name": "error",
-				"react/no-useless-fragment": "error",
-				"react/prefer-destructuring-assignment": "error",
-				"react/prefer-shorthand-fragment": "error",
-				// eslint-disable-next-line perfectionist/sort-objects
+				// Hook rules
 				"react-hooks-extra/ensure-custom-hooks-using-other-hooks": "error",
 				"react-hooks-extra/no-unnecessary-use-callback": "warn",
 				"react-hooks-extra/no-unnecessary-use-memo": "warn",
 				"react-hooks-extra/prefer-use-state-lazy-initialization": "error",
-				"react-naming-convention/component-name": "warn",
-				"react-naming-convention/use-state": "warn",
-
-				// Hook rules
-				// eslint-disable-next-line perfectionist/sort-objects
 				"react-hooks/exhaustive-deps": "warn",
 				"react-hooks/rules-of-hooks": "error",
-
+				// Naming convention rules
+				"react-naming-convention/component-name": "warn",
+				"react-naming-convention/use-state": "warn",
 				// React refresh rules
 				"react-refresh/only-export-components": [
 					"warn",
@@ -124,6 +109,19 @@ const react = async (
 						],
 					},
 				],
+				// Regular React rules
+				"react/avoid-shorthand-boolean": "error",
+				"react/function-component-definition": "off",
+				"react/no-array-index-key": "error",
+				"react/no-children-count": "off",
+				"react/no-children-only": "off",
+				"react/no-children-prop": "error",
+				"react/no-clone-element": "off",
+				"react/no-complex-conditional-rendering": "warn",
+				"react/no-missing-component-display-name": "error",
+				"react/no-useless-fragment": "error",
+				"react/prefer-destructuring-assignment": "error",
+				"react/prefer-shorthand-fragment": "error",
 
 				...overrides,
 			},

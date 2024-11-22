@@ -135,6 +135,7 @@
 		"prettier": "3.3.3",
 		"publint": "0.2.12",
 		"size-limit": "11.1.6",
+		"tailwindcss": "^3.4.15",
 		"tsup": "8.3.5",
 		"tsx": "4.19.2",
 		"typescript": "5.7.2"
