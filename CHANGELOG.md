@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.2.12
+
+### Patch Changes
+
+-  e549305: feat: turn off readonly props requirement
+
 ## 0.2.11
 
 ### Patch Changes
