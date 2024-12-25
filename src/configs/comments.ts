@@ -23,7 +23,6 @@ export const comments = async (
 				"eslint-comments/no-duplicate-disable": "error",
 				"eslint-comments/no-unlimited-disable": "error",
 				"eslint-comments/no-unused-enable": "error",
-				"eslint-comments/require-description": "warn",
 
 				...(type !== "app" && {
 					"eslint-comments/require-description": "warn",
