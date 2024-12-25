@@ -30,7 +30,6 @@ const react = async (
 		"eslint-plugin-react-hooks",
 		"eslint-plugin-react-refresh",
 		...(nextjs ? ["@next/eslint-plugin-next"] : []),
-		"typescript-eslint",
 	]);
 
 	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh, eslintPluginNextjs] =

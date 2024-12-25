@@ -339,6 +339,8 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * Requires installing:
 	 * - `eslint-plugin-vue`
 	 * - `vue-eslint-parser`
+	 *
+	 * If sfcBlocks is enabled,
 	 * - `eslint-processor-vue-blocks`
 	 */
 	vue?:

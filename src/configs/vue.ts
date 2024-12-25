@@ -2,7 +2,7 @@ import type { Linter } from "eslint";
 import { mergeProcessors } from "eslint-merge-processors";
 import { GLOB_VUE } from "../globs";
 import type { ExtractOptions, OptionsConfig, TypedFlatConfigItem } from "../types";
-import { interopDefault } from "../utils";
+import { ensurePackages, interopDefault } from "../utils";
 
 export async function vue(
 	options: ExtractOptions<OptionsConfig["vue"]> = {}
@@ -17,6 +17,12 @@ export async function vue(
 	} = options;
 
 	const sfcBlocks = options.sfcBlocks === true ? {} : (options.sfcBlocks ?? {});
+
+	await ensurePackages([
+		"eslint-plugin-vue",
+		"vue-eslint-parser",
+		...(sfcBlocks ? ["eslint-processor-vue-blocks"] : []),
+	]);
 
 	const [pluginVue, parserVue, processorVueBlocks] = await Promise.all([
 		interopDefault(import("eslint-plugin-vue")),

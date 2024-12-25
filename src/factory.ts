@@ -51,10 +51,10 @@ export const zayne = (
 	> = []
 ): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> => {
 	const {
-		/* eslint-disable perfectionist/sort-objects -- I just want to put this at the beginning */
 		type = "app",
+		/* eslint-disable perfectionist/sort-objects -- I just want to put `type` at the beginning */
 		autoRenamePlugins = true,
-		/* eslint-enable perfectionist/sort-objects -- I just want to put this at the beginning */
+		/* eslint-enable perfectionist/sort-objects -- I just want to put `type` at the beginning */
 		comments: enableComments = true,
 		componentExts = [],
 		gitignore: enableGitignore = true,
