@@ -12,3 +12,7 @@ export * from "./react";
 export * from "./tanstack";
 export * from "./sort";
 export * from "./node";
+export * from "./comments";
+export * from "./toml";
+export * from "./yaml";
+export * from "./vue";

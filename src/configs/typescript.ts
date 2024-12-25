@@ -1,22 +1,17 @@
 import { interopDefault, renamePluginInConfigs } from "@/utils";
 import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from "../globs";
 import type {
-	OptionsComponentExts,
-	OptionsFiles,
-	OptionsOverrides,
-	OptionsStylistic,
+	ExtractOptions,
+	OptionsConfig,
 	OptionsTypeScriptParserOptions,
 	OptionsTypeScriptWithTypes,
 	TypedFlatConfigItem,
 } from "../types";
 
+type OptionsTypescript = ExtractOptions<OptionsConfig["typescript"]>;
+
 export const typescript = async (
-	options: OptionsComponentExts &
-		OptionsFiles &
-		OptionsOverrides &
-		OptionsStylistic &
-		OptionsTypeScriptParserOptions &
-		OptionsTypeScriptWithTypes = {}
+	options: OptionsTypescript & OptionsTypeScriptParserOptions & OptionsTypeScriptWithTypes = {}
 ): Promise<TypedFlatConfigItem[]> => {
 	const {
 		allowDefaultProjects,

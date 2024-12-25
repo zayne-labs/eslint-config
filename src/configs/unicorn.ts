@@ -9,7 +9,11 @@ export const unicorn = async (
 	const eslintPluginUnicorn = await interopDefault(import("eslint-plugin-unicorn"));
 
 	return [
-		{ ...eslintPluginUnicorn.configs["flat/recommended"], name: "zayne/unicorn/recommended" },
+		{
+			...eslintPluginUnicorn.configs["flat/recommended"],
+			name: "zayne/unicorn/recommended",
+		},
+
 		{
 			name: "zayne/unicorn/rules",
 

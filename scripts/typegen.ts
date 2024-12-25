@@ -1,8 +1,10 @@
 import fs from "node:fs/promises";
+import { yaml } from "@/configs/yaml";
 import { flatConfigsToRulesDTS } from "eslint-typegen/core";
 import { builtinRules } from "eslint/use-at-your-own-risk";
 import {
 	combine,
+	comments,
 	imports,
 	javascript,
 	jsdoc,
@@ -13,12 +15,14 @@ import {
 	stylistic,
 	tailwindcss,
 	tanstack,
+	toml,
 	typescript,
 	unicorn,
+	vue,
 } from "../src";
 
 const coreRules = () => ({
-	// eslint-disable-next-line ts-eslint/no-deprecated
+	// eslint-disable-next-line ts-eslint/no-deprecated -- Allow this, cuz built in rules are always marked deprecated
 	plugins: { "": { rules: Object.fromEntries(builtinRules) } },
 });
 
@@ -35,7 +39,11 @@ const configs = await combine(
 	jsonc(),
 	react({ nextjs: true }),
 	node(),
-	tanstack({ query: true })
+	tanstack({ query: true }),
+	comments(),
+	toml(),
+	yaml(),
+	vue()
 );
 
 const dts = await flatConfigsToRulesDTS(configs, {

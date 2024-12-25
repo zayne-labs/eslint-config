@@ -15,10 +15,10 @@ const sharedOptions = {
 	tsconfig: "tsconfig.json",
 } satisfies Options;
 
-export default defineConfig([
-	{
-		...sharedOptions,
-		name: "ESM",
-		outDir: "./dist",
-	},
-]);
+const config = defineConfig({
+	...sharedOptions,
+	name: "ESM",
+	outDir: "./dist",
+});
+
+export default config;

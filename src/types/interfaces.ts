@@ -1,18 +1,15 @@
+/* eslint-disable ts-eslint/consistent-type-definitions -- Users need to be able to override styles, so interfaces are needed */
 import type { ParserOptions } from "@typescript-eslint/parser";
 import type { Linter } from "eslint";
 import type { FlatGitignoreOptions } from "eslint-config-flat-gitignore";
+import type { Options as VueBlocksOptions } from "eslint-processor-vue-blocks";
 import type { Rules } from "../typegen";
 import type { FlatESLintConfigItem } from "./eslint-config-types";
 
-export type Awaitable<T> = Promise<T> | T;
-
 export type { ConfigNames, Rules } from "../typegen";
 
-/* eslint-disable ts-eslint/consistent-type-definitions */
 export interface TypedFlatConfigItem extends FlatESLintConfigItem<Partial<Linter.RulesRecord> & Rules> {
-	// Relax plugins type limitation, as most of the plugins did not have correct type info yet.
-
-	// eslint-disable-next-line ts-eslint/no-explicit-any
+	// eslint-disable-next-line ts-eslint/no-explicit-any -- Relax plugins type limitation, as most of the plugins did not have correct type info yet.
 	plugins?: Record<string, any>;
 }
 
@@ -21,12 +18,12 @@ export interface OptionsOverrides {
 }
 export interface OptionsAppType {
 	/**
-	 * Specifiy application type
-	 * @default true
+	 * Specify application type
+	 * @default "app"
 	 */
 
-	// eslint-disable-next-line perfectionist/sort-union-types
-	type?: "app" | "lib" | "lib-strict";
+	// eslint-disable-next-line perfectionist/sort-union-types -- App type should be first
+	type?: "app" | "app-strict" | "lib" | "lib-strict";
 }
 
 export interface OptionsFiles {
@@ -42,7 +39,7 @@ export interface OptionsVue extends OptionsOverrides {
 	 * @see https://github.com/antfu/eslint-processor-vue-blocks
 	 * @default true
 	 */
-	// sfcBlocks?: boolean | VueBlocksOptions;
+	sfcBlocks?: boolean | VueBlocksOptions;
 
 	/**
 	 * Vue version. Apply different rules set from `eslint-plugin-vue`.
@@ -93,11 +90,16 @@ export interface OptionsTypeScriptWithTypes {
 	tsconfigPath?: true | string | string[];
 }
 
-export type OptionsTypescript =
-	| (OptionsComponentExts & OptionsOverrides & OptionsTypeScriptParserOptions)
-	| (OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes);
+export type OptionsTypescript = OptionsComponentExts &
+	(OptionsTypeScriptParserOptions | OptionsTypeScriptWithTypes);
 
 export interface OptionsHasTypeScript {
+	/**
+	 *  Enable typescript rules
+	 *
+	 * Requires typescript config to be enabled, or the typescript parser to be provided to the plugin
+	 * @default true
+	 */
 	typescript?: boolean;
 }
 
@@ -110,6 +112,10 @@ export interface OptionsReact {
 }
 
 export interface OptionsStylistic {
+	indent?: number;
+
+	quotes?: "backtick" | "double" | "single";
+
 	/**
 	 *  Enable stylistic rules
 	 * @default true
@@ -177,6 +183,8 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 */
 	autoRenamePlugins?: boolean;
 
+	comments?: (OptionsAppType & OptionsOverrides) | boolean;
+
 	/**
 	 * Enable gitignore support.
 	 *
@@ -187,15 +195,27 @@ export interface OptionsConfig extends OptionsComponentExts {
 	gitignore?: boolean | FlatGitignoreOptions;
 
 	/**
+	 * Enable linting rules for imports.
+	 * @default true
+	 */
+	imports?: (OptionsHasTypeScript & OptionsOverrides & OptionsStylistic) | boolean;
+
+	/**
 	 * Core rules. Can't be disabled.
 	 */
 	javascript?: OptionsOverrides;
 
 	/**
+	 * Enable jsdoc linting.
+	 * @default true
+	 */
+	jsdoc?: (OptionsFiles & OptionsOverrides & OptionsStylistic) | boolean;
+
+	/**
 	 * Enable JSONC support.
 	 * @default true
 	 */
-	jsonc?: boolean | OptionsOverrides;
+	jsonc?: (OptionsFiles & OptionsOverrides & OptionsStylistic) | boolean;
 
 	/**
 	 * Enable JSX related rules.
@@ -291,10 +311,10 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * Enable TOML support.
 	 * @default true
 	 */
-	toml?: boolean | OptionsOverrides;
+	toml?: (OptionsFiles & OptionsOverrides & OptionsStylistic) | boolean;
 
 	/**
-	 * Specifiy application type
+	 * Specify application type
 	 * @default "app"
 	 */
 	type?: OptionsAppType["type"];
@@ -305,7 +325,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * Passing an object to enable TypeScript Language Server support.
 	 * @default auto-detect based on the dependencies
 	 */
-	typescript?: (OptionsStylistic & OptionsTypescript) | boolean;
+	typescript?: (OptionsFiles & OptionsOverrides & OptionsStylistic & OptionsTypescript) | boolean;
 
 	/**
 	 * Options for eslint-plugin-unicorn.
@@ -315,12 +335,19 @@ export interface OptionsConfig extends OptionsComponentExts {
 
 	/**
 	 * Enable Vue support.
+	 *
+	 * Requires installing:
+	 * - `eslint-plugin-vue`
+	 * - `vue-eslint-parser`
+	 * - `eslint-processor-vue-blocks`
 	 */
-	vue?: boolean | OptionsVue;
+	vue?:
+		| (OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsVue)
+		| boolean;
 
 	/**
 	 * Enable YAML support.
 	 * @default true
 	 */
-	yaml?: boolean | OptionsOverrides;
+	yaml?: (OptionsFiles & OptionsOverrides & OptionsStylistic) | boolean;
 }

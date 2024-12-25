@@ -9,7 +9,6 @@
 - Requires ESLint v9.5.0+
 - Inspired by the legendary open sourcerer, [antfu](https://github.com/antfu)
 
-
 ## Usage
 
 ### Manual Install
@@ -24,7 +23,7 @@ And create `eslint.config.js` in your project root:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne()
 ```
@@ -38,7 +37,7 @@ If you still use some configs from the legacy eslintrc format, you can use the [
 
 ```js
 // eslint.config.mjs
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 import { FlatCompat } from '@eslint/eslintrc'
 
 const compat = new FlatCompat()
@@ -50,7 +49,7 @@ export default zayne(
 
   // Legacy config
   [
-	...compat.config({
+ ...compat.config({
     extends: [
       'eslint:recommended',
       // Other extends...
@@ -199,7 +198,7 @@ Normally you only need to import the `zayne` preset:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne()
 ```
@@ -208,7 +207,7 @@ And that's it! Or you can configure each integration individually, for example:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   // Enable stylistic formatting rules
@@ -234,7 +233,7 @@ The `zayne` factory function also accepts an array of arbitrary custom config ov
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne(
   {
@@ -325,14 +324,13 @@ When you want to override rules, or disable them inline, you need to update to t
 type foo = { bar: 2 }
 ```
 
-
 <details>
 <summary>Change back to original prefix</summary>
 
 If you really want to use the original prefix, you can revert the plugin renaming by:
 
 ```ts
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne()
   .renamePlugins({
@@ -349,7 +347,7 @@ Certain rules would only be enabled in specific files, for example, `ts-eslint/*
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne(
   {
@@ -375,7 +373,7 @@ We also provided the `overrides` options in each integration to make it easier:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   react: {
@@ -402,7 +400,7 @@ The factory function `zayne()` returns a [`FlatConfigComposer` object from `esli
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne()
   .prepend(
@@ -425,14 +423,13 @@ export default zayne()
 // ...
 ```
 
-
 #### React
 
 React support is auto-detected from installed dependencies. You can also explicitly turn it on:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   react: true,
@@ -451,7 +448,7 @@ To enable svelte support, you need to explicitly turn it on:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   svelte: true,
@@ -470,7 +467,7 @@ To enable astro support, you need to explicitly turn it on:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   astro: true,
@@ -489,7 +486,7 @@ To enable Solid support, you need to explicitly turn it on:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   solid: true,
@@ -508,7 +505,7 @@ To enable Tailwindcss support, you need to explicitly turn it on:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   tailwindcss: true,
@@ -521,14 +518,13 @@ Running `pnpm eslint` should prompt you to install the required dependencies, ot
 pnpm i -D eslint-plugin-tailwindcss
 ```
 
-
 ### Type Aware Rules
 
 You can optionally enable the [type aware rules](https://typescript-eslint.io/linting/typed-linting/) by passing the options object to the `typescript` config:
 
 ```js
 // eslint.config.js
-import zayne from '@zayne-labs/eslint-config'
+import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne({
   typescript: {
@@ -536,7 +532,6 @@ export default zayne({
   },
 })
 ```
-
 
 ## View what rules are enabled
 
@@ -568,6 +563,6 @@ This project follows [Semantic Versioning](https://semver.org/) for releases. Ho
 
 ## FAQ
 
-### I prefer XXX...
+### I prefer XXX
 
 Sure, you can configure and override rules locally in your project to fit your needs. If that still does not work for you, you can always fork this repo and maintain your own.

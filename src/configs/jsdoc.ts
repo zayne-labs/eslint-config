@@ -1,8 +1,8 @@
-import type { OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from "@/types";
+import type { ExtractOptions, OptionsConfig, TypedFlatConfigItem } from "@/types";
 import { interopDefault } from "@/utils";
 
 const jsdoc = async (
-	options: OptionsOverrides & OptionsStylistic = {}
+	options: ExtractOptions<OptionsConfig["jsdoc"]> = {}
 ): Promise<TypedFlatConfigItem[]> => {
 	const { overrides, stylistic = true } = options;
 
@@ -14,6 +14,7 @@ const jsdoc = async (
 			plugins: {
 				jsdoc: eslintPluginJsdoc,
 			},
+
 			rules: {
 				"jsdoc/check-access": "warn",
 				"jsdoc/check-param-names": "warn",

@@ -1,9 +1,9 @@
-import type { OptionsOverrides, OptionsTanstack, TypedFlatConfigItem } from "@/types";
+import type { ExtractOptions, OptionsConfig, TypedFlatConfigItem } from "@/types";
 import { ensurePackages, interopDefault, renameRules } from "@/utils";
 import { defaultPluginRenameMap } from "../constants";
 
 const tanstack = async (
-	options: OptionsOverrides & OptionsTanstack = {}
+	options: ExtractOptions<OptionsConfig["tanstack"]> = {}
 ): Promise<TypedFlatConfigItem[]> => {
 	const { query = true } = options;
 

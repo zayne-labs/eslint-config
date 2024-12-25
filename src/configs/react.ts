@@ -1,3 +1,5 @@
+import { defaultPluginRenameMap } from "@/constants";
+import { GLOB_SRC } from "@/globs";
 import type {
 	OptionsFiles,
 	OptionsHasTypeScript,
@@ -5,9 +7,6 @@ import type {
 	OptionsReact,
 	TypedFlatConfigItem,
 } from "@/types";
-
-import { defaultPluginRenameMap } from "@/constants";
-import { GLOB_SRC } from "@/globs";
 import { ensurePackages, interopDefault, renamePlugins, renameRules } from "@/utils";
 import { fixupPluginRules } from "@eslint/compat";
 import { isPackageExists } from "local-pkg";
@@ -40,7 +39,7 @@ const react = async (
 			interopDefault(import("eslint-plugin-react-hooks")),
 			interopDefault(import("eslint-plugin-react-refresh")),
 			...(nextjs ? [interopDefault(import("@next/eslint-plugin-next"))] : []),
-		] as const);
+		]);
 
 	// prettier-ignore
 	const recommendedReactConfig = eslintPluginReact.configs[typescript ? "recommended-type-checked" : "recommended"];
@@ -143,11 +142,13 @@ const react = async (
 			},
 
 			rules: renameRules(
-				/* eslint-disable ts-eslint/no-unsafe-argument, ts-eslint/no-unsafe-member-access */
+				// eslint-disable-next-line ts-eslint/no-unsafe-argument -- eslint-plugin-nextjs is not typed
 				{
 					// @ts-expect-error - eslint-plugin-nextjs is not typed
+					// eslint-disable-next-line ts-eslint/no-unsafe-member-access -- eslint-plugin-nextjs is not typed
 					...eslintPluginNextjs.configs?.recommended?.rules,
 					// @ts-expect-error - eslint-plugin-nextjs is not typed
+					// eslint-disable-next-line ts-eslint/no-unsafe-member-access -- eslint-plugin-nextjs is not typed
 					...eslintPluginNextjs.configs?.["core-web-vitals"]?.rules,
 				},
 				defaultPluginRenameMap

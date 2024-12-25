@@ -1,7 +1,7 @@
 import { fileURLToPath } from "node:url";
-import type { ESLint } from "eslint";
+import type { ESLint, Linter } from "eslint";
 import { isPackageExists } from "local-pkg";
-import type { Awaitable, TypedFlatConfigItem } from "./types";
+import type { Awaitable, Rules, TypedFlatConfigItem } from "./types";
 
 export const isObject = <TObject extends Record<string, unknown>>(value: unknown): value is TObject => {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -12,7 +12,7 @@ export const isObject = <TObject extends Record<string, unknown>>(value: unknown
  */
 export const combine = async (
 	...configs: Array<Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>>
-) => {
+): Promise<TypedFlatConfigItem[]> => {
 	const resolved = await Promise.all(configs);
 
 	return resolved.flat();
@@ -23,7 +23,7 @@ export const interopDefault = async <TModule>(
 ): Promise<TModule extends { default: infer TDefaultExport } ? TDefaultExport : TModule> => {
 	const resolved = await module;
 
-	// eslint-disable-next-line ts-eslint/no-unnecessary-condition
+	// eslint-disable-next-line ts-eslint/no-unnecessary-condition -- casting is necessary to prevent assignability ts issues at call-site
 	return (resolved as { default: never }).default ?? resolved;
 };
 
@@ -48,7 +48,7 @@ export const interopDefault = async <TModule>(
 export const renameRules = (
 	rules: Record<string, unknown> | undefined,
 	renameMap: Record<string, string>
-) => {
+): (Partial<Linter.RulesRecord> & Rules) | undefined => {
 	if (!rules) return;
 
 	const renamedRulesEntries = Object.entries(rules).map(([ruleKey, ruleValue]) => {
@@ -67,7 +67,7 @@ export const renameRules = (
 export const renamePlugins = (
 	plugins: Record<string, unknown> | undefined,
 	renameMap: Record<string, string>
-) => {
+): Record<string, ESLint.Plugin> | undefined => {
 	if (!plugins) return;
 
 	const renamedPluginEntries = Object.entries(plugins).map(([pluginKey, pluginValue]) => {
@@ -116,10 +116,12 @@ const isCwdInScope = isPackageExists("@zayne-labs/eslint-config");
 export const isPackageInScope = (name: string): boolean => isPackageExists(name, { paths: [scopeUrl] });
 
 /**
- * @description - Ensure that packages are installed in the current scope. If they are not
- * installed, and the user is in a TTY, and the user is not in a CI environment,
+ * @description
+ * - Ensures that packages are installed in the current scope.
+ * - If they are not installed, and the user is in a TTY, and the user is not in a CI environment,
  * and the user is in the same scope as this package, then prompt the user to
  * install the packages.
+ *
  * @param packages - The packages to ensure are installed.
  */
 export const ensurePackages = async (packages: Array<string | undefined>): Promise<void> => {
