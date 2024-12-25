@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.4.1
+
+### Patch Changes
+
+- a02c293: fix: forgot to remove the require desc rule from comments
+
 ## 0.4.0
 
 ### Minor Changes
