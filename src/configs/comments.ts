@@ -4,7 +4,7 @@ import type { ExtractOptions, OptionsConfig, TypedFlatConfigItem } from "../type
 export const comments = async (
 	options: ExtractOptions<OptionsConfig["comments"]> = {}
 ): Promise<TypedFlatConfigItem[]> => {
-	const { overrides, type = "app-strict" } = options;
+	const { overrides, type = "app" } = options;
 
 	const eslintPluginComments = await interopDefault(
 		import("@eslint-community/eslint-plugin-eslint-comments")

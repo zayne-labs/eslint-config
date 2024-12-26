@@ -97,7 +97,7 @@ export const zayne = (
 	}
 
 	if (enableComments) {
-		configs.push(comments(resolveOptions(enableComments)));
+		configs.push(comments({ type, ...resolveOptions(enableComments) }));
 	}
 
 	if (enableGitignore) {
