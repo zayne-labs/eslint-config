@@ -2,21 +2,19 @@ import type { Linter } from "eslint";
 import { mergeProcessors } from "eslint-merge-processors";
 import { GLOB_VUE } from "../globs";
 import type { ExtractOptions, OptionsConfig, TypedFlatConfigItem } from "../types";
-import { ensurePackages, interopDefault } from "../utils";
+import { ensurePackages, interopDefault, resolveOptions } from "../utils";
 
 export async function vue(
 	options: ExtractOptions<OptionsConfig["vue"]> = {}
 ): Promise<TypedFlatConfigItem[]> {
 	const {
 		files = [GLOB_VUE],
-		indent = 3,
 		overrides,
+		sfcBlocks = true,
 		stylistic = true,
 		typescript = true,
 		vueVersion = 3,
 	} = options;
-
-	const sfcBlocks = options.sfcBlocks === true ? {} : (options.sfcBlocks ?? {});
 
 	await ensurePackages([
 		"eslint-plugin-vue",
@@ -27,7 +25,7 @@ export async function vue(
 	const [pluginVue, parserVue, processorVueBlocks] = await Promise.all([
 		interopDefault(import("eslint-plugin-vue")),
 		interopDefault(import("vue-eslint-parser")),
-		interopDefault(import("eslint-processor-vue-blocks")),
+		...(sfcBlocks ? [interopDefault(import("eslint-processor-vue-blocks"))] : []),
 	]);
 
 	return [
@@ -70,9 +68,9 @@ export async function vue(
 						jsx: true,
 					},
 					extraFileExtensions: [".vue"],
-					// eslint-disable-next-line import/no-extraneous-dependencies -- allow this for now, might change later
-					parser: typescript ? await interopDefault(import("@typescript-eslint/parser")) : undefined,
 					sourceType: "module",
+
+					...(typescript && { parser: await interopDefault(import("@typescript-eslint/parser")) }),
 				},
 			},
 
@@ -83,13 +81,13 @@ export async function vue(
 					? (pluginVue.processors[".vue"] as Linter.Processor)
 					: mergeProcessors([
 							pluginVue.processors[".vue"] as Linter.Processor,
-							processorVueBlocks({
-								...sfcBlocks,
+							processorVueBlocks?.({
+								...resolveOptions(sfcBlocks),
 								blocks: {
 									styles: true,
-									...sfcBlocks.blocks,
+									...resolveOptions(sfcBlocks).blocks,
 								},
-							}),
+							}) ?? (pluginVue.processors[".vue"] as Linter.Processor),
 						]),
 
 			rules: {
@@ -108,6 +106,7 @@ export async function vue(
 						}),
 
 				"node/prefer-global/process": "off",
+
 				"vue/block-order": [
 					"error",
 					{
@@ -131,7 +130,7 @@ export async function vue(
 				"vue/dot-location": ["error", "property"],
 				"vue/dot-notation": ["error", { allowKeywords: true }],
 				"vue/eqeqeq": ["error", "smart"],
-				"vue/html-indent": ["error", indent],
+				"vue/html-indent": "off",
 				"vue/html-quotes": ["error", "double"],
 				"vue/max-attributes-per-line": "off",
 				"vue/multi-word-component-names": "off",
@@ -164,6 +163,7 @@ export async function vue(
 				"vue/prop-name-casing": ["error", "camelCase"],
 				"vue/require-default-prop": "off",
 				"vue/require-prop-types": "off",
+				"vue/singleline-html-element-content-newline": "off",
 				"vue/space-infix-ops": "error",
 				"vue/space-unary-ops": ["error", { nonwords: false, words: true }],
 
@@ -200,6 +200,8 @@ export async function vue(
 					"vue/space-in-parens": ["error", "never"],
 					"vue/template-curly-spacing": "error",
 				}),
+
+				"ts-eslint/no-unused-vars": "off",
 
 				...overrides,
 			},

@@ -55,6 +55,13 @@ export interface OptionsComponentExts {
 	 * @default []
 	 */
 	componentExts?: string[];
+
+	/**
+	 * Additional extensions for type aware components.
+	 * @example ['vue']
+	 * @default []
+	 */
+	componentExtsTypeAware?: string[];
 }
 
 export interface OptionsTypeScriptParserOptions {
@@ -104,6 +111,12 @@ export interface OptionsHasTypeScript {
 }
 
 export interface OptionsReact {
+	/**
+	 * Enable react compiler rules.
+	 * @default false
+	 */
+	compiler?: boolean;
+
 	/**
 	 * Enable nextjs rules.
 	 * @default auto-detect-from-dependencies

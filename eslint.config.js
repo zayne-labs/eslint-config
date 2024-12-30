@@ -4,10 +4,11 @@ export default zayne({
 	gitignore: false,
 	ignores: ["dist/**", "src/typegen.d.ts", "src/types/eslint-config-types/**"],
 	react: {
+		compiler: true,
 		files: ["fixtures/**"],
 		nextjs: true,
 		overrides: {
-			"nextjs-next/no-html-link-for-pages": ["error", "fixtures"],
+			"nextjs-next/no-html-link-for-pages": ["error", "fixtures/react"],
 		},
 	},
 	tailwindcss: true,
@@ -16,4 +17,5 @@ export default zayne({
 	typescript: {
 		tsconfigPath: "tsconfig.eslint.json",
 	},
+	vue: true,
 });

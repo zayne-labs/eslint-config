@@ -1,12 +1,6 @@
 import { defaultPluginRenameMap } from "@/constants";
 import { GLOB_SRC } from "@/globs";
-import type {
-	OptionsFiles,
-	OptionsHasTypeScript,
-	OptionsOverrides,
-	OptionsReact,
-	TypedFlatConfigItem,
-} from "@/types";
+import type { ExtractOptions, OptionsConfig, TypedFlatConfigItem } from "@/types";
 import { ensurePackages, interopDefault, renamePlugins, renameRules } from "@/utils";
 import { fixupPluginRules } from "@eslint/compat";
 import { isPackageExists } from "local-pkg";
@@ -21,24 +15,33 @@ const isUsingRemix = RemixPackages.some((i) => isPackageExists(i));
 const isUsingNext = NextJsPackages.some((i) => isPackageExists(i));
 
 const react = async (
-	options: OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsReact = {}
+	options: ExtractOptions<OptionsConfig["react"]> = {}
 ): Promise<TypedFlatConfigItem[]> => {
-	const { files = [GLOB_SRC], nextjs = isUsingNext, overrides, typescript = true } = options;
+	const {
+		compiler = false,
+		files = [GLOB_SRC],
+		nextjs = isUsingNext,
+		overrides,
+		typescript = true,
+	} = options;
 
 	await ensurePackages([
 		"@eslint-react/eslint-plugin",
 		"eslint-plugin-react-hooks",
 		"eslint-plugin-react-refresh",
+		...(compiler ? ["eslint-plugin-react-compiler"] : []),
 		...(nextjs ? ["@next/eslint-plugin-next"] : []),
 	]);
 
-	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh, eslintPluginNextjs] =
+	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh, eslintPluginReactCompiler] =
 		await Promise.all([
 			interopDefault(import("@eslint-react/eslint-plugin")),
 			interopDefault(import("eslint-plugin-react-hooks")),
 			interopDefault(import("eslint-plugin-react-refresh")),
-			...(nextjs ? [interopDefault(import("@next/eslint-plugin-next"))] : []),
+			...(compiler ? [interopDefault(import("eslint-plugin-react-compiler"))] : []),
 		]);
+
+	const eslintPluginNextjs = nextjs && (await interopDefault(import("@next/eslint-plugin-next")));
 
 	// prettier-ignore
 	const recommendedReactConfig = eslintPluginReact.configs[typescript ? "recommended-type-checked" : "recommended"];
@@ -70,11 +73,13 @@ const react = async (
 			name: "zayne/react/rules",
 
 			rules: {
-				// Hook rules
+				// Hook Extra rules
 				"react-hooks-extra/ensure-custom-hooks-using-other-hooks": "error",
 				"react-hooks-extra/no-unnecessary-use-callback": "warn",
 				"react-hooks-extra/no-unnecessary-use-memo": "warn",
 				"react-hooks-extra/prefer-use-state-lazy-initialization": "error",
+
+				// Hook rules
 				"react-hooks/exhaustive-deps": "warn",
 				"react-hooks/rules-of-hooks": "error",
 
@@ -130,11 +135,27 @@ const react = async (
 		},
 	];
 
+	if (compiler && eslintPluginReactCompiler) {
+		config.push({
+			files,
+
+			name: "zayne/react/compiler",
+
+			plugins: {
+				"react-compiler": eslintPluginReactCompiler,
+			},
+
+			rules: {
+				"react-compiler/react-compiler": "error",
+			},
+		});
+	}
+
 	if (nextjs && eslintPluginNextjs) {
 		config.push({
 			files,
 
-			name: "zayne/react/next",
+			name: "zayne/react/nextjs",
 
 			plugins: {
 				"nextjs-next": fixupPluginRules(eslintPluginNextjs),

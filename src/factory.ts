@@ -1,4 +1,4 @@
-import { isObject } from "@/utils";
+import { isObject, resolveOptions } from "@/utils";
 import type { Linter } from "eslint";
 import { FlatConfigComposer } from "eslint-flat-config-utils";
 import { isPackageExists } from "local-pkg";
@@ -32,8 +32,6 @@ const ReactPackages = ["react", "react-dom"];
 
 const VuePackages = ["vue", "nuxt", "vitepress", "@slidev/cli"];
 
-const resolveOptions = (option: unknown) => (isObject(option) ? option : {});
-
 /**
  * Construct an array of ESLint flat config items.
  * @param options
@@ -57,6 +55,7 @@ export const zayne = (
 		/* eslint-enable perfectionist/sort-objects -- I just want to put `type` at the beginning */
 		comments: enableComments = true,
 		componentExts = [],
+		componentExtsTypeAware = [],
 		gitignore: enableGitignore = true,
 		imports: enableImports = true,
 		jsdoc: enableJsdoc = true,
@@ -134,9 +133,19 @@ export const zayne = (
 		);
 	}
 
+	if (enableVue) {
+		componentExts.push("vue");
+		componentExtsTypeAware.push("vue");
+	}
+
 	if (enableTypeScript) {
 		configs.push(
-			typescript({ componentExts, stylistic: isStylistic, ...resolveOptions(enableTypeScript) })
+			typescript({
+				componentExts,
+				componentExtsTypeAware,
+				stylistic: isStylistic,
+				...resolveOptions(enableTypeScript),
+			})
 		);
 	}
 
@@ -171,7 +180,7 @@ export const zayne = (
 	}
 
 	if (enableVue) {
-		configs.push(vue({ typescript: isTypeAware, ...resolveOptions(enableVue) }));
+		configs.push(vue({ stylistic: isStylistic, ...resolveOptions(enableVue) }));
 	}
 
 	// TODO Switch this out for assert from toolkit later on

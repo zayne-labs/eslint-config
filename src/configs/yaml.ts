@@ -25,7 +25,9 @@ export const yaml = async (
 			languageOptions: {
 				parser: parserYaml,
 			},
+
 			name: "antfu/yaml/rules",
+
 			rules: {
 				"style/spaced-comment": "off",
 
@@ -38,24 +40,24 @@ export const yaml = async (
 
 				"yaml/vue-custom-block/no-parsing-error": "error",
 
-				...(stylistic
-					? {
-							"yaml/block-mapping-question-indicator-newline": "error",
-							"yaml/block-sequence-hyphen-indicator-newline": "error",
-							"yaml/flow-mapping-curly-newline": "error",
-							"yaml/flow-mapping-curly-spacing": "error",
-							"yaml/flow-sequence-bracket-newline": "error",
-							"yaml/flow-sequence-bracket-spacing": "error",
-							// "yaml/indent": ["error", indent],
-							"yaml/key-spacing": "error",
-							"yaml/no-tab-indent": "error",
-							// "yaml/quotes": [
-							// 	"error",
-							// 	{ avoidEscape: true, prefer: quotes === "backtick" ? "double" : quotes },
-							// ],
-							"yaml/spaced-comment": "error",
-						}
-					: {}),
+				...(stylistic && {
+					"yaml/block-mapping-question-indicator-newline": "error",
+					"yaml/block-sequence-hyphen-indicator-newline": "error",
+					"yaml/flow-mapping-curly-newline": "error",
+					"yaml/flow-mapping-curly-spacing": "error",
+					"yaml/flow-sequence-bracket-newline": "error",
+					"yaml/flow-sequence-bracket-spacing": "error",
+					// "yaml/indent": ["error", indent],
+					"yaml/key-spacing": "error",
+					"yaml/no-tab-indent": "error",
+					// "yaml/quotes": [
+					// 	"error",
+					// 	{ avoidEscape: true, prefer: quotes === "backtick" ? "double" : quotes },
+					// ],
+					"yaml/spaced-comment": "error",
+				}),
+
+				"stylistic/spaced-comment": "off",
 
 				...overrides,
 			},

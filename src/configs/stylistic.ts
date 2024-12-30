@@ -1,4 +1,3 @@
-import { GLOB_YAML } from "@/globs";
 import type { OptionsHasJsx, OptionsOverrides, TypedFlatConfigItem } from "@/types";
 import { interopDefault } from "@/utils";
 
@@ -40,13 +39,6 @@ const stylistic = async (
 				}),
 
 				...overrides,
-			},
-		},
-		{
-			files: [GLOB_YAML],
-
-			rules: {
-				"stylistic/spaced-comment": "off",
 			},
 		},
 	];

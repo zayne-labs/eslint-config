@@ -143,3 +143,6 @@ export const ensurePackages = async (packages: Array<string | undefined>): Promi
 		await antfuPkg.installPackage(nonExistingPackages as string[], { dev: true });
 	}
 };
+
+export const resolveOptions = <TObject>(option: boolean | TObject | undefined) =>
+	isObject(option) ? option : ({} as TObject);

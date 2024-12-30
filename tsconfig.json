@@ -1,7 +1,4 @@
 {
-	/* Extend Base tsconfig settings from:
-	 *LINK: https://github.com/zayne-labs/tsconfig
-	 */
 	"extends": "@zayne-labs/tsconfig/bundler/no-dom/library",
 
 	"compilerOptions": {

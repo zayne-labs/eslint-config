@@ -17,7 +17,7 @@ export const typescript = async (
 		allowDefaultProjects,
 		componentExts = [],
 		files = [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)],
-		filesTypeAware = [GLOB_TS, GLOB_TSX],
+		filesTypeAware = [GLOB_TS, GLOB_TSX, ...componentExts.map((ext) => `**/*.${ext}`)],
 		ignoresTypeAware = [`${GLOB_MARKDOWN}/**`, GLOB_ASTRO_TS],
 		overrides,
 		parserOptions,
