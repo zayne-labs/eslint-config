@@ -1,4 +1,5 @@
 import { isObject, resolveOptions } from "@/utils";
+import { assert } from "@zayne-labs/toolkit-type-helpers";
 import type { Linter } from "eslint";
 import { FlatConfigComposer } from "eslint-flat-config-utils";
 import { isPackageExists } from "local-pkg";
@@ -13,6 +14,7 @@ import {
 	node,
 	perfectionist,
 	react,
+	solid,
 	sortPackageJson,
 	sortTsconfig,
 	stylistic,
@@ -29,8 +31,6 @@ import { defaultPluginRenameMap } from "./constants";
 import type { Awaitable, ConfigNames, OptionsConfig, Prettify, TypedFlatConfigItem } from "./types";
 
 const ReactPackages = ["react", "react-dom"];
-
-const VuePackages = ["vue", "nuxt", "vitepress", "@slidev/cli"];
 
 /**
  * Construct an array of ESLint flat config items.
@@ -68,7 +68,6 @@ export const zayne = (
 		toml: enableToml = true,
 		typescript: enableTypeScript = isPackageExists("typescript"),
 		unicorn: enableUnicorn = true,
-		vue: enableVue = VuePackages.some((pkg) => isPackageExists(pkg)),
 		yaml: enableYaml = true,
 		...restOfOptions
 	} = options;
@@ -133,7 +132,7 @@ export const zayne = (
 		);
 	}
 
-	if (enableVue) {
+	if (restOfOptions.vue) {
 		componentExts.push("vue");
 		componentExtsTypeAware.push("vue");
 	}
@@ -179,16 +178,20 @@ export const zayne = (
 		configs.push(react({ typescript: isTypeAware, ...resolveOptions(enableReact) }));
 	}
 
-	if (enableVue) {
-		configs.push(vue({ stylistic: isStylistic, ...resolveOptions(enableVue) }));
-	}
-
-	// TODO Switch this out for assert from toolkit later on
-	if ("files" in restOfOptions) {
-		throw new Error(
-			`[@zayne-labs/eslint-config] The first argument should not contain the "files" property as the options are supposed to be global. Place it in the second config array instead.`
+	if (restOfOptions.vue) {
+		configs.push(
+			vue({ stylistic: isStylistic, typescript: isTypeAware, ...resolveOptions(restOfOptions.vue) })
 		);
 	}
+
+	if (restOfOptions.solid) {
+		configs.push(solid({ typescript: isTypeAware, ...resolveOptions(restOfOptions.solid) }));
+	}
+
+	assert(
+		!("files" in restOfOptions),
+		`[@zayne-labs/eslint-config] The first argument should not contain the "files" property as the options are supposed to be global. Place it in the second config array instead.`
+	);
 
 	let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
 

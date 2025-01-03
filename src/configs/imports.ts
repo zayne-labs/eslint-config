@@ -15,11 +15,13 @@ const imports = async (
 
 	return [
 		{
+			name: "zayne/import/setup",
+
 			plugins: {
 				import: eslintPluginImportX,
 			},
+
 			...(typescript && { settings: eslintPluginImportX.flatConfigs.typescript.settings }),
-			name: "zayne/import/setup",
 		},
 
 		{

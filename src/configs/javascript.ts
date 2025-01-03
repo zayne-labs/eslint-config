@@ -21,9 +21,6 @@ const javascript = async (options: OptionsOverrides = {}): Promise<TypedFlatConf
 				},
 
 				parserOptions: {
-					ecmaFeatures: {
-						jsx: true,
-					},
 					ecmaVersion: "latest",
 					sourceType: "module",
 				},

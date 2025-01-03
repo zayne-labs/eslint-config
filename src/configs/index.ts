@@ -16,3 +16,4 @@ export * from "./comments";
 export * from "./toml";
 export * from "./yaml";
 export * from "./vue";
+export * from "./solid";

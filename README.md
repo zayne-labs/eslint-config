@@ -7,19 +7,27 @@
 - Optional [React](#react), [Svelte](#svelte), [TailwindCSS](#tailwindcss), [Astro](#astro), [Solid](#solid) support
 - Respects `.gitignore` by default
 - Requires ESLint v9.5.0+
-- Inspired by the legendary open sourcerer, [antfu](https://github.com/antfu)
+- Inspired by the legendary open sourcerer, [antfu](https://github.com/antfu/eslint-config)
 
 ## Usage
 
-### Manual Install
+Hey there! 👋 Let's get you started with this ESLint config. Here's how to set it up:
 
-If you prefer to set up manually:
+### Installation
+
+Just run one of these commands in your project:
 
 ```bash
 pnpm add -D eslint @zayne-labs/eslint-config
+
+# Using npm
+npm install -D eslint @zayne-labs/eslint-config
+
+# Using yarn
+yarn add -D eslint @zayne-labs/eslint-config
 ```
 
-And create `eslint.config.js` in your project root:
+Then create an `eslint.config.js` in your project root:
 
 ```js
 // eslint.config.js
@@ -28,10 +36,10 @@ import { zayne } from '@zayne-labs/eslint-config'
 export default zayne()
 ```
 
+That's it! You're ready to go. Want to do more? Check out the customization options below.
+
 <details>
-<summary>
-Combined with legacy config:
-</summary>
+<summary>Combined with legacy config:</summary>
 
 If you still use some configs from the legacy eslintrc format, you can use the [`@eslint/eslintrc`](https://www.npmjs.com/package/@eslint/eslintrc) package to convert them to the flat config.
 
@@ -49,16 +57,15 @@ export default zayne(
 
   // Legacy config
   [
- ...compat.config({
-    extends: [
-      'eslint:recommended',
-      // Other extends...
-    ],
-  }),
+    ...compat.config({
+      extends: [
+        'eslint:recommended',
+        // Other extends...
+      ],
+    }),
 
-  // Other flat configs...
+    // Other flat configs...
   ]
-
 )
 ```
 
@@ -68,7 +75,7 @@ export default zayne(
 
 ### Add script for package.json
 
-For example:
+Add these handy scripts to your `package.json`:
 
 ```json
 {
@@ -80,6 +87,8 @@ For example:
 ```
 
 ## IDE Support (auto fix on save)
+
+Let's set up your editor to automatically fix ESLint issues when you save. Here's how:
 
 <details>
 <summary>🟦 VS Code support</summary>
@@ -186,7 +195,7 @@ lspconfig.eslint.setup({
 })
 ```
 
-- Use [conform.nvim](https://github.com/stevearc/conform.nvim).
+- Use [conform.nvim](https://github.com/stevearc/conform.nvim)
 - Use [none-ls](https://github.com/nvimtools/none-ls.nvim)
 - Use [nvim-lint](https://github.com/mfussenegger/nvim-lint)
 
@@ -194,16 +203,7 @@ lspconfig.eslint.setup({
 
 ## Customization
 
-Normally you only need to import the `zayne` preset:
-
-```js
-// eslint.config.js
-import { zayne } from '@zayne-labs/eslint-config'
-
-export default zayne()
-```
-
-And that's it! Or you can configure each integration individually, for example:
+The great thing about this config is that it works out of the box with zero config. But if you want to tweak things (and who doesn't?), here's how:
 
 ```js
 // eslint.config.js
@@ -213,15 +213,15 @@ export default zayne({
   // Enable stylistic formatting rules
   stylistic: true,
 
-  // TypeScript and React are autodetected, you can also explicitly enable it:
+  // TypeScript and React are auto-detected, but you can be explicit:
   typescript: true,
-  react: true
+  react: true,
 
-  // Disable jsonc and yaml support
+  // Don't need JSON or YAML? Turn them off:
   jsonc: false,
   yaml: false,
 
-  // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
+  // Since `.eslintignore` isn't supported in Flat config, use `ignores`:
   ignores: [
     'build/**',
     // ...globs
@@ -229,7 +229,7 @@ export default zayne({
 })
 ```
 
-The `zayne` factory function also accepts an array of arbitrary custom config overrides as the second argument:
+Need more control? The `zayne` function takes a second argument for custom overrides:
 
 ```js
 // eslint.config.js
@@ -237,17 +237,23 @@ import { zayne } from '@zayne-labs/eslint-config'
 
 export default zayne(
   {
-    // Configures for zayne labs' config
+    // Your base config
   },
 
-  // The second arguments is an array of ESLint Configs
- [ {
-    files: ['**/*.ts'],
-    rules: {},
-  },
-  {
-    rules: {},
-  }],
+  // Custom ESLint configs
+  [
+    {
+      files: ['**/*.ts'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+    {
+      rules: {
+        'no-console': 'warn',
+      },
+    },
+  ],
 )
 ```
 
@@ -304,128 +310,13 @@ Check out the [configs](https://github.com/zayne-labs/eslint-config/blob/main/sr
 
 > Thanks to [antfu/eslint-config](https://github.com/antfu/eslint-config) for the inspiration and reference.
 
-### Plugins Renaming
+### Framework Support
 
-Since flat config requires us to explicitly provide the plugin names (instead of the mandatory convention from npm package name), we renamed some plugins to make the overall scope more consistent and easier to write.
-
-| New Prefix | Original Prefix        | Source Plugin                                                                              |
-| ---------- | ---------------------- | ------------------------------------------------------------------------------------------ |
-| `import/*` | `import-x/*`           | [eslint-plugin-import-x](https://github.com/un-es/eslint-plugin-import-x)                  |
-| `node/*`   | `n/*`                  | [eslint-plugin-n](https://github.com/eslint-community/eslint-plugin-n)                     |
-| `yaml/*`   | `yml/*`                | [eslint-plugin-yml](https://github.com/ota-meshi/eslint-plugin-yml)                        |
-| `ts-eslint/*`     | `@typescript-eslint/*` | [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint) |
-| `stylistic/*`  | `@stylistic/*`         | [@stylistic/eslint-plugin](https://github.com/eslint-stylistic/eslint-stylistic)           |
-
-When you want to override rules, or disable them inline, you need to update to the new prefix:
-
-```diff
--// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-+// eslint-disable-next-line ts-eslint/consistent-type-definitions
-type foo = { bar: 2 }
-```
-
-<details>
-<summary>Change back to original prefix</summary>
-
-If you really want to use the original prefix, you can revert the plugin renaming by:
-
-```ts
-import { zayne } from '@zayne-labs/eslint-config'
-
-export default zayne()
-  .renamePlugins({
-    "ts-eslint": '@typescript-eslint',
-    // ...
-  })
-```
-
-</details>
-
-### Rules Overrides
-
-Certain rules would only be enabled in specific files, for example, `ts-eslint/*` rules would only be enabled in `.ts` files and `vue/*` rules would only be enabled in `.vue` files. If you want to override the rules, you need to specify the file extension:
-
-```js
-// eslint.config.js
-import { zayne } from '@zayne-labs/eslint-config'
-
-export default zayne(
-  {
-    react: true,
-    typescript: true
-  },
-  {
-    files: ['**/*.jsx','**/*.tsx' ],
-    rules: {
-      'react/no-unstable-context-value': "off",
-    },
-  },
-  {
-    // Without `files`, they are general rules for all files
-    rules: {
-      'stylistic/semi': ['error', 'never'],
-    },
-  }
-)
-```
-
-We also provided the `overrides` options in each integration to make it easier:
-
-```js
-// eslint.config.js
-import { zayne } from '@zayne-labs/eslint-config'
-
-export default zayne({
-  react: {
-    overrides: {
-       'react/no-unstable-context-value': "off",
-    },
-  },
-  typescript: {
-    overrides: {
-      'ts/consistent-type-definitions': ['error', 'interface'],
-    },
-  },
-  yaml: {
-    overrides: {
-      // ...
-    },
-  },
-})
-```
-
-### Config Composer
-
-The factory function `zayne()` returns a [`FlatConfigComposer` object from `eslint-flat-config-utils`](https://github.com/zayne/eslint-flat-config-utils#composer) where you can chain the methods to compose the config even more flexibly.
-
-```js
-// eslint.config.js
-import { zayne } from '@zayne-labs/eslint-config'
-
-export default zayne()
-  .prepend(
-    // some configs before the main config
-  )
-  // overrides any named configs
-  .override(
-    'zayne/imports',
-    {
-      rules: {
-        'import/order': ['error', { 'newlines-between': 'always' }],
-      }
-    }
-  )
-  // rename plugin prefixes
-  .renamePlugins({
-    'old-prefix': 'new-prefix',
-    // ...
-  })
-// ...
-```
+Need to lint your favorite framework? We've got you covered! Here's how to enable support for various frameworks:
 
 #### React
 
-React support is auto-detected from installed dependencies. You can also explicitly turn it on:
+React support is usually auto-detected, but you can explicitly enable it:
 
 ```js
 // eslint.config.js
@@ -436,7 +327,7 @@ export default zayne({
 })
 ```
 
-Running `pnpm eslint` should prompt you to install the required dependencies, otherwise, you can install them manually:
+When you run `pnpm eslint`, it'll let you know if you need to install any dependencies. But if you prefer to install them manually:
 
 ```bash
 pnpm i -D @eslint-react/eslint-plugin eslint-plugin-react-hooks eslint-plugin-react-refresh
@@ -499,7 +390,7 @@ Running `pnpm eslint` should prompt you to install the required dependencies, ot
 pnpm i -D eslint-plugin-solid
 ```
 
-#### tailwindcss
+#### TailwindCSS
 
 To enable Tailwindcss support, you need to explicitly turn it on:
 
@@ -520,7 +411,7 @@ pnpm i -D eslint-plugin-tailwindcss
 
 ### Type Aware Rules
 
-You can optionally enable the [type aware rules](https://typescript-eslint.io/linting/typed-linting/) by passing the options object to the `typescript` config:
+Working with TypeScript? You can enable type-aware linting by pointing to your `tsconfig.json`:
 
 ```js
 // eslint.config.js
@@ -535,10 +426,7 @@ export default zayne({
 
 ## View what rules are enabled
 
-Eslint config inspecctor is visual tool to help you view what rules are enabled in your project and apply them to what files, [@eslint/config-inspector](https://github.com/eslint/config-inspector).
-It was built by the legendary [Anthony Fu](https://github.com/antfu).
-
-Go to your project root that contains `eslint.config.js` and run:
+Want to see what rules are active in your project? There's a cool tool for that! Use the ESLint config inspector (created by [Anthony Fu](https://github.com/antfu)):
 
 ```bash
 pnpx @eslint/config-inspector@latest
@@ -546,23 +434,35 @@ pnpx @eslint/config-inspector@latest
 
 ## Versioning Policy
 
-This project follows [Semantic Versioning](https://semver.org/) for releases. However, since this is just a config and involves opinions and many moving parts, we don't treat rules changes as breaking changes.
+We follow [Semantic Versioning](https://semver.org/), but with a twist since this is a config package. Here's what we consider breaking changes and what we don't:
 
-### Changes Considered as Breaking Changes
+### Breaking Changes ⚠️
 
-- Node.js version requirement changes
-- Huge refactors that might break the config
-- Plugins made major changes that might break the config
-- Changes that might affect most of the codebases
+- Node.js version changes
+- Major refactors that could break your setup
+- Big plugin updates that change behavior
+- Changes affecting most codebases
 
-### Changes Considered as Non-breaking Changes
+### Non-Breaking Changes 🌟
 
-- Enable/disable rules and plugins (that might become stricter)
-- Rules options changes
-- Version bumps of dependencies
+- Enabling/disabling rules (even if they get stricter)
+- Tweaking rule options
+- Updating dependencies
 
 ## FAQ
 
-### I prefer XXX
+### "I prefer X instead of Y..."
 
-Sure, you can configure and override rules locally in your project to fit your needs. If that still does not work for you, you can always fork this repo and maintain your own.
+No worries! This config is just our take on things. Feel free to override rules locally to match your style. If that's not enough, you can always fork the repo and make it your own.
+
+## 🤝 Contributing
+
+We welcome contributions! Please check out our [contribution guidelines](https://github.com/zayne-labs/contribute) for details on how to get started.
+
+## 📄 License
+
+MIT © [Ryan Zayne]
+
+## 💖 Credits
+
+Inspired by the legendary open sourcerer, [antfu](https://github.com/antfu/eslint-config)

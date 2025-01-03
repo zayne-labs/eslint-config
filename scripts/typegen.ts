@@ -12,6 +12,7 @@ import {
 	node,
 	perfectionist,
 	react,
+	solid,
 	stylistic,
 	tailwindcss,
 	tanstack,
@@ -43,7 +44,8 @@ const configs = await combine(
 	comments(),
 	toml(),
 	yaml(),
-	vue()
+	vue(),
+	solid()
 );
 
 const dts = await flatConfigsToRulesDTS(configs, {

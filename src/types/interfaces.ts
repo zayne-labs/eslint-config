@@ -122,6 +122,12 @@ export interface OptionsReact {
 	 * @default auto-detect-from-dependencies
 	 */
 	nextjs?: boolean;
+
+	/**
+	 * Enable react-refresh(HMR) rules.
+	 * @default true
+	 */
+	refresh?: boolean;
 }
 
 export interface OptionsStylistic {
@@ -287,7 +293,7 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 * - `eslint-plugin-solid`
 	 * @default false
 	 */
-	solid?: boolean | OptionsOverrides;
+	solid?: (OptionsFiles & OptionsHasTypeScript & OptionsOverrides) | boolean;
 
 	/**
 	 * Enable stylistic rules.

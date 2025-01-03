@@ -11,6 +11,7 @@ const jsdoc = async (
 	return [
 		{
 			name: "zayne/jsdoc/rules",
+
 			plugins: {
 				jsdoc: eslintPluginJsdoc,
 			},

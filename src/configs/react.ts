@@ -22,24 +22,26 @@ const react = async (
 		files = [GLOB_SRC],
 		nextjs = isUsingNext,
 		overrides,
+		refresh = true,
 		typescript = true,
 	} = options;
 
 	await ensurePackages([
 		"@eslint-react/eslint-plugin",
 		"eslint-plugin-react-hooks",
-		"eslint-plugin-react-refresh",
+		...(refresh ? ["eslint-plugin-react-refresh"] : []),
 		...(compiler ? ["eslint-plugin-react-compiler"] : []),
 		...(nextjs ? ["@next/eslint-plugin-next"] : []),
 	]);
 
-	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh, eslintPluginReactCompiler] =
-		await Promise.all([
-			interopDefault(import("@eslint-react/eslint-plugin")),
-			interopDefault(import("eslint-plugin-react-hooks")),
-			interopDefault(import("eslint-plugin-react-refresh")),
-			...(compiler ? [interopDefault(import("eslint-plugin-react-compiler"))] : []),
-		]);
+	const [eslintPluginReact, eslintReactHooks, eslintPluginReactRefresh] = await Promise.all([
+		interopDefault(import("@eslint-react/eslint-plugin")),
+		interopDefault(import("eslint-plugin-react-hooks")),
+		...(refresh ? [interopDefault(import("eslint-plugin-react-refresh"))] : []),
+	]);
+
+	const eslintPluginReactCompiler =
+		compiler && (await interopDefault(import("eslint-plugin-react-compiler")));
 
 	const eslintPluginNextjs = nextjs && (await interopDefault(import("@next/eslint-plugin-next")));
 

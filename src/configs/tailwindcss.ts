@@ -29,6 +29,7 @@ const tailwindcss = async (
 
 		{
 			name: "zayne/tailwindcss/recommended",
+
 			rules: eslintPluginTailwindCss.configs["flat/recommended"][1]?.rules,
 		},
 

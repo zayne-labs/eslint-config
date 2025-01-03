@@ -35,7 +35,7 @@ const stylistic = async (
 				],
 
 				...(jsx && {
-					"stylistic/jsx-self-closing-comp": "error",
+					"stylistic/jsx-self-closing-comp": "warn",
 				}),
 
 				...overrides,
