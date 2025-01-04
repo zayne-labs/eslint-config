@@ -55,7 +55,6 @@ const react = async (
 			plugins: {
 				...renamePlugins(recommendedReactConfig.plugins, defaultPluginRenameMap),
 				"react-hooks": fixupPluginRules(eslintReactHooks),
-				"react-refresh": eslintPluginReactRefresh,
 			},
 
 			settings: recommendedReactConfig.settings,
@@ -89,7 +88,37 @@ const react = async (
 				"react-naming-convention/component-name": "warn",
 				"react-naming-convention/use-state": "warn",
 
-				// React refresh rules
+				// Regular React rules
+				"react/avoid-shorthand-boolean": "error",
+				"react/function-component-definition": "off",
+				"react/no-array-index-key": "error",
+				"react/no-children-count": "off",
+				"react/no-children-only": "off",
+				"react/no-children-prop": "error",
+				"react/no-clone-element": "off",
+				"react/no-complex-conditional-rendering": "warn",
+				"react/no-missing-component-display-name": "error",
+				"react/no-useless-fragment": "error",
+				"react/prefer-destructuring-assignment": "error",
+				"react/prefer-read-only-props": "off",
+				"react/prefer-shorthand-fragment": "error",
+
+				...overrides,
+			},
+		},
+	];
+
+	if (refresh && eslintPluginReactRefresh) {
+		config.push({
+			files,
+
+			name: "zayne/react/refresh",
+
+			plugins: {
+				"react-refresh": eslintPluginReactRefresh,
+			},
+
+			rules: {
 				"react-refresh/only-export-components": [
 					"warn",
 					{
@@ -116,26 +145,9 @@ const react = async (
 						],
 					},
 				],
-
-				// Regular React rules
-				"react/avoid-shorthand-boolean": "error",
-				"react/function-component-definition": "off",
-				"react/no-array-index-key": "error",
-				"react/no-children-count": "off",
-				"react/no-children-only": "off",
-				"react/no-children-prop": "error",
-				"react/no-clone-element": "off",
-				"react/no-complex-conditional-rendering": "warn",
-				"react/no-missing-component-display-name": "error",
-				"react/no-useless-fragment": "error",
-				"react/prefer-destructuring-assignment": "error",
-				"react/prefer-read-only-props": "off",
-				"react/prefer-shorthand-fragment": "error",
-
-				...overrides,
 			},
-		},
-	];
+		});
+	}
 
 	if (compiler && eslintPluginReactCompiler) {
 		config.push({
