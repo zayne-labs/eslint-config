@@ -202,6 +202,10 @@ export interface OptionsConfig extends OptionsComponentExts {
 	 */
 	autoRenamePlugins?: boolean;
 
+	/**
+	 * Enable linting rules for eslint comments.
+	 * @default true
+	 */
 	comments?: (OptionsAppType & OptionsOverrides) | boolean;
 
 	/**
