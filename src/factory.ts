@@ -56,16 +56,19 @@ export const zayne = (
 		...restOfOptions
 	} = options;
 
+	// == These configs are too needful to be turned off with a single switch, plus won't harm things much
+	const enableGitignore = restOfOptions.gitignore ?? true;
+	const enableJsx = restOfOptions.jsx ?? true;
+
+	// == These ones won't matter if they are all turned off at once
 	const enableComments = restOfOptions.comments ?? withDefaults;
-	const enableGitignore = restOfOptions.gitignore ?? withDefaults;
 	const enableImports = restOfOptions.imports ?? withDefaults;
 	const enableJsdoc = restOfOptions.jsdoc ?? withDefaults;
 	const enableJsonc = restOfOptions.jsonc ?? withDefaults;
-	const enableJsx = restOfOptions.jsx ?? withDefaults;
 	const enableNode = restOfOptions.node ?? withDefaults;
 	const enablePerfectionist = restOfOptions.perfectionist ?? withDefaults;
-	const enableReact =
-		restOfOptions.react ?? (withDefaults && ReactPackages.some((pkg) => isPackageExists(pkg)));
+	// prettier-ignore
+	const enableReact = restOfOptions.react ?? (withDefaults && ReactPackages.some((pkg) => isPackageExists(pkg)));
 	const enableStylistic = restOfOptions.stylistic ?? withDefaults;
 	const enableToml = restOfOptions.toml ?? withDefaults;
 	const enableTypeScript = restOfOptions.typescript ?? (withDefaults && isPackageExists("typescript"));
