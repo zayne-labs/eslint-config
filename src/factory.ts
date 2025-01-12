@@ -33,15 +33,14 @@ import type { Awaitable, ConfigNames, OptionsConfig, Prettify, TypedFlatConfigIt
 const ReactPackages = ["react", "react-dom"];
 
 /**
- * Construct an array of ESLint flat config items.
+ * @description Construct an array of ESLint flat config items.
  * @param options
  *  The options for generating the ESLint configurations.
  * @param userConfigs
- *  The user configurations to be merged with the generated configurations.
+ *  The extra user configurations to be merged with the generated configurations.
  * @returns
  *  The merged ESLint configurations.
  */
-
 export const zayne = (
 	options: OptionsConfig & Prettify<Pick<TypedFlatConfigItem, "ignores">> = {},
 	userConfigs: Array<
@@ -49,28 +48,29 @@ export const zayne = (
 	> = []
 ): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> => {
 	const {
-		type = "app",
-		/* eslint-disable perfectionist/sort-objects -- I just want to put `type` at the beginning */
 		autoRenamePlugins = true,
-		/* eslint-enable perfectionist/sort-objects -- I just want to put `type` at the beginning */
-		comments: enableComments = true,
 		componentExts = [],
 		componentExtsTypeAware = [],
-		gitignore: enableGitignore = true,
-		imports: enableImports = true,
-		jsdoc: enableJsdoc = true,
-		jsonc: enableJsonc = true,
-		jsx: enableJsx = true,
-		node: enableNode = true,
-		perfectionist: enablePerfectionist = true,
-		react: enableReact = ReactPackages.some((pkg) => isPackageExists(pkg)),
-		stylistic: enableStylistic = true,
-		toml: enableToml = true,
-		typescript: enableTypeScript = isPackageExists("typescript"),
-		unicorn: enableUnicorn = true,
-		yaml: enableYaml = true,
+		type = "app",
+		withDefaults = true,
 		...restOfOptions
 	} = options;
+
+	const enableComments = restOfOptions.comments ?? withDefaults;
+	const enableGitignore = restOfOptions.gitignore ?? withDefaults;
+	const enableImports = restOfOptions.imports ?? withDefaults;
+	const enableJsdoc = restOfOptions.jsdoc ?? withDefaults;
+	const enableJsonc = restOfOptions.jsonc ?? withDefaults;
+	const enableJsx = restOfOptions.jsx ?? withDefaults;
+	const enableNode = restOfOptions.node ?? withDefaults;
+	const enablePerfectionist = restOfOptions.perfectionist ?? withDefaults;
+	const enableReact =
+		restOfOptions.react ?? (withDefaults && ReactPackages.some((pkg) => isPackageExists(pkg)));
+	const enableStylistic = restOfOptions.stylistic ?? withDefaults;
+	const enableToml = restOfOptions.toml ?? withDefaults;
+	const enableTypeScript = restOfOptions.typescript ?? (withDefaults && isPackageExists("typescript"));
+	const enableUnicorn = restOfOptions.unicorn ?? withDefaults;
+	const enableYaml = restOfOptions.yaml ?? withDefaults;
 
 	const isStylistic = Boolean(enableStylistic);
 

@@ -371,6 +371,12 @@ export interface OptionsConfig extends OptionsComponentExts {
 		| boolean;
 
 	/**
+	 *  Controls whether or not configs enabled by defaults should stay enabled or not
+	 * @default true
+	 */
+	withDefaults?: boolean;
+
+	/**
 	 * Enable YAML support.
 	 * @default true
 	 */

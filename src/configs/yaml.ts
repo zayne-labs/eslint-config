@@ -14,7 +14,7 @@ export const yaml = async (
 
 	return [
 		{
-			name: "antfu/yaml/setup",
+			name: "zayne/yaml/setup",
 			plugins: {
 				yaml: pluginYaml,
 			},
@@ -26,11 +26,9 @@ export const yaml = async (
 				parser: parserYaml,
 			},
 
-			name: "antfu/yaml/rules",
+			name: "zayne/yaml/rules",
 
 			rules: {
-				"style/spaced-comment": "off",
-
 				"yaml/block-mapping": "error",
 				"yaml/block-sequence": "error",
 				"yaml/no-empty-key": "error",
