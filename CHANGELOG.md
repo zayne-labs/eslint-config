@@ -1,5 +1,17 @@
 # @zayne-labs/eslint-config
 
+## 0.5.1
+
+### Patch Changes
+
+- 8f457a8: feat(factory)!: ✨ add withDefaults option to control default configs
+  feat(factory): 📝 improve factory function docs and type organization
+  refactor(yaml): 🔄 rename config namespaces from antfu to zayne
+  fix(yaml): 🔧 remove redundant style/spaced-comment rule
+- 4564cab: fix(react): 🔧 ♻️ refactor react-refresh plugin configuration
+
+   Move react-refresh plugin and its rules into a separate config object that's conditionally added. This improves code organization and prevents potential issues when the refresh option is disabled.
+
 ## 0.5.0
 
 ### Minor Changes
