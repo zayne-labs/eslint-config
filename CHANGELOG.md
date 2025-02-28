@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.6.0
+
+### Minor Changes
+
+- a7f94e5: feat(prettier): add Prettier configuration and integrate with existing setup
+
 ## 0.5.1
 
 ### Patch Changes
