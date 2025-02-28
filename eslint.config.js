@@ -15,7 +15,13 @@ export default zayne({
 	solid: {
 		files: ["fixtures/solid/**"],
 	},
-	tailwindcss: true,
+
+	/**
+	 * FIXME - Re-enable when the issue is fixed:
+	 * @see https://github.com/francoismassart/eslint-plugin-tailwindcss/issues/325
+	 */
+
+	// tailwindcss: true,
 	tanstack: true,
 	type: "lib-strict",
 	typescript: {

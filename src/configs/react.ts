@@ -54,7 +54,7 @@ const react = async (
 
 			plugins: {
 				...renamePlugins(recommendedReactConfig.plugins, defaultPluginRenameMap),
-				"react-hooks": fixupPluginRules(eslintReactHooks),
+				"react-hooks": eslintReactHooks,
 			},
 
 			settings: recommendedReactConfig.settings,
@@ -176,13 +176,14 @@ const react = async (
 			},
 
 			rules: renameRules(
-				// eslint-disable-next-line ts-eslint/no-unsafe-argument -- eslint-plugin-nextjs is not typed
+				// eslint-disable-next-line ts-eslint/no-unsafe-argument -- missing types
 				{
-					// @ts-expect-error - eslint-plugin-nextjs is not typed
-					// eslint-disable-next-line ts-eslint/no-unsafe-member-access -- eslint-plugin-nextjs is not typed
+					// @ts-expect-error -- missing types
+					// eslint-disable-next-line ts-eslint/no-unsafe-member-access -- missing types
 					...eslintPluginNextjs.configs?.recommended?.rules,
-					// @ts-expect-error - eslint-plugin-nextjs is not typed
-					// eslint-disable-next-line ts-eslint/no-unsafe-member-access -- eslint-plugin-nextjs is not typed
+
+					// @ts-expect-error -- missing types
+					// eslint-disable-next-line ts-eslint/no-unsafe-member-access -- missing types
 					...eslintPluginNextjs.configs?.["core-web-vitals"]?.rules,
 				},
 				defaultPluginRenameMap

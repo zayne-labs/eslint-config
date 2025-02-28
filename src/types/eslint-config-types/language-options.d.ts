@@ -44,4 +44,6 @@ export interface LanguageOptions extends Linter.LanguageOptions {
 	 * @see [Configuring a custom parser and its options](https://eslint.org/docs/latest/user-guide/configuring/configuration-files-new#configuring-a-custom-parser-and-its-options)
 	 */
 	parserOptions?: ParserOptions;
+
+	[key: string]: any;
 }

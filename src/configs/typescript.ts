@@ -73,6 +73,9 @@ export const typescript = async (
 		"ts-eslint/return-await": ["error", "in-try-catch"],
 	};
 
+	const selectedBaseRuleSet = isTypeAware ? "strictTypeChecked" : "strict";
+	const selectedStylisticRuleSet = isTypeAware ? "strictTypeChecked" : "strict";
+
 	return [
 		{
 			name: `zayne/ts-eslint/${isTypeAware ? "type-aware-setup" : "setup"}`,
@@ -82,16 +85,16 @@ export const typescript = async (
 		},
 
 		...renamePluginInConfigs(
-			tsEslint.configs[isTypeAware ? "strictTypeChecked" : "strict"],
+			tsEslint.configs[selectedBaseRuleSet],
 			{ "@typescript-eslint": "ts-eslint" },
-			{ files, name: `zayne/ts-eslint/${isTypeAware ? "strictTypeChecked" : "strict"}` }
+			{ files, name: `zayne/ts-eslint/${selectedBaseRuleSet}` }
 		),
 
 		...(stylistic
 			? renamePluginInConfigs(
-					tsEslint.configs[isTypeAware ? "stylisticTypeChecked" : "stylistic"],
+					tsEslint.configs[selectedStylisticRuleSet],
 					{ "@typescript-eslint": "ts-eslint" },
-					{ files, name: `zayne/ts-eslint/${isTypeAware ? "stylisticTypeChecked" : "stylistic"}` }
+					{ files, name: `zayne/ts-eslint/${selectedStylisticRuleSet}` }
 				)
 			: []),
 
