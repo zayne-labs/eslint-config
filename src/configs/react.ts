@@ -86,7 +86,7 @@ const react = async (
 
 				// Naming convention rules
 				"react-naming-convention/component-name": "warn",
-				"react-naming-convention/use-state": "warn",
+				"react-naming-convention/use-state": "off",
 
 				// Regular React rules
 				"react/avoid-shorthand-boolean": "error",
