@@ -1,4 +1,4 @@
-import { baseConfig } from "./src/prettier";
+import { baseConfig } from "@zayne-labs/eslint-config/prettier";
 
 /**
  * @import { Config } from "prettier"
