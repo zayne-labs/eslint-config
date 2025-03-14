@@ -1,5 +1,11 @@
 # @zayne-labs/eslint-config
 
+## 0.6.2
+
+### Patch Changes
+
+- 6e2703c: add extra options to prettier config
+
 ## 0.6.0
 
 ### Minor Changes
