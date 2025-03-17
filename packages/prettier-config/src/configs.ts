@@ -31,4 +31,4 @@ export const configWithTailwind = defineEnum({
 	tailwindAttributes: ["classNames", "classes"],
 	tailwindFunctions: ["cnMerge", "cnJoin", "cn", "tv"],
 	tailwindStylesheet: "./tailwind.css",
-}) satisfies ConfigWithTailwind;
+} satisfies ConfigWithTailwind);

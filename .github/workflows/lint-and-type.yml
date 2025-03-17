@@ -24,7 +24,7 @@ jobs:
               version: 9.15.0
 
          - name: Setup Node.js
-           uses: actions/setup-node@v4
+           uses: useblacksmith/setup-node@v5
            with:
               node-version: ${{ matrix.node-version }}
               cache: pnpm
@@ -36,5 +36,5 @@ jobs:
 
          - name: Run linters
            run: |
-              pnpm lint:check-types
+              pnpm lint:type-check
               pnpm lint:eslint

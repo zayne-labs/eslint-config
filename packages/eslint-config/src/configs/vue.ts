@@ -93,17 +93,10 @@ export async function vue(
 			rules: {
 				...pluginVue.configs.base.rules,
 
-				...(vueVersion === 2
-					? {
-							...pluginVue.configs.essential.rules,
-							...pluginVue.configs["strongly-recommended"].rules,
-							...pluginVue.configs.recommended.rules,
-						}
-					: {
-							...pluginVue.configs["vue3-essential"].rules,
-							...pluginVue.configs["vue3-strongly-recommended"].rules,
-							...pluginVue.configs["vue3-recommended"].rules,
-						}),
+				...pluginVue.configs[`flat/${vueVersion === 2 ? "vue2-" : ""}essential`].at(-1)?.rules,
+				...pluginVue.configs[`flat/${vueVersion === 2 ? "vue2-" : ""}strongly-recommended`].at(-1)
+					?.rules,
+				...pluginVue.configs[`flat/${vueVersion === 2 ? "vue2-" : ""}recommended`].at(-1)?.rules,
 
 				"node/prefer-global/process": "off",
 

@@ -2,7 +2,12 @@ import { zayne } from "@zayne-labs/eslint-config";
 
 export default zayne({
 	gitignore: false,
-	ignores: ["dist/**", "src/typegen.d.ts", "src/types/eslint-config-types/**"],
+	ignores: [
+		"packages/eslint-config/dist/**",
+		"packages/eslint-config/src/typegen.d.ts",
+		"packages/eslint-config/src/types/eslint-config-types/**",
+		"packages/tsconfig/src/**",
+	],
 
 	react: {
 		compiler: true,
@@ -25,7 +30,7 @@ export default zayne({
 	tanstack: true,
 	type: "lib-strict",
 	typescript: {
-		tsconfigPath: "tsconfig.json",
+		tsconfigPath: ["**/tsconfig.json"],
 	},
 	vue: true,
 });
