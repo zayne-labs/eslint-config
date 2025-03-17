@@ -6,7 +6,7 @@
 	"description": "A collection of TypeScript configurations for various projects, based on Total TypeScript's TSConfig Cheat Sheet, with a few additions.",
 	"author": "Ryan Zayne",
 	"license": "MIT",
-	"homepage": "https://github.com/ryan-zayne/config/tree/main/packages/tsconfig#readme",
+	"homepage": "https://github.com/ryan-zayne/config#readme",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/zayne-labs/config"

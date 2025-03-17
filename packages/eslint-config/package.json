@@ -5,7 +5,7 @@
 	"description": "Zayne Labs' ESLint config preset",
 	"author": "Ryan Zayne",
 	"license": "MIT",
-	"homepage": "https://github.com/zayne-labs/config/tree/main/packages/eslint-config#readme",
+	"homepage": "https://github.com/zayne-labs/config#readme",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/zayne-labs/config.git"
