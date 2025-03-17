@@ -97,8 +97,8 @@ export interface OptionsTypeScriptWithTypes {
 	tsconfigPath?: true | string | string[];
 }
 
-export type OptionsTypescript = OptionsComponentExts &
-	(OptionsTypeScriptParserOptions | OptionsTypeScriptWithTypes);
+export type OptionsTypescript = OptionsComponentExts
+	& (OptionsTypeScriptParserOptions | OptionsTypeScriptWithTypes);
 
 export interface OptionsHasTypeScript {
 	/**
